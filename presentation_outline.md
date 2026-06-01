@@ -88,19 +88,55 @@
 ---
 
 ## Slide 6 — The VALUE Framework Applied to AI Adoption
-**Type:** Five-column or 5-row card layout — one per letter
+**Type:** Five-row card layout — one per letter, each with a concrete engineering-team scenario
 
-**Headline:** *VALUE turns "do AI" into a question discipline.*
+**Headline:** *VALUE turns "do AI" into a question discipline — applied to the engineering team we actually run.*
 
-| Letter | Workbook anchor question | Move it produces for AI Adoption |
-|---|---|---|
-| **V — Visualise** | "If this succeeds beyond expectations, what is different 3–5 years from now?" | Connect every pilot to grower outcomes — not engineering hours saved |
-| **A — Anticipate & Ask** | "What patterns are repeating that we are normalising? What question are we afraid to ask?" | Catch "pilot becomes permanent pilot." Name senior-engineer identity threat as an addressable risk |
-| **L — Lead from Purpose** | "What is the cause I am serving beyond my role or title?" | Reframe: not an "efficiency mandate" (sounds like headcount cut) but "honour what these tools are for — better grower decisions" |
-| **U — Understand Context** | "Am I speaking the language of my stakeholder?" | Translate "this LLM does X" into agronomist language: "this changes how a seed recommendation gets made" |
-| **E — Enable, Energise, Engage** | "What needs to be removed, not added?" | Publish guardrails *before* pushing usage. Remove the "is AI OK here?" ambiguity that blocks engineers |
+### **V — Visualise: How does AI transform an engineering team in 3–5 years?**
+*Workbook anchor:* "If this succeeds beyond expectations, what is different 3–5 years from now? What would future leaders thank us for starting today?"
 
-**Take-home line:** VALUE is not a slogan; it is a discipline. Each letter has changed a specific decision we would have made differently.
+**Concrete picture for our engineering org:**
+- The role itself dissolves the old boundaries: a "frontend engineer" or "backend engineer" becomes a **full-stack engineer cutting across dev, QA, DevOps, and data** — able to tie a whole solution together because the AI handles the depth in any one layer.
+- **Software gets dramatically cheaper to build.** A two-week feature becomes a two-day feature. What does the industry look like when the cost curve collapses? Are we ready for 10× more ideas reaching production — or 10× fewer engineers shipping the same roadmap?
+- The differentiator is no longer "can you code this" — it is **"do you understand the business well enough to choose what to build?"** Engineers move from order-takers to **growth partners alongside product management**, co-owning outcomes, not just stories.
+- Career ladders, hiring rubrics, and what "senior" means all need to be rewritten. If we don't redesign them, we will keep promoting for a craft the market no longer pays for.
+
+**Visualise question for the room:** *Three years out, is our team a group of specialists waiting for tickets, or a group of solution-owners co-creating with PM and the business? Which future are we building toward this quarter?*
+
+### **A — Anticipate & Ask**
+*Workbook anchor:* "What patterns are repeating that we are normalising? What question are we afraid to ask?"
+
+**Concrete moves:**
+- Catch "pilot becomes permanent pilot" — the pattern where AI work never crosses into production.
+- Name the unspoken question: *"If AI writes 60% of the code, what happens to the engineer who built their identity on writing it?"* Senior-engineer identity threat is real and addressable — only if named.
+- Ask early: *which roles in our org are we quietly planning around, instead of designing for?*
+
+### **L — Lead from Purpose**
+*Workbook anchor:* "What is the cause I am serving beyond my role or title?"
+
+**Concrete moves:**
+- Reframe the cause: not an "efficiency mandate" (which reads as "headcount cut" and triggers defence), but **"engineers as growth partners — closer to the grower, closer to the business outcome."**
+- Speak from purpose: *we are not adopting AI to ship cheaper code; we are adopting it to free engineers to do the work only humans can do — judgement, design, business partnership.*
+- Test the message: would the most skeptical senior engineer in the room recognise themselves as the *beneficiary* of the change, or the *casualty*?
+
+### **U — Understand Context & Cultural Nuance**
+*Workbook anchor:* "Am I speaking the language of my stakeholder? Or expecting them to learn mine?"
+
+**Concrete moves:**
+- Translate across audiences: "this LLM agent does X" → for an agronomist: *"this changes how a seed recommendation gets made"*; for a PM: *"this collapses discovery-to-prototype from weeks to days"*; for an engineer: *"this is your pair, not your replacement."*
+- Respect the high-power-distance, high-uncertainty-avoidance reality of our culture: don't ask engineers to experiment in public without a published guardrail.
+- Watch the impact gap: our intent is "empower"; the impact, unmanaged, can land as "evaluate." Close that gap explicitly.
+
+### **E — Enable, Energise & Engage**
+*Workbook anchor:* "What is currently making it hard for others to do their best work? What needs to be removed, not added?"
+
+**Concrete moves:**
+- **Publish guardrails *before* pushing usage** — remove the "is AI OK here?" ambiguity that silently blocks adoption.
+- Remove friction: license access, prompt libraries, a Coding Agents Policy, an AI-disclosure norm in PRs — so the easy path is the right path.
+- Energise through visibility: Brown Bag forums where engineers show *both* what worked and what failed. Failure content is what builds trust, not curated wins.
+- Engage PM and business partners *into* the engineering practice — so the "growth partner" identity is built every sprint, not announced once a year.
+
+**Take-home line:** VALUE is not a slogan — it is a discipline. Visualise tells us what the role becomes; Anticipate names the fear; Lead reframes the cause; Understand translates across stakeholders; Enable removes the friction. Skip any letter and adoption stalls in a predictable place.
 
 ---
 

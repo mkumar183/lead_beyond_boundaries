@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Team 6 — Lead Beyond Boundaries Effectiveness PPT (Outline)</title>
+<style>
+  :root {
+    --green: #2d6a4f;
+    --green-pale: #d8f3dc;
+    --blue: #1d3557;
+    --blue-mid: #457b9d;
+    --blue-light: #dbeafe;
+    --amber: #e9c46a;
+    --amber-pale: #fff3cd;
+    --orange: #c2410c;
+    --orange-pale: #ffe4d6;
+    --purple: #6d28d9;
+    --purple-pale: #ede9fe;
+    --bg: #f4f4f7;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --radius: 12px;
+    --shadow: 0 4px 14px rgba(0,0,0,.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    padding: 24px 16px 60px;
+  }
+  .page { max-width: 1080px; margin: 0 auto; }
+
+  /* Top banner */
+  .doc-header {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+    color: #fff; padding: 28px 32px; border-radius: var(--radius);
+    margin-bottom: 22px; box-shadow: var(--shadow);
+  }
+  .doc-header h1 { font-size: 1.7rem; }
+  .doc-header p { opacity: .9; margin-top: 6px; font-size: .95rem; }
+  .doc-header .tag {
+    display: inline-block; background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 3px 12px;
+    font-size: 11px; letter-spacing: .5px;
+    margin-bottom: 12px;
+  }
+
+  /* Slide */
+  .slide {
+    background: var(--card); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 26px 30px;
+    margin-bottom: 18px; border-left: 5px solid var(--blue);
+  }
+  .slide-num {
+    display: inline-block;
+    background: var(--blue); color: #fff;
+    font-weight: 700; font-size: .7rem;
+    padding: 3px 9px; border-radius: 12px;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  .slide h2 {
+    font-size: 1.2rem; font-weight: 700; color: var(--blue);
+    display: flex; align-items: center;
+    margin-bottom: 6px;
+  }
+  .slide .sub {
+    font-size: .85rem; color: var(--muted);
+    margin-bottom: 16px; font-style: italic;
+  }
+
+  /* Variants */
+  .slide-purpose { border-left-color: var(--green); }
+  .slide-purpose h2 { color: var(--green); }
+  .slide-purpose .slide-num { background: var(--green); }
+
+  .slide-compare { border-left-color: var(--orange); }
+  .slide-compare h2 { color: var(--orange); }
+  .slide-compare .slide-num { background: var(--orange); }
+
+  .slide-change { border-left-color: var(--purple); }
+  .slide-change h2 { color: var(--purple); }
+  .slide-change .slide-num { background: var(--purple); }
+
+  .slide-pilot { border-left-color: var(--blue-mid); }
+  .slide-pilot h2 { color: var(--blue-mid); }
+  .slide-pilot .slide-num { background: var(--blue-mid); }
+
+  .slide-close { border-left-color: var(--amber); background: #fffef7; }
+  .slide-close h2 { color: #b45309; }
+  .slide-close .slide-num { background: #b45309; }
+
+  /* Generic content */
+  .content { font-size: .94rem; line-height: 1.55; }
+  .content p { margin-bottom: 10px; }
+  .content ul { margin-left: 22px; }
+  .content ul li { margin-bottom: 5px; }
+  .content strong { color: var(--text); }
+
+  /* Two-column compare */
+  .compare-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 8px;
+  }
+  @media(max-width:760px) { .compare-grid { grid-template-columns: 1fr; } }
+  .compare-col {
+    border-radius: 10px; padding: 14px 18px;
+    font-size: .9rem;
+  }
+  .compare-without {
+    background: #fff0ee; border: 1px solid #fbcaba;
+  }
+  .compare-without h3 { color: var(--orange); font-size: .9rem; margin-bottom: 8px; }
+  .compare-with {
+    background: var(--green-pale); border: 1px solid #95d5b2;
+  }
+  .compare-with h3 { color: var(--green); font-size: .9rem; margin-bottom: 8px; }
+
+  /* Three-column for "how training helped" */
+  .three-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+    margin-top: 8px;
+  }
+  @media(max-width:760px) { .three-grid { grid-template-columns: 1fr; } }
+  .three-col {
+    background: var(--blue-light); border-radius: 10px;
+    padding: 14px 16px; font-size: .87rem;
+  }
+  .three-col strong {
+    display: block; margin-bottom: 6px; color: var(--blue);
+    font-size: .8rem; text-transform: uppercase; letter-spacing: .4px;
+  }
+
+  /* Pilot card layout */
+  .pilot-meta {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    background: #f8fafc; border-radius: 8px; padding: 12px 16px;
+    margin: 10px 0 12px; font-size: .85rem;
+  }
+  @media(max-width:600px) { .pilot-meta { grid-template-columns: 1fr; } }
+  .pilot-meta .row { display: flex; gap: 8px; }
+  .pilot-meta .label {
+    color: var(--muted); font-weight: 600; min-width: 90px;
+  }
+  .pilot-meta .value { flex: 1; }
+  .pilot-evidence {
+    background: var(--green-pale); border-radius: 8px;
+    padding: 10px 14px; font-size: .87rem;
+    border-left: 3px solid var(--green);
+  }
+  .pilot-evidence strong { color: var(--green); }
+  .pilot-link {
+    display: inline-block;
+    background: #fff; border: 1px solid var(--border);
+    padding: 4px 10px; border-radius: 16px;
+    font-size: .76rem; text-decoration: none;
+    color: var(--blue-mid); margin: 4px 4px 0 0;
+  }
+  .pilot-link:hover { background: var(--blue-light); }
+
+  /* Speaker note */
+  .say {
+    background: #fff9e6; border-left: 3px solid var(--amber);
+    border-radius: 6px; padding: 10px 14px;
+    font-size: .88rem; margin-top: 10px;
+    font-style: italic; color: #6b5510;
+  }
+  .say strong { font-style: normal; color: #6b5510; }
+
+  /* Owner pill (no longer used — kept for fallback if reintroduced) */
+  .owner-pill {
+    display: inline-block;
+    background: var(--purple-pale); color: var(--purple);
+    font-size: .68rem; font-weight: 700; letter-spacing: .4px;
+    padding: 2px 8px; border-radius: 10px;
+    text-transform: uppercase;
+    margin-left: 8px;
+  }
+
+  /* Section divider with header */
+  .section-divider {
+    margin: 32px 0 16px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--border);
+    font-size: .78rem; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  /* Footer */
+  footer {
+    text-align: center; margin-top: 36px;
+    font-size: .8rem; color: var(--muted);
+  }
+
+  /* Print */
+  @media print {
+    body { background: #fff; padding: 0; }
+    .slide { page-break-inside: avoid; box-shadow: none; }
+    .doc-header { background: var(--blue); color: #fff !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<div class="doc-header">
+  <span class="tag">Team 6 · Lead Beyond Boundaries Effectiveness · Draft for Cadence 2026-05-22</span>
+  <h1>How the Training Changed How We Lead AI Adoption</h1>
+  <p>Slide-by-slide outline for the Team 6 deck. Each slide carries the talking point, what to show, and the evidence to point at. Use this as the structure; build the actual slides from it. All slides are starter content for Team 6 to refine collectively.</p>
+  <p style="margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.2); font-size:.88rem;"><strong>Delivery:</strong> Async PPT draft to Team 6 by Friday 2026-05-22. The Monday cadence with Manoj + Nandan happens weekly; this is the draft to discuss in one of them.</p>
+</div>
+
+<div class="slide" style="border-left-color:#6d28d9; background:#faf5ff;">
+  <h2 style="color:#6d28d9;"><span class="slide-num" style="background:#6d28d9;">⏱</span> Context: where this PPT sits in the Lead Beyond Boundaries journey</h2>
+  <div class="content">
+    <ul>
+      <li><strong>9-10 Feb 2026</strong> — Original 2-day workshop. Sukant Thakur (HR) organised. Facilitated by Nandan @ Purple Cow Consulting. Held at Training Room 6th Floor, Amar Paradigm, Baner, Pune. Team 6 + broader engineering attended.</li>
+      <li><strong>5 May 2026</strong> — Phase 2 - Use Case Discussion (Sukant + Nandan + Manoj Kumar + Team 6 + Richa Agarwal + external consultants Vikram and Shekhar). Use case assigned: Scale AI Adoption Across Digital AgTech.</li>
+      <li><strong>11, 18 May → ongoing weekly Mondays 4-5 pm</strong> — <strong>Cadence meetings run by Manoj Kumar</strong> with Nandan in attendance. Recurring slot through at least 12 Jun.</li>
+      <li><strong>22 May 2026 (Friday)</strong> — Next Cadence. This PPT draft is the input.</li>
+    </ul>
+    <p style="margin-top:10px;"><strong>The proof to surface for leadership:</strong> a workshop in Feb 2026 → measurable changes in how we are leading AI adoption by May 2026. That's the &lt;90-day-from-training arc.</p>
+  </div>
+</div>
+
+<div class="section-divider">Opening — frame the proof, not the project</div>
+
+<!-- SLIDE 1 -->
+<div class="slide slide-purpose">
+  <h2><span class="slide-num">1</span> Purpose of this presentation</h2>
+  <div class="sub">Frame: this is about training effectiveness, not an AI adoption pitch.</div>
+  <div class="content">
+    <p>"This deck is not a pitch for AI adoption. AI adoption is the <strong>use case we chose</strong> to demonstrate whether the <em>Lead Beyond Boundaries</em> training actually changed how we lead. Today we will show you — concretely, with examples — what we did differently because of the training, and what we are learning along the way."</p>
+    <p><strong>Three things to evidence:</strong></p>
+    <ul>
+      <li>What shifted in our mindset and approach after the training</li>
+      <li>How we used specific tools from the workbook (VALUE, Stakeholder Map, Trust, Listening)</li>
+      <li>Concrete pilots in flight that we would not have run the same way without the training</li>
+    </ul>
+  </div>
+  <div class="say"><strong>Say:</strong> "Treat the pilots not as adoption metrics, but as evidence that the training changed our leadership choices."</div>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide slide-purpose">
+  <h2><span class="slide-num">2</span> The use case — AI Adoption at Scale, aligned to Uday's 2026 Engineering Priorities</h2>
+  <div class="sub">Why this use case, and why it is the right test of adaptive leadership.</div>
+  <div class="content">
+    <p>AI adoption across Digital AgTech in Pune is an <strong>adaptive challenge</strong> — not a technical one. It requires changes in beliefs, habits, and loyalties, not just rolling out tools.</p>
+    <p><strong>This is not a side bet.</strong> Uday's <a class="pilot-link" href="https://digitial-product-engineering.atlassian.net/wiki/spaces/GD/pages/5628264898/Digital+AgTech+2026+Engineering+Priorities">Digital AgTech 2026 Engineering Priorities</a> opens with <em>"Flagship Agentic Engineering Projects"</em> as Priority Area #1, described as <em>"our most ambitious bet for 2026: prove that autonomous, multi-agent engineering teams can deliver foundational quality work at the scale of Digital AgTech."</em> Three flagship missions, all Uday-sponsored:</p>
+    <ul>
+      <li>1.1 <strong>Code-critical and dependency vulnerabilities to be fixed</strong> — DRI: Luis</li>
+      <li>1.2 100% unit / integration code coverage — DRI: Harshit</li>
+      <li>1.3 <strong>E2E test critical paths covered 100%</strong> — DRI: Matt / Manoj</li>
+    </ul>
+    <p>Several of our pilots (P3, P6) sit directly inside missions 1.1 and 1.3. The training did not produce the priority; <strong>the training shaped how we are executing on it</strong> — that distinction is the whole deck.</p>
+    <p><strong>Scope of our use case:</strong></p>
+    <ul>
+      <li>9 India products across 4 product groups (Seeds &amp; Analytics, Agronomy Platforms, Mobile Field Ops, Grower Financials) — multiple scrum teams per product</li>
+      <li>Three coding agents available — Claude Code, Cursor, GitHub Copilot</li>
+      <li>Sponsor feedback: Andre, Uday</li>
+    </ul>
+    <p>This is exactly the kind of problem the workbook (Heifetz) says expert knowledge and routine management cannot solve. <strong>It mobilises people to solve it</strong> — which is what the training prepared us for.</p>
+  </div>
+</div>
+
+<div class="section-divider">Comparison — with vs without training</div>
+
+<!-- SLIDE 3 -->
+<div class="slide slide-compare">
+  <h2><span class="slide-num">3</span> With vs Without the training — how our approach changed</h2>
+  <div class="sub">The single most important slide. Be honest on the left column.</div>
+  <div class="compare-grid">
+    <div class="compare-col compare-without">
+      <h3>WITHOUT the training — what we would have defaulted to</h3>
+      <ul>
+        <li>Mandated tooling rollout: "everyone use Copilot by Q3"</li>
+        <li>Treat adoption as a technical problem — license counts, training videos, dashboards</li>
+        <li>Top-down communication; assume seniority alone will drive uptake</li>
+        <li>Measure adoption as "% engineers logged in"</li>
+        <li>Treat skeptics as obstacles to overcome</li>
+        <li>Each leader runs their own pilot in their squad; no shared learning</li>
+        <li>Reaction-mode: respond when adoption stalls</li>
+      </ul>
+    </div>
+    <div class="compare-col compare-with">
+      <h3>WITH the training — what we are actually doing</h3>
+      <ul>
+        <li>Pilot-then-cascade: prove deep adoption in one group, let social proof spread</li>
+        <li>Treat adoption as adaptive — mindshift first, tools second</li>
+        <li>Stakeholder map first; identify Invisible Influencers; co-author with respected seniors</li>
+        <li>Measure quality + rework + cycle time, not throughput</li>
+        <li>Involve skeptics in writing the guardrails; they own them</li>
+        <li>Brown bag sessions create cross-team learning (Akshay coordinates; 3 done, 8 scheduled)</li>
+        <li>Anticipate-mode: ask "what patterns are repeating that we are normalising?"</li>
+      </ul>
+    </div>
+  </div>
+  <div class="say"><strong>Say:</strong> "The left column is what we would have done a year ago, with the same intent. The right column is what we are doing today. Same goal, very different leadership choices — that delta is the training."</div>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="slide slide-compare">
+  <h2><span class="slide-num">4</span> How the training helped</h2>
+  <div class="sub">Three specific contributions — pick the language of the workbook deliberately.</div>
+  <div class="three-grid">
+    <div class="three-col">
+      <strong>Mindshift</strong>
+      Heifetz adaptive-vs-technical frame let us name what was happening. "Loyal Soldier → Growth Partner" became a shared vocabulary on how to engage stakeholders. We stopped asking "what does leadership want us to do?" and started asking "what does this organisation need us to do, and how do we mobilise it?"
+    </div>
+    <div class="three-col">
+      <strong>Harder problems — the subtle / adaptive space</strong>
+      Before: we treated AI adoption as a tooling rollout problem. After: we see it as an identity / craft / habit shift. The workbook gave us a lens to see the "unspoken but influential" forces — senior engineers' identity threat, junior fear of looking lazy, EM concern about delivery risk. We can now name them.
+    </div>
+    <div class="three-col">
+      <strong>More structured</strong>
+      VALUE framework as a question discipline (Visualise → Anticipate → Lead from Purpose → Understand Context → Enable). Trust Model breaks "build trust" into 4 measurable moves. Stakeholder map turns "stakeholder management" into a drawable artefact. Three Levels of Listening turns conversations into deliberate practice.
+    </div>
+  </div>
+</div>
+
+<div class="section-divider">Changes we made — the leadership moves themselves</div>
+
+<!-- SLIDE 5 -->
+<div class="slide slide-change">
+  <h2><span class="slide-num">5</span> Growth Partner mindshift — what we said yes to, and what we said no to</h2>
+  <div class="content">
+    <p><strong>Said NO to (Loyal Soldier defaults):</strong></p>
+    <ul>
+      <li>Waiting to be told what to pilot</li>
+      <li>Communicating at task level ("we ran the demo, here are the metrics")</li>
+      <li>Compliance reporting ("X% of teams have onboarded")</li>
+    </ul>
+    <p><strong>Said YES to (Growth Partner moves):</strong></p>
+    <ul>
+      <li>Anticipating what will block adoption 6 months out — and acting now</li>
+      <li>Communicating impact ("this changes how a grower gets their seed recommendation")</li>
+      <li>Influencing by design — Stakeholder Map before town-hall</li>
+      <li>Bringing imperfect artefacts to be co-edited, not polished decks to be approved</li>
+    </ul>
+    <p style="margin-top:14px;"><strong>How we are overcoming the shift (this is harder than the framing):</strong></p>
+    <ul>
+      <li><strong>Naming the resistance in ourselves, not just in others.</strong> Loyal Soldier defaults — wait for the brief, complete the brief, report up — feel safe. The training gave us a vocabulary to spot when we are reaching for them and pause. The first move is internal, not external.</li>
+      <li><strong>Public commitments to "Growth Partner moves" in 1:1s with our leaders.</strong> Naming what we will do differently and inviting accountability is itself a Growth Partner act. Without that ritual, the new behaviour does not stick.</li>
+      <li><strong>Sharing in-flight work, not just shipped work.</strong> Brown Bag, draft documents (this deck), the Agent-discussion cadence in Planting — we are practising "imperfect-artefact-shared-early" as a default. Repetition is the only thing that converts framing into habit.</li>
+      <li><strong>Accepting that the shift is partial, not total.</strong> The training does not erase Loyal Soldier mode; it gives us a choice. The honest learning is that we still default to it in some rooms — and we keep noticing.</li>
+    </ul>
+  </div>
+  <div class="say"><strong>Say:</strong> "The clearest tell: a year ago we would have polished this deck for two weeks before showing you. Today, we are showing you the working draft and inviting you in. That is the mindshift. The hard part is doing it consistently — that is the work in progress."</div>
+</div>
+
+<!-- SLIDE 6 -->
+<div class="slide slide-change">
+  <h2><span class="slide-num">6</span> How the V-A-L-U-E framework shaped our approach — letter by letter</h2>
+  <div class="sub">All five letters, with the move each one produced for this initiative.</div>
+  <div class="content">
+    <p><strong>V — Visualise.</strong> Question: <em>"If this succeeds beyond expectations, what is different 3–5 years from now?"</em> Move it produced: connecting AI adoption to <strong>grower outcomes</strong>, not developer productivity alone. Without V, our story stops at engineering hours saved. With V, every pilot has a line of sight to the field — faster software → better agronomic tools → better grower decisions.</p>
+    <p><strong>A — Anticipate &amp; Ask.</strong> Question: <em>"What patterns are repeating that we might be normalising? What question are we afraid to ask?"</em> Move it produced: catching the "pilot becomes permanent pilot" pattern early; treating senior-engineer identity threat as a named, addressable risk rather than as unexplained foot-dragging. <strong>Did A really help?</strong> Yes — concretely: the Planting Agent-discussion cadence (P3★) exists because Chitra asked the anticipate question with Ram. Without it, Planting would have shipped one agent and stopped. With it, they shipped two and are designing more.</p>
+    <p><strong>L — Lead from Purpose.</strong> Question: <em>"What is the cause I am serving beyond my role or title?"</em> Move it produced: stops us framing AI adoption as "efficiency mandate" (which reads as headcount threat) and reframes as "honour what these tools are actually for — grower decisions." Reframing matters because the same words sound different from "executive ask" vs "purpose statement."</p>
+    <p><strong>U — Understand Context &amp; Cultural Nuance.</strong> Question: <em>"Am I speaking the language of my stakeholder? Where might my intent be correct but my impact misaligned?"</em> Move it produced: stopped translating "this LLM does X" into engineering rooms; started saying "this changes how an agronomist gets a seed recommendation." Same change, audience-matched.</p>
+    <p><strong>E — Enable, Energise &amp; Engage.</strong> Question: <em>"What is making it hard for stakeholders to do their best work? What needs to be removed, not added?"</em> Move it produced: published guardrails (Coding Agents Policy) <em>before</em> pushing adoption, so engineers know exactly when AI is encouraged vs exception-required. Removing the "is AI OK here?" ambiguity unblocked more usage than any training video would have.</p>
+  </div>
+  <div class="say"><strong>Say:</strong> "VALUE is not a slogan. It is a question discipline. Each letter is a question we now ask before we move — and each has changed a specific decision we would have made differently."</div>
+</div>
+
+<!-- SLIDE 7 — NEW: Champions + heavy users -->
+<div class="slide slide-change">
+  <h2><span class="slide-num">7</span> Identifying champions and finding the heavy users</h2>
+  <div class="sub">Champions are the multiplier. We do not pick them — we recognise them.</div>
+  <div class="content">
+    <p><strong>How we identify champions (the method, not the wish list):</strong></p>
+    <ul>
+      <li><strong>Cross-reference three signals</strong> — (a) tools-access records (who requested and uses Claude / Cursor / Copilot most actively per Coding Agents Policy data), (b) public artefacts produced (Confluence pages, PRs, brown-bag sessions), (c) peer mentions in 1:1s ("X showed me this"). Anyone strong on all three is a real champion; strong on only one is a candidate.</li>
+      <li><strong>Trust the Invisible Influencer per squad.</strong> The workbook's Hofstede-collectivism move — every squad has one senior engineer whose quiet adoption is the unlock. Find them before running a town hall.</li>
+      <li><strong>Distinguish "AI-curious" (lots of talk) from "heavy user" (lots of shipped artefacts).</strong> The latter is what we recruit; the former are next-tier candidates.</li>
+    </ul>
+    <p><strong>Heavy users visible across our pilots (not exhaustive):</strong></p>
+    <ul>
+      <li><strong>Lalitkumar Sakare</strong> — authored the published "AI for Speed, Humans for Correctness" operating principle (P5)</li>
+      <li><strong>Ravi Bhosle</strong> — shipped Sonar-fixer agent with two-mode architecture; offered demos to others (P3★)</li>
+      <li><strong>Chitralekha Ruikar</strong> — organises the Planting Agent-discussion cadence; owns the "AI Use Case for Planting" page (P3★)</li>
+      <li><strong>Sahil Sharma + Josh Larson</strong> — designed and ran the AI Integration Experiment, sharing results across geographies (P2★)</li>
+      <li><strong>Akshay Dharerao</strong> — coordinates the Brown Bag forum; 11 sessions scheduled (P4)</li>
+      <li><strong>Aaditya Pagar, Roman Antony, Amol</strong> — recent Brown Bag presenters (Figma MCP, Agent-Driven Development)</li>
+    </ul>
+    <p><strong>The formal scaffolding that supports them:</strong> Lynx Champions program (per Claude Rollout Master Strategy), Copilot Champions program (Jira SNO-18), EPAM AI Maturity Framework with designated AI Champion role per BA team. We are not inventing the champion structure — we are using what already exists.</p>
+  </div>
+  <div class="say"><strong>Say:</strong> "Champions are recognised, not appointed. The training shifted us from 'who should we make a champion?' to 'who is already a champion in their squad, and how do we amplify them?' That re-direction matters."</div>
+</div>
+
+<!-- SLIDE 8 -->
+<div class="slide slide-change">
+  <h2><span class="slide-num">8</span> Psychological safety — how we are making it real, not slogan</h2>
+  <div class="content">
+    <p>Three concrete practices, mapped to workbook concepts:</p>
+    <ul>
+      <li><strong>Trust → Acceptance.</strong> When a senior engineer says "AI gives wrong suggestions half the time," we don't argue. We accept the position — it is protecting years of invested craft — before trying to move it. The skeptic is the signal, not the obstacle.</li>
+      <li><strong>Hofstede Uncertainty Avoidance handled deliberately.</strong> Engineers won't experiment without guardrails. So we published guardrails first — Coding Agents Policy (pick exactly one of Claude Code / Cursor / Copilot), AI usage disclosure norms — before pushing usage.</li>
+      <li><strong>Skeptic ownership.</strong> The AI usage guideline document gets <em>co-authored with the loudest skeptic in each squad</em>. People defend what they build. Conversion attempts are replaced with co-authoring.</li>
+    </ul>
+  </div>
+  <div class="say"><strong>Say:</strong> "Psychological safety isn't a vibe. It's that engineers know exactly where the boundary is between encouraged and exception-required — and the loudest skeptic helped write that boundary."</div>
+</div>
+
+<!-- SLIDE 9 — NEW: Hallucination + accountability -->
+<div class="slide slide-change">
+  <h2><span class="slide-num">9</span> Hallucination and accountability — how we address them, with named guardrails</h2>
+  <div class="sub">"AI for Speed. Humans for Correctness." — codified across Syngenta, not just our deck.</div>
+  <div class="content">
+    <p><strong>The principle the whole org has codified, applied to our work:</strong></p>
+    <ul>
+      <li><strong>"No AI system shall make autonomous decisions on sensitive business data without human oversight"</strong> — verbatim from the [DRAFT] Syngenta Integrated Agentic Reference Architecture. Treated as a non-negotiable.</li>
+      <li><strong>"AI for Speed. Humans for Correctness."</strong> — the Agrobiodiversity squad's published operating principle (Lalitkumar Sakare, P5). Human defines scenarios → AI drafts → Human validates.</li>
+      <li><strong>"AI without guardrails makes it worse — we inherit tech debt at machine speed."</strong> — verbatim from the 2026 AI-Driven Coverage initiative. The line that anchors why guardrails come <em>before</em> usage.</li>
+    </ul>
+    <p><strong>The named guardrail layers we rely on (not invented for this deck — already in the org):</strong></p>
+    <ul>
+      <li><strong>Portkey LLM Guardrails</strong> — the org's "AI Compliance Checkpoint" for every model call. Aligns to the AI Manifesto's Human Oversight commitment.</li>
+      <li><strong>8-pillar guardrail framework</strong> (per RFC-009 Data Platform AI Strategy) — explicitly includes <em>jailbreak detection, compliance checks, and hallucination detection</em> as named pillars.</li>
+      <li><strong>Coding Agents Policy</strong> — engineers pick exactly one of Claude Code / Cursor / Copilot. Ambiguity is itself a hallucination risk; one-tool-one-team removes it.</li>
+      <li><strong>Human-in-the-loop by design</strong> — for AI-Driven Coverage: <em>"Generated tests never merge without developer review."</em> For TouchStone: explicit agent boundaries + human gates. For Planting agents: PR-based review for every fix.</li>
+      <li><strong>Three-stage test workflow</strong> (per Agrobiodiversity doc): naive AI test generation = 30% false positives — <em>"never use"</em>. Human-led AI three-stage workflow = 5% false positives. The squad explicitly chose the safer path.</li>
+    </ul>
+    <p><strong>Accountability chain we make explicit on every AI artefact:</strong></p>
+    <ul>
+      <li>Engineer who reviewed/merged it — accountable for correctness</li>
+      <li>EM whose squad shipped it — accountable for the team's overall quality</li>
+      <li>Sponsor (typically Manoj-org for these pilots) — accountable for the priority being served</li>
+      <li>AI itself: not on the accountability chain. AI is a drafting and acceleration tool, not a decision-maker.</li>
+    </ul>
+  </div>
+  <div class="say"><strong>Say:</strong> "The accountability framing the workshop pushed us toward is the line that makes any AI build defensible. When anyone asks 'who is responsible?' — the answer is always a named human, never the model."</div>
+</div>
+
+<!-- SLIDE 10 -->
+<div class="slide slide-change">
+  <h2><span class="slide-num">10</span> Learn-and-listen → feedback → guardrails</h2>
+  <div class="content">
+    <p>The training's <strong>Three Levels of Listening</strong> (Level 0 my assumptions · Level 1 stated · Level 2 feelings/needs · Level 3 what is possible) reshaped our discovery practice. Concretely:</p>
+    <ul>
+      <li>We listened, at Level 2, to what engineers <em>actually</em> feared — not "will AI replace me" but "will my manager think I didn't do the work?"</li>
+      <li>We listened, at Level 3, to what they thought was <em>possible</em> — "if I owned the AI quality guidelines, what would they look like?"</li>
+      <li>Out of that came the guardrails — Coding Agents Policy, AI usage disclosure, the Brown Bag sessions where teams share what worked <em>and what didn't</em>.</li>
+    </ul>
+  </div>
+  <div class="pilot-evidence"><strong>Evidence:</strong> Brown Bag Session page lists 3 sessions delivered (Figma MCP, Agent-Driven Development, Ravi's session) and 8 more scheduled through October 2026. The forum exists; teams use it; outputs are recorded and linked. <a class="pilot-link" href="https://digitial-product-engineering.atlassian.net/wiki/spaces/GD/pages/5375492885/Brown+Bag+Session">Brown Bag Session →</a></div>
+</div>
+
+<div class="section-divider">Example pilots — concrete evidence the training is producing different leadership choices</div>
+
+<div class="slide" style="background:#f0fdf4; border-left-color:var(--green);">
+  <div class="content" style="font-size:.95rem;">
+    <p><strong>The pattern across the pilots that follow:</strong> work shipped or published <em>since</em> the training, across squads Team 6 leads or co-leads — not just attended-the-workshop talk.</p>
+    <ul>
+      <li><strong>Lalitkumar Sakare (Team 6)</strong> — codified the Agrobiodiversity AI-vs-manual operating principle into a published Confluence artefact (<strong>P5</strong>).</li>
+      <li><strong>Sahil Sharma + Josh Larson</strong> (Seeds, in Manoj's delivery org) — ran the AI Integration Experiment; Manoj's enthusiastic 28-Apr written reaction is the deck's strongest single endorsement (<strong>P2★</strong>).</li>
+      <li><strong>Ravi Bhosle, Chitralekha Ruikar, Ram Waykar + external partners</strong> (Planting / Sustainability, in Manoj's delivery org) — shipped two agents (Vulnerability Sentinel + Sonar-fixer) and stood up a recurring Agent-discussion cadence (<strong>P3★</strong>).</li>
+    </ul>
+    <p>That is what training-effectiveness <em>looks like</em>: leadership cascade into squad-level shipping, not the workshop staying as the workshop.</p>
+  </div>
+</div>
+
+
+<!-- PILOT 1 -->
+<div class="slide slide-pilot">
+  <h2><span class="slide-num">P1</span> Tooling for all developers — guardrailed choice, not mandate</h2>
+  <div class="pilot-meta">
+    <div class="row"><span class="label">Lead</span><span class="value">Global Engineering</span></div>
+    <div class="row"><span class="label">Stage</span><span class="value">Active rollout</span></div>
+    <div class="row"><span class="label">Training move</span><span class="value">Enable, Energise, Engage (E of VALUE) + Uncertainty Avoidance guardrail</span></div>
+    <div class="row"><span class="label">Scale</span><span class="value">Org-wide rollout — across Pune India site product teams</span></div>
+  </div>
+  <div class="pilot-evidence">
+    <strong>What we did:</strong> Engineers pick exactly one of <em>Claude Code</em>, <em>Cursor</em>, or <em>GitHub Copilot</em> — not all three. The policy itself is a guardrail co-built with leadership (compliance, security, IT). The intent is to remove ambiguity ("is AI OK here?") before pushing adoption.
+    <br/><br/>
+    <a class="pilot-link" href="https://digitial-product-engineering.atlassian.net/wiki/spaces/GD/pages/5492113409">Coding Agents Policy →</a>
+    <a class="pilot-link" href="https://digitial-product-engineering.atlassian.net/wiki/spaces/GD/pages/5433131020">Claude Code Tool Request →</a>
+    <a class="pilot-link" href="https://digitial-product-engineering.atlassian.net/wiki/spaces/DD1/pages/5485330818">Claude Rollout Master Strategy →</a>
+  </div>
+</div>
+
+<!-- PILOT 2 -->
+<div class="slide slide-pilot" style="border-left-width:8px; background:#f0f9ff;">
+  <h2><span class="slide-num">P2★</span> Seeds experiment — AI Integration Experiment (Sahil-led)</h2>
+  <div class="pilot-meta">
+    <div class="row"><span class="label">Lead</span><span class="value">Sahil Sharma (Seeds team) + Josh Larson (USRS)</span></div>
+    <div class="row"><span class="label">Stage</span><span class="value">Test 1 results in hand 2026-04-28; planning Test 2 — Combined Throughput</span></div>
+    <div class="row"><span class="label">Training move</span><span class="value">Pre-commit to an experiment design, run it, share results across silos — the workshop's "Anticipate &amp; Ask + Enable" combination put into practice</span></div>
+    <div class="row"><span class="label">Scope</span><span class="value">Product Triangle — business ideation to production, with AI integrated end-to-end</span></div>
+  </div>
+  <div class="pilot-evidence">
+    <strong>What Manoj wrote on 2026-04-28 (verbatim, edited for length):</strong> "It's great to see the team executing on ideas we've been discussing in our 1:1s and translating them into tangible outcomes. The results from Test 1 are very encouraging — especially the clear step forward in improving throughput productivity, which is critical to unlocking real value from AI adoption at scale."
+    <br/><br/>
+    The experiment is documented in <a class="pilot-link" href="https://digitial-product-engineering.atlassian.net/wiki/spaces/~63b605f6fa5fbde2ba466b7c/pages/5558145081">Reimagining the Product Development Pipeline: AI Integration Experiment Design</a> — Test-2 specifically targets "Combined Throughput."
+  </div>
+  <div class="say"><strong>Why this is the strongest single piece of evidence for the PPT:</strong> Manoj's written reaction does the work for us. The training-effectiveness story is not "we adopted AI" — it is "we ran a designed experiment that produced a measurable productivity step forward, and engineering leadership recognises it as 'real value from AI adoption at scale'." That sentence is the deck.</div>
+</div>
+
+<!-- PILOT 3 — MERGED: Sonar-fixer + Vulnerability Sentinel + Planting agent track -->
+<div class="slide slide-pilot" style="border-left-width:8px; background:#f0f9ff;">
+  <h2><span class="slide-num">P3★</span> Agentic Engineering for code quality &amp; vulnerabilities — direct delivery on Uday's 2026 Priority #1</h2>
+  <div class="pilot-meta">
+    <div class="row"><span class="label">Aligns to</span><span class="value"><a class="pilot-link" href="https://digitial-product-engineering.atlassian.net/wiki/spaces/GD/pages/5628264898/Digital+AgTech+2026+Engineering+Priorities">Digital AgTech 2026 Priority #1 — Flagship Agentic Engineering</a> · Sponsor: Uday · DRI: Luis (vulnerabilities)</div>
+    <div class="row"><span class="label">Team</span><span class="value">Cropwise Planting — Ram Waykar (tech lead) + Chitralekha Ruikar (BA) + Ravi Bhosle + Khare Nikita (ext) + Singh Himanshu (ext) + Sharma Harshit</span></div>
+    <div class="row"><span class="label">Stage</span><span class="value">Multi-agent pipeline. Two agents in production across two products; further agents under active design via the Agent-discussion cadence.</span></div>
+    <div class="row"><span class="label">Repo</span><span class="value"><code>api-python-planting-ai-agents</code></span></div>
+  </div>
+  <div class="pilot-evidence">
+    <strong>Two shipped agents, two products, one practice:</strong>
+    <ul style="margin-top:6px;">
+      <li><strong>Vulnerability Sentinel</strong> (Planting) — CWPT-3935. Agent parsed AWS Inspector + Dependabot scan report, fetched CircleCI artifact, patched dependencies, validated, raised PR — <em>in one automated run</em>. Dockerfile updates: 2. Newly introduced vulnerabilities: 0. <a class="pilot-link" href="https://digitial-product-engineering.atlassian.net/wiki/spaces/cropwiseplanting/pages/5703795074">Sentinel page →</a> <a class="pilot-link" href="https://digitial-product-engineering.atlassian.net/wiki/spaces/cropwiseplanting/pages/5704122432">Real Scenarios →</a></li>
+      <li><strong>Sonar-fixer Agent</strong> (Sustainability Mobile, React Native) — Ravi. Auto-fetches SonarCloud issues, fixes, runs lint + tests, raises PR with fix report. Two modes: Cloud Agent (GitHub Issue → Copilot → auto-PR, zero effort) and Local VS Code Agent (<code>sonar-fixer</code> chat with dev review-before-commit). Real shipped evidence: <a class="pilot-link" href="https://github.com/syngenta-digital/mobile-reactnative-sustainability/pull/1347">PR #1347</a>. <a class="pilot-link" href="https://syt-dpe.slack.com/archives/CK62DVDA9/p1777462357533069">Ravi's Slack post →</a></li>
+    </ul>
+    <strong>The ongoing practice that produces more (not visible from a single PR):</strong>
+    <ul style="margin-top:6px;">
+      <li><strong>"Agent discussion" cadence</strong> — recurring meetings (latest "Agent discussion contd" on 2026-05-19, organised by Chitra, forwarded by Manoj). Chitra + Ram + Ravi + Shemeem + external partners. This is how multi-agent design moves forward.</li>
+      <li><strong>Shared AI use-case template</strong> — Chitra owns the <a class="pilot-link" href="https://digitial-product-engineering.atlassian.net/wiki/spaces/cropwiseplanting/pages/5491556587">"AI Use case for Planting" Confluence page</a> where engineers submit candidate use cases.</li>
+      <li><strong>Cross-functional BA leadership on AI</strong> — Chitra organises the agent-discussion cadence, not just attends. BA actively shaping the product's AI roadmap with the tech lead — the workshop's "anticipate and ask" + "growth partner" moves.</li>
+    </ul>
+  </div>
+  <div class="say"><strong>Why this is the strongest concrete evidence:</strong> A single agent could be an experiment. <em>Two agents shipped to production in two different products, built by one cross-functional practice, with an agent-discussion cadence producing more</em> — that's a practice, not a one-off. And it directly delivers on Uday's 2026 Priority #1 (Flagship Agentic Engineering — code-critical and dependency vulnerabilities, DRI Luis). The training-effectiveness story is "we built a way to keep building agents — and we are executing on the year's #1 engineering priority while we do it."</div>
+</div>
+
+<!-- PILOT 4 -->
+<div class="slide slide-pilot">
+  <h2><span class="slide-num">P4</span> Brown Bag — institutionalised cross-silo learning</h2>
+  <div class="pilot-meta">
+    <div class="row"><span class="label">Lead</span><span class="value">Akshay Dharerao (coordinator) — engineering-wide</span></div>
+    <div class="row"><span class="label">Cadence</span><span class="value">3 delivered (4/1, 4/29, 5/13); 8 scheduled through Oct 2026</span></div>
+    <div class="row"><span class="label">Training move</span><span class="value">Cross-silo collaboration; listen at Level 2 to what worked AND what didn't</span></div>
+  </div>
+  <div class="pilot-evidence">
+    <strong>Sessions delivered (in last 6 weeks):</strong>
+    <ul style="margin-top:6px;">
+      <li><strong>Figma MCP</strong> — Aaditya Pagar, coordinated by Amit Gaikwad (4/1/2026)</li>
+      <li><strong>Agent-Driven Development</strong> — Roman + Amol, coordinated by Pratik Tayade (4/29/2026); demo repo <code>syngenta-digital/demo-agent-dev</code></li>
+      <li><strong>Ravi Bhosale</strong> — 5/13/2026</li>
+    </ul>
+    <a class="pilot-link" href="https://digitial-product-engineering.atlassian.net/wiki/spaces/GD/pages/5375492885/Brown+Bag+Session">Brown Bag Session page →</a>
+  </div>
+  <div class="say"><strong>Why this is training-effectiveness evidence:</strong> Brown Bag is the explicit antidote to Hofstede high-power-distance + high-collectivism cultures stalling cross-team learning. Without the training, "share what didn't work" would not be on the page — only "share what worked." The "what didn't work" line is the giveaway.</div>
+</div>
+
+<!-- PILOT 5 -->
+<div class="slide slide-pilot">
+  <h2><span class="slide-num">P5</span> Agrobiodiversity — codified a new way of working: <em>"AI for Speed. Humans for Correctness."</em></h2>
+  <div class="pilot-meta">
+    <div class="row"><span class="label">Product</span><span class="value">Cropwise Agrobiodiversity</span></div>
+    <div class="row"><span class="label">Owner / Author</span><span class="value"><strong>Lalitkumar Sakare</strong> (Team 6 co-member) — published the squad's AI-vs-manual operating principle</span></div>
+    <div class="row"><span class="label">Stage</span><span class="value">Operating-principle document published on Confluence; quantitative before/after data captured from real work</span></div>
+    <div class="row"><span class="label">Training move</span><span class="value">A Team 6 member codified the squad's post-training operating principle into a published artefact — adaptive change in how the squad works, not just what they build</span></div>
+  </div>
+  <div class="pilot-evidence">
+    <strong>The codified principle:</strong> <em>"AI for Speed. Humans for Correctness."</em> Human defines scenarios → AI drafts (code/tests/docs) → Human reviews and validates. The document explicitly names the wrong pattern (AI generates end-to-end with minimal validation → false confidence + more defects) and stands the squad against it.
+    <br/><br/>
+    <strong>Real Syngenta example documented in the page — React Native v77 upgrade:</strong>
+    <ul style="margin-top:6px;">
+      <li>Manual approach: 12 story points across iOS + Android + RN upgrade + tests, ~12–16 days</li>
+      <li>AI-assisted approach: 3–4 story points combined, ~3–5 days</li>
+      <li>67–75% reduction in points and time; 8–9 SP freed for other work; code quality maintained (independent of speed)</li>
+    </ul>
+    <strong>Test-writing approach the document explicitly recommends and the squad practices:</strong> Three-stage Human-Led AI — human defines scenarios → AI drafts test implementation → human reviews and validates. The document explicitly warns against naive AI test generation (in their analysis: 78% coverage but 30% false positives — *"never use"*), in favour of human-led AI (82% coverage, 5% false positives — *"best"*). That distinction is itself a training-shaped operating choice.
+    <br/><br/>
+    <a class="pilot-link" href="https://digitial-product-engineering.atlassian.net/wiki/spaces/CA3/pages/5731942805/AI-Assisted+Development+vs+Manual+Traditional+Development+Agrobiodiversity">AI-Assisted vs Manual Development — Agrobiodiversity (full page) →</a>
+  </div>
+  <div class="say"><strong>Why this is one of the deck's stronger pilots:</strong> It is not "we tried AI." It is "a Team 6 member led their squad through codifying a deliberate operating principle — with structured before/after data, named anti-patterns, and a recommended three-stage workflow — and published it for the rest of Digital AgTech to reuse." That is training-effectiveness made tangible: leadership cascading into squad-level operating norms, not just stayed at workshop-attendee level.</div>
+</div>
+
+<!-- PILOT 6 (was P7) — reframed against Uday's 2026 Priority #1.3 E2E -->
+<div class="slide slide-pilot">
+  <h2><span class="slide-num">P6</span> Agentic AI — Agent-Driven Development + TouchStone (delivering Uday's 2026 Priority #1.3 E2E)</h2>
+  <div class="pilot-meta">
+    <div class="row"><span class="label">Aligns to</span><span class="value"><a class="pilot-link" href="https://digitial-product-engineering.atlassian.net/wiki/spaces/GD/pages/5628264898/Digital+AgTech+2026+Engineering+Priorities">Digital AgTech 2026 Priority #1.3 — Flagship Agentic Engineering: E2E test critical paths covered 100%</a> · Sponsor: Uday · DRI: Matt / Manoj</div>
+    <div class="row"><span class="label">A — Brown Bag</span><span class="value">Roman + Amol, "Agent-Driven Development" (4/29/2026)</span></div>
+    <div class="row"><span class="label">B — TouchStone</span><span class="value">Pushkal Maheshwari, Agentic E2E testing, Epic CIE-4628</span></div>
+  </div>
+  <div class="pilot-evidence">
+    <strong>Two threads, both serving the year's stated priority:</strong>
+    <ul style="margin-top:6px;">
+      <li><strong>Agent-Driven Development</strong> — cross-team learning shared via Brown Bag. Demo repo <code>syngenta-digital/demo-agent-dev</code>; "Media Sentinel" media-analysis app demonstrated.</li>
+      <li><strong>TouchStone</strong> — agentic E2E testing framework with human gates, agent boundaries, artefact contracts. Active v2; owner Pushkal Maheshwari. Directly executes Uday's Priority #1.3 — *"the first goal is to have AI agents build the E2E suite. Execution of E2E will then run via CircleCI automation — not via AI agents at run-time."* (verbatim from the 2026 Priorities page) Manoj is one of the named DRIs for this priority.</li>
+    </ul>
+    <a class="pilot-link" href="https://digitial-product-engineering.atlassian.net/wiki/spaces/CIE/pages/5524389891">TouchStone Workflow →</a>
+  </div>
+  <div class="say"><strong>Why this matters:</strong> The training did not push us to "anticipate before leadership asked." Leadership had already asked — Agentic Engineering is the year's <strong>top engineering priority</strong>, set by Uday. What the training did was give us the leadership <em>discipline</em> to execute on the priority differently: shared muscle-building (Brown Bag), cross-functional design (TouchStone agent boundaries + human gates), and shipping rather than spec-writing. We are not anticipating the ask; we are <em>delivering</em> the ask with training-shaped methods.</div>
+</div>
+
+<!-- PILOT 7 (was P8) -->
+<div class="slide slide-pilot">
+  <h2><span class="slide-num">P7</span> CNH — supporting a customer to use AI</h2>
+  <div class="pilot-meta">
+    <div class="row"><span class="label">Customer</span><span class="value">CNH Industrial (machinery telemetry; Case IH / New Holland / Steyr)</span></div>
+    <div class="row"><span class="label">Initiative</span><span class="value">CNH Integration with OSR (Seed Selector) — Technical Proposal</span></div>
+    <div class="row"><span class="label">Training move</span><span class="value">Visualise broader value chain; partner-enable, not partner-control</span></div>
+  </div>
+  <div class="pilot-evidence">
+    <strong>What it demonstrates:</strong> CNH's own chat experience calls Syngenta's OSR API, collects grower inputs, and returns a seed recommendation as text — keeping CNH's UX independent. We are enabling a partner to deliver an AI experience to growers using our intelligence.
+    <br/><br/>
+    <a class="pilot-link" href="https://digitial-product-engineering.atlassian.net/wiki/spaces/CSSG/pages/5709037877">CNH Integration with OSR — Technical Proposal →</a>
+  </div>
+  <div class="say"><strong>Closing line on this pilot:</strong> "The grower buying seed from CNH gets an AI-assisted recommendation rooted in Syngenta's agronomy — without knowing it. That is the grower-benefit-last principle from the workbook's Visualise framework, made literal."</div>
+</div>
+
+<div class="section-divider">Honest answer — is AI productivity at scale real?</div>
+
+<!-- SLIDE 11 — NEW: Productivity at scale — real or myth -->
+<div class="slide slide-close" style="background:#fffbeb;">
+  <h2><span class="slide-num">11</span> AI productivity at scale — real or myth? Our position</h2>
+  <div class="sub">Answered honestly, with internal evidence and external data — not with hand-waving.</div>
+  <div class="content">
+    <p><strong>The honest answer from 2026 external data:</strong> productivity gains are <em>real where deployment is mature, mostly myth where stuck in pilot</em> — and most organisations are stuck in pilot.</p>
+    <ul>
+      <li><strong>Real:</strong> Q1 2026 surveys (McKinsey, Salesforce, Slack, Anthropic enterprise telemetry) converge on <strong>6.1–7.2 hours saved per knowledge worker per week</strong>. 79% of organisations use AI agents to some degree; 66% report measurable productivity improvements.</li>
+      <li><strong>Myth at scale:</strong> March 2026 survey — <strong>78% of enterprises have AI agent pilots; under 15% reach production</strong>. McKinsey: 92% plan more AI investment, but <strong>only 1% say they are mature in deployment</strong>. PwC: 75% of AI economic gains captured by 20% of companies — uneven distribution.</li>
+      <li><strong>The bottleneck isn't the model.</strong> Frontier AI quality is not the constraint. The constraint is <em>"everything between a frontier model and a measurable outcome"</em> — evaluation frameworks, production monitoring, accountability chains. Exactly the work the workshop pushed us toward.</li>
+    </ul>
+    <p><strong>Where we sit, evidenced not asserted:</strong></p>
+    <ul>
+      <li><strong>We are past pilot in 3 places:</strong> Vulnerability Sentinel (Planting) — production PRs · Sonar-fixer (Sustainability Mobile) — PR #1347 shipped · Lalitkumar's Agrobiodiversity operating principle — published cross-team artefact. That is what "past pilot" looks like.</li>
+      <li><strong>We have measured before/after data:</strong> Sahil's AI Integration Test 1 produced Manoj's enthusiastic written reaction (the deck's strongest single endorsement). Lalitkumar's RN v77 case study: 12 SP → 3-4 SP, 67–75% reduction, 8-9 SP freed.</li>
+      <li><strong>We have the structural practice that separates the 20% from the 80%:</strong> Brown Bag forum sharing what worked AND what didn't (P4); Agent-discussion cadence (P3★); guardrails published before usage (P1, Slide 9). These are the practices the McKinsey "mature deployers" share.</li>
+    </ul>
+    <p><strong>Our position to Andre / Uday:</strong> The productivity-at-scale story is real when the leadership scaffolding is real — and the scaffolding is what we have built since the training. Where we have not yet shipped, we have a route, not a hope.</p>
+  </div>
+  <div class="say"><strong>Say:</strong> "We are not claiming a finished story. We are claiming we are running in the lane the data says actually works — past-pilot artefacts, measured before/after, structural sharing practice. That is what mature deployment looks like at this stage, and it is what we will keep doing."</div>
+</div>
+
+<div class="section-divider">Close — what we are learning, and what we are asking for</div>
+
+<!-- SLIDE 10 -->
+<div class="slide slide-close">
+  <h2><span class="slide-num">12</span> What we are learning — honestly (and what we did not know we did not know)</h2>
+  <div class="content">
+    <p>Things the training-shaped approach surfaced that we would not have seen without it — the workshop's deliberate value: <strong>making the "unknown unknowns" visible</strong>. Naming them is Growth Partner mode required practice.</p>
+    <p><strong>What we knew we knew before the training:</strong> tools exist; some teams want to use them; we should run pilots.</p>
+    <p><strong>What we knew we didn't know:</strong> which pilots scale; what governance looks like; how to measure impact.</p>
+    <p><strong>What we did NOT know we did not know (surfaced by the training):</strong></p>
+    <ul>
+      <li><strong>Senior engineers' resistance is not Luddism — it is identity protection.</strong> Before the training, we read it as resistance to change. The Hofstede Masculinity lens reframed it: senior engineers protect years of invested craft. We adjust by leading with <em>"AI mastery is the new craft"</em>, not <em>"AI is more efficient."</em> We would not have seen this re-frame on our own.</li>
+      <li><strong>"What didn't work" is the right Brown Bag content, not the polite version.</strong> Before the training, we assumed shared-success was the format. The Trust-Acceptance element pushed us to surface failure-content explicitly — and engagement is qualitatively different. The room treats it as professional development, not internal marketing.</li>
+      <li><strong>Cross-functional ownership of agents shifts who carries the agenda.</strong> Before the training, we assumed engineering would lead agent design. The RACI-with-one-Accountable framing made us see: where BA + Tech Lead + Engineering co-own the cadence (Planting agent track), design discussions are about use cases and outcomes; where engineering owns alone, they are about implementation. The latter ships faster and travels further. This was not on our radar.</li>
+      <li><strong>Asking "what is the question we are afraid to ask?" changes the room.</strong> The workbook's VALUE-Anticipate framing is the move that has produced the most surprising 1:1 conversations — and several pilot pivots. Uncomfortable, not optional. We did not know we needed this prompt until the training gave it to us.</li>
+      <li><strong>The training's biggest gift is not a tool — it is a vocabulary.</strong> "Loyal Soldier → Growth Partner," "thresholded gate vs always-on gate," "Invisible Influencer," "anticipate and ask," "small-and-deep beats uniform-and-thin." Each phrase makes a previously invisible pattern nameable and discussable. That is the workshop's largest unmeasured outcome.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SLIDE 11 -->
+<div class="slide slide-close">
+  <h2><span class="slide-num">13</span> Where we need alignment, and what we commit to next</h2>
+  <div class="content">
+    <p><strong>Where we are seeking sponsor alignment from Andre &amp; Uday:</strong></p>
+    <ul>
+      <li><strong>Public endorsement of quality metrics over throughput metrics</strong> as the right measure of AI adoption progress. Throughput is easier to count; quality is the right answer.</li>
+      <li><strong>Continued sponsorship of the Brown Bag time-box.</strong> Psychological safety and cross-silo learning are central to the cultural shift the training is producing — protecting that time slot matters.</li>
+      <li><strong>Backing our pilot-shape choice: deep, not wide.</strong> Our position is small-and-deep on a few pilots rather than uniform-and-thin across many. The workbook is explicit that uniform-but-thin stalls adaptive change. When challenged on coverage, we will defend the depth choice.</li>
+    </ul>
+    <p><strong>What Team 6 commits to next, individually:</strong></p>
+    <ul>
+      <li>Identify one stakeholder each of us will deliberately invest in over the coming weeks.</li>
+      <li>Ongoing engagement with the Brown Bag forum — present or attend at least once per quarter, with explicit "what didn't work" content where applicable.</li>
+      <li>Each of us draws our own stakeholder map; we cross-edit next month to see where Team 6's collective network is thin or duplicative.</li>
+    </ul>
+  </div>
+  <div class="say"><strong>Closing line:</strong> "The training did not change <em>what</em> we are trying to do. It changed <em>how</em> we are trying to do it. The pilots are real; the leadership delta is real; the discipline of keeping this from drifting back into tooling-only thinking is what we are committing to as a team."</div>
+</div>
+
+<footer>
+  Team 6 · Lead Beyond Boundaries effectiveness · 2026-05-18
+  &nbsp;|&nbsp; Companion: <code>ai-adoption-plan.html</code> (full playbook), <code>BLANK_STAKEHOLDER_MAP.html</code> (print template)
+</footer>
+
+</div>
+
+</body>
+</html>

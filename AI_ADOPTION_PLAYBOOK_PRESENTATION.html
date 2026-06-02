@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The AI Adoption Playbook — Lead Beyond Boundaries</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0f1419;
+    color: #1a1a1a;
+    overflow: hidden;
+  }
+
+  .presentation {
+    position: fixed; top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .slide {
+    position: absolute;
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 48px 72px;
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out;
+    pointer-events: none;
+    overflow-y: auto;
+  }
+
+  .slide.active { opacity: 1; pointer-events: auto; z-index: 10; }
+
+  /* ---------- Title slides ---------- */
+  .slide-title {
+    background: linear-gradient(135deg, #1d3557 0%, #2d6a4f 100%);
+    color: white;
+  }
+  .slide-title h1 { font-size: 3.4rem; font-weight: 700; margin-bottom: 18px; line-height: 1.15; }
+  .slide-title .subtitle { font-size: 1.5rem; opacity: 0.95; font-weight: 300; margin-bottom: 30px; }
+  .slide-title .footer { margin-top: 50px; opacity: 0.85; font-size: 1rem; letter-spacing: 0.5px; }
+
+  /* ---------- Content slides ---------- */
+  .slide-content { background: white; }
+
+  .slide h2 {
+    font-size: 2.3rem; color: #1d3557; margin-bottom: 8px;
+    font-weight: 700; position: relative; padding-bottom: 14px; line-height: 1.15;
+  }
+  .slide h2::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 80px; height: 4px;
+    background: linear-gradient(90deg, #2d6a4f, #457b9d);
+  }
+
+  .headline {
+    font-size: 1.2rem; font-style: italic; color: #457b9d;
+    margin: 16px 0 22px 0; font-weight: 500;
+  }
+
+  .slide h3 { font-size: 1.15rem; color: #457b9d; margin: 14px 0 8px 0; font-weight: 600; }
+
+  .slide ul { list-style: none; padding-left: 0; }
+  .slide li {
+    font-size: 1.02rem; line-height: 1.55; margin-bottom: 12px;
+    padding-left: 28px; position: relative; color: #333;
+  }
+  .slide li::before {
+    content: '▸'; position: absolute; left: 0;
+    color: #2d6a4f; font-weight: bold; font-size: 1.2rem;
+  }
+
+  .strong-text { color: #1d3557; font-weight: 600; }
+  .anchor {
+    font-size: 0.95rem; color: #6b7280; font-style: italic;
+    border-left: 3px solid #cbd5e1; padding-left: 14px; margin: 6px 0 16px 0;
+  }
+  .takehome {
+    margin-top: 20px; padding: 16px 20px; border-radius: 8px;
+    background: rgba(45,106,79,0.08); border-left: 4px solid #2d6a4f;
+    font-size: 1.02rem; line-height: 1.5; color: #1d3557;
+  }
+  .takehome strong { color: #2d6a4f; }
+
+  /* ---------- Color variants ---------- */
+  .slide-problem { background: linear-gradient(135deg, #fff5f5 0%, #fef2f2 100%); }
+  .slide-problem h2 { color: #c2410c; }
+  .slide-problem h2::after { background: linear-gradient(90deg, #c2410c, #ea580c); }
+  .slide-problem li::before { color: #c2410c; }
+
+  .slide-principles { background: linear-gradient(135deg, #f0f9ff 0%, #f1faff 100%); }
+  .slide-principles h2 { color: #1d3557; }
+  .slide-principles h2::after { background: linear-gradient(90deg, #1d3557, #457b9d); }
+  .slide-principles li::before { color: #457b9d; }
+
+  .slide-challenge { background: linear-gradient(135deg, #fef3c7 0%, #fef9e7 100%); }
+  .slide-challenge h2 { color: #b45309; }
+  .slide-challenge h2::after { background: linear-gradient(90deg, #b45309, #d97706); }
+  .slide-challenge li::before { color: #b45309; }
+
+  .slide-solution { background: linear-gradient(135deg, #f0fdf4 0%, #f1fdf5 100%); }
+  .slide-solution h2 { color: #2d6a4f; }
+  .slide-solution h2::after { background: linear-gradient(90deg, #2d6a4f, #40916c); }
+  .slide-solution li::before { color: #2d6a4f; }
+
+  .slide-outcome { background: linear-gradient(135deg, #ede9fe 0%, #f3f0ff 100%); }
+  .slide-outcome h2 { color: #6d28d9; }
+  .slide-outcome h2::after { background: linear-gradient(90deg, #6d28d9, #7c3aed); }
+  .slide-outcome li::before { color: #6d28d9; }
+
+  /* ---------- Layout helpers ---------- */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 14px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 14px; }
+  .four-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
+
+  .col-box {
+    background: rgba(69,123,157,0.08); border-left: 4px solid #457b9d;
+    padding: 18px 20px; border-radius: 8px;
+  }
+  .col-box h4 { color: #1d3557; font-size: 1.08rem; margin-bottom: 10px; font-weight: 700; }
+  .col-box p, .col-box li { font-size: 0.95rem; line-height: 1.5; color: #333; }
+  .col-box ul { margin-top: 6px; }
+  .col-box li { padding-left: 20px; margin-bottom: 7px; }
+  .col-box li::before { font-size: 1rem; }
+
+  .danger-box { background: rgba(194,65,12,0.07); border-left-color: #c2410c; }
+  .danger-box h4 { color: #c2410c; }
+  .danger-box li::before { color: #c2410c; }
+  .good-box { background: rgba(45,106,79,0.08); border-left-color: #2d6a4f; }
+  .good-box h4 { color: #2d6a4f; }
+  .good-box li::before { color: #2d6a4f; }
+
+  .quote {
+    background: rgba(29,53,87,0.06); border-left: 4px solid #1d3557;
+    padding: 16px 22px; border-radius: 8px; margin: 18px 0;
+    font-size: 1.05rem; font-style: italic; color: #1d3557; line-height: 1.5;
+  }
+
+  /* Challenge group cards (slide 2) */
+  .group-label {
+    display: inline-block; font-size: 0.8rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    padding: 3px 10px; border-radius: 20px; margin-bottom: 8px;
+  }
+  .g-a { background: #fde2e2; color: #c2410c; }
+  .g-b { background: #fef0c7; color: #b45309; }
+  .g-c { background: #ddd6fe; color: #6d28d9; }
+  .chal-card { font-size: 0.92rem; line-height: 1.45; }
+  .chal-card strong { display: block; color: #1d3557; margin-bottom: 4px; font-size: 0.98rem; }
+
+  /* Compare table (slides 5, 11) */
+  table.compare { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.95rem; }
+  table.compare th, table.compare td {
+    padding: 10px 14px; text-align: left; border-bottom: 1px solid #e5e7eb; vertical-align: top;
+  }
+  table.compare th { color: #1d3557; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+  table.compare td.from { color: #c2410c; }
+  table.compare td.to { color: #2d6a4f; }
+  table.compare td.label { font-weight: 700; color: #1d3557; }
+
+  /* Playbook numbered grid (slide 10) */
+  .playbook-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; margin-top: 12px; }
+  .pb-step { display: flex; gap: 12px; align-items: flex-start; }
+  .pb-num {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+    background: linear-gradient(135deg, #2d6a4f, #40916c); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.95rem;
+  }
+  .pb-body { font-size: 0.9rem; line-height: 1.4; color: #333; }
+  .pb-body strong { color: #1d3557; display: block; }
+  .pb-tag { color: #2d6a4f; font-size: 0.8rem; font-style: italic; }
+
+  .speaker-note {
+    margin-top: 18px; font-size: 0.9rem; color: #6b7280;
+    border-top: 1px dashed #cbd5e1; padding-top: 12px;
+  }
+  .speaker-note::before { content: '🎤 Talking point: '; font-weight: 700; color: #457b9d; font-style: normal; }
+
+  /* ---------- Controls ---------- */
+  .controls {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 18px; align-items: center; z-index: 100;
+  }
+  button {
+    background: white; border: none; padding: 10px 22px; border-radius: 8px;
+    font-size: 0.95rem; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    font-weight: 600; color: #1d3557; transition: all 0.3s ease;
+  }
+  button:hover { background: #f0fdf4; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+  .slide-counter { color: white; font-size: 1rem; font-weight: 600; min-width: 70px; text-align: center; }
+  .doc-link {
+    position: fixed; top: 20px; right: 24px; z-index: 100;
+    background: rgba(255,255,255,0.92); color: #1d3557; text-decoration: none;
+    padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .doc-link:hover { background: white; }
+
+  /* ---------- Print ---------- */
+  @media print {
+    body { background: white; overflow: visible; }
+    .slide { opacity: 1 !important; page-break-after: always; position: relative !important; height: auto; min-height: 100vh; }
+    .controls, .doc-link { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<a class="doc-link" href="AI_ADOPTION_THESIS.html">📄 Read the full project report →</a>
+
+<div class="presentation">
+
+  <!-- Slide 1: Title -->
+  <div class="slide slide-title active">
+    <h1>From Tooling Rollout<br/>to Adaptive Leadership</h1>
+    <p class="subtitle">Applying <em>Lead Beyond Boundaries</em> to AI Adoption at Scale</p>
+    <p style="font-size:1.1rem; opacity:0.9; max-width:760px; line-height:1.6;">
+      A principle-driven playbook for leading engineering teams through the AI transition —
+      where the technology changes every quarter, but the human challenges stay constant.
+    </p>
+    <p class="footer">A principle-driven playbook · Workbook → Use Case → Practice</p>
+  </div>
+
+  <!-- Slide 2: The Challenge -->
+  <div class="slide slide-content slide-problem">
+    <h2>The Challenge: Why AI Adoption Is Hard</h2>
+    <p class="headline">AI Adoption is not a tooling problem. It is an adaptive challenge — and it stalls for seven reasons, in three groups.</p>
+    <div class="three-col">
+      <div class="col-box danger-box">
+        <span class="group-label g-a">Group A · The Human Shift</span>
+        <ul>
+          <li class="chal-card"><strong>1. A new skill, not a tool upgrade</strong>Prompt engineering is a different craft — understand systems &amp; design, but stop writing the syntax. An identity shift.</li>
+          <li class="chal-card"><strong>2. Speed of change creates fear</strong>Models evolve faster than people can adapt. The velocity itself breeds anxiety — no stable ground to stand on.</li>
+          <li class="chal-card"><strong>3. Psychological safety under threat</strong>Engineers fear losing their jobs. The future of the engineer feels uncertain — and uncertainty paralyses.</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <span class="group-label g-b">Group B · The Reality Gap</span>
+        <ul>
+          <li class="chal-card"><strong>4. Productivity is unclear — AI hallucinates</strong>Code is generated fast, but confidently wrong. Testing &amp; validation still slow. Net gain is murky.</li>
+          <li class="chal-card"><strong>5. The bottleneck shifted</strong>Coding got faster; testing, review, deployment, observability did not. The slowest step moved.</li>
+          <li class="chal-card"><strong>6. Hype has hidden the real work</strong>Gen AI hype buries real ML (supervised/unsupervised). Engineers aren't trained on data — adopting hype before literacy.</li>
+        </ul>
+      </div>
+      <div class="col-box" style="border-left-color:#6d28d9; background:rgba(109,40,217,0.07);">
+        <span class="group-label g-c">Group C · The Responsibility Gap</span>
+        <ul>
+          <li class="chal-card" style="margin-bottom:14px;"><strong>7. Ethical AI &amp; security threats</strong>Bias, transparency, accountability are now engineering concerns. New attack surfaces — data leakage, prompt injection, IP exposure. Move fast <em>and</em> stay responsible.</li>
+        </ul>
+        <div class="quote" style="font-size:0.9rem; margin:12px 0 0 0; padding:12px 16px;">
+          "Adaptive challenges can only be addressed through changes in people's priorities, beliefs, habits, and loyalties." — Heifetz
+        </div>
+      </div>
+    </div>
+    <p class="speaker-note">Every one of these is adaptive — none is solved by buying a licence. The rest of this deck shows which principle resolves each.</p>
+  </div>
+
+  <!-- Slide 3: Adaptive vs Technical -->
+  <div class="slide slide-content slide-principles">
+    <h2>Adaptive vs Technical: Diagnosing the Real Problem</h2>
+    <p class="headline">Get the diagnosis wrong, and every subsequent move misfires.</p>
+    <div class="two-col">
+      <div class="col-box danger-box">
+        <h4>❌ If we treat it as TECHNICAL</h4>
+        <ul>
+          <li>Known solution: buy licences, run training videos, set quotas</li>
+          <li>Command compliance: "everyone uses Copilot by Q3"</li>
+          <li>Measure: % logged in, lines generated, licence utilisation</li>
+          <li>Assume code generation = productivity (ignore the rest of the SDLC)</li>
+          <li>Assume engineers just need a tool, not a new skill</li>
+        </ul>
+      </div>
+      <div class="good-box col-box">
+        <h4>✅ But AI Adoption is ADAPTIVE</h4>
+        <ul>
+          <li><strong>New skill, not new tool</strong> — learn to direct, not write</li>
+          <li><strong>Identity under threat</strong> — the role cuts across everything</li>
+          <li><strong>Fear is rational</strong> — today's workflow feels temporary</li>
+          <li><strong>Productivity is ambiguous</strong> — hallucination &amp; validation eat the gains</li>
+          <li><strong>Bottleneck shifted</strong> — testing, review, deploy are now slowest</li>
+          <li><strong>Hype hides the work</strong> — a data-literacy gap, not a licensing gap</li>
+          <li><strong>Ethics &amp; security</strong> — new habits in every engineer, not a bolt-on</li>
+        </ul>
+      </div>
+    </div>
+    <p class="speaker-note">Diagnosing this correctly <em>is</em> the first leadership move. This slide reframes the whole conversation from "rollout" to "transition."</p>
+  </div>
+
+  <!-- Slide 4: Without the training -->
+  <div class="slide slide-content slide-problem">
+    <h2>How We'd Approach This <em>Without</em> the Training</h2>
+    <p class="headline">The Loyal Soldier defaults — well-intentioned, but adaptive-blind.</p>
+    <ul>
+      <li><span class="strong-text">Respond to expectations</span> → Wait for the executive mandate; cascade as a directive → ❌ mandating into fear produces compliance theatre</li>
+      <li><span class="strong-text">Comply and appease</span> → "Leadership wants AI used, so use it" → ❌ ignores the psychological-safety crisis underneath</li>
+      <li><span class="strong-text">Communicate at task levels</span> → "X% adoption, Y licences provisioned" → ❌ hides that real productivity gains are still unproven</li>
+      <li><span class="strong-text">Wait to be invited</span> → Each EM runs their own pilot; no shared learning → ❌ nobody addresses the SDLC bottleneck downstream</li>
+      <li>Treat prompt engineering as optional "tips &amp; tricks" → ❌ misses that this is an entirely new skill</li>
+      <li>Skeptics treated as obstacles · Guardrails written <em>after</em> incidents · Success = "did they log in?"</li>
+    </ul>
+    <div class="takehome" style="background:rgba(194,65,12,0.08); border-left-color:#c2410c; color:#c2410c;">
+      <strong>Predicted outcome:</strong> Joins the 85% of enterprises stuck in pilot purgatory — every adaptive challenge met with a technical response.
+    </div>
+  </div>
+
+  <!-- Slide 5: Mindshift -->
+  <div class="slide slide-content slide-principles">
+    <h2>The Mindshift: Loyal Soldier → Growth Partner</h2>
+    <p class="headline">The training does not change the goal. It changes the leadership stance.</p>
+    <div class="two-col">
+      <div>
+        <table class="compare">
+          <tr><th>From: Loyal Soldier</th><th>To: Growth Partner</th></tr>
+          <tr><td class="from">Respond to expectations</td><td class="to">Anticipate &amp; engage</td></tr>
+          <tr><td class="from">Comply and appease</td><td class="to">Create &amp; collaborate</td></tr>
+          <tr><td class="from">Communicate at task levels</td><td class="to">Communicate impact</td></tr>
+          <tr><td class="from">Wait to be invited</td><td class="to">Influence by design</td></tr>
+        </table>
+      </div>
+      <div class="col-box good-box">
+        <h4>How Growth Partner meets the challenges</h4>
+        <ul>
+          <li><strong>New skill</strong> → anticipates prompt engineering is a career shift, designs learning paths</li>
+          <li><strong>Job fear</strong> → co-designs the future role <em>with</em> engineers</li>
+          <li><strong>Must adopt</strong> → makes the case through purpose, not mandate</li>
+          <li><strong>Unclear productivity</strong> → measures real outcomes, not vanity metrics</li>
+          <li><strong>SDLC bottleneck</strong> → designs for the whole pipeline</li>
+        </ul>
+      </div>
+    </div>
+    <p class="speaker-note">This is the pivot. Everything after this slide is a Growth Partner move, not a separate invention.</p>
+  </div>
+
+  <!-- Slide 6: VALUE Framework -->
+  <div class="slide slide-content slide-principles">
+    <h2>The VALUE Framework Applied to AI Adoption</h2>
+    <p class="headline">VALUE turns "do AI" into a question discipline — applied to the team we actually run.</p>
+    <div class="three-col">
+      <div class="col-box">
+        <h4>V — Visualise</h4>
+        <p style="font-size:0.9rem;">The 3–5 year picture: frontend/backend dissolve into <strong>full-stack engineers across dev, QA, DevOps &amp; data</strong>. Software gets dramatically cheaper. The differentiator becomes <strong>"do you understand the business?"</strong> — engineers as growth partners alongside PM.</p>
+      </div>
+      <div class="col-box">
+        <h4>A — Anticipate &amp; Ask</h4>
+        <p style="font-size:0.9rem;">Catch "pilot becomes permanent pilot." Name the unspoken question: <em>"If AI writes 60% of code, what happens to the engineer's identity?"</em> Anticipate the week 6–8 productivity-disillusionment wave.</p>
+      </div>
+      <div class="col-box">
+        <h4>L — Lead from Purpose</h4>
+        <p style="font-size:0.9rem;">Reframe the cause: not an "efficiency mandate" (reads as headcount cut), but <strong>"engineers as growth partners — closer to the business outcome."</strong> Would the skeptic see themselves as beneficiary or casualty?</p>
+      </div>
+      <div class="col-box">
+        <h4>U — Understand Context</h4>
+        <p style="font-size:0.9rem;">Translate per audience. <strong>Cut through the hype honestly</strong> — Gen AI is one tool, not all of AI; durable value sits in real ML on our own data. Speaking plainly is itself trust-building.</p>
+      </div>
+      <div class="col-box" style="grid-column: span 2;">
+        <h4>E — Enable, Energise &amp; Engage</h4>
+        <p style="font-size:0.9rem;">Publish guardrails (incl. ethics &amp; security) <strong>before</strong> usage. <strong>Build the missing data literacy</strong> — invest in ML fundamentals, not just prompt tips. Name the bottleneck shift; invest in AI-assisted testing &amp; CI/CD. Measure honestly. Engage PM into the practice every sprint.</p>
+      </div>
+    </div>
+    <p class="speaker-note">Skip any letter and adoption stalls in a <em>predictable</em> place. VALUE tells you which letter you skipped.</p>
+  </div>
+
+  <!-- Slide 7: Trust Model -->
+  <div class="slide slide-content slide-principles">
+    <h2>The Trust Model: Psychological Safety in an Uncertain World</h2>
+    <p class="headline">Engineers cannot adopt what they fear will replace them. Trust is the prerequisite, not the by-product.</p>
+    <div class="four-col">
+      <div class="col-box">
+        <h4>Reliability — do what you say</h4>
+        <p style="font-size:0.92rem;">Publish a Coding Agents Policy (incl. ethics &amp; security) and <strong>stick to it</strong>. Don't pivot tooling every quarter — stabilise the framework. "No one loses their job because of AI" must hold if you say it.</p>
+      </div>
+      <div class="col-box">
+        <h4>Acceptance — don't change people</h4>
+        <p style="font-size:0.92rem;">"AI is wrong half the time" — they're right (it hallucinates) <em>and</em> protecting their craft. "My role won't exist in two years" is not resistance; it's a rational read. <strong>Make space for the fear.</strong></p>
+      </div>
+      <div class="col-box">
+        <h4>Openness — no surprises</h4>
+        <p style="font-size:0.92rem;">Be honest about the hype and hallucination. Share what you <em>don't</em> know: "we'll design the role evolution <em>with</em> you, not <em>for</em> you." Brown Bags surface what didn't work.</p>
+      </div>
+      <div class="col-box">
+        <h4>Congruence — walk my talk</h4>
+        <p style="font-size:0.92rem;">Leaders must use AI visibly — including struggling publicly. Bring imperfect AI drafts to co-edit. If your calendar shows no AI learning time, the gap is visible and trust collapses.</p>
+      </div>
+    </div>
+    <div class="takehome">
+      <strong>Capstone move:</strong> Co-author AI usage guidelines <em>with the loudest skeptic in each squad.</em> People defend what they build — replace conversion with co-authoring.
+    </div>
+  </div>
+
+  <!-- Slide 8: Three Levels of Listening -->
+  <div class="slide slide-content slide-principles">
+    <h2>Three Levels of Listening: What Engineers Actually Fear</h2>
+    <p class="headline">Most adoption conversations stop at Level 1. The real challenges only surface at Levels 2 and 3.</p>
+    <div class="two-col">
+      <div>
+        <div class="col-box" style="margin-bottom:12px;">
+          <h4>Level 0 — My assumptions</h4>
+          <p style="font-size:0.9rem;">Our bias: "engineers resist because they're behind." Reality: the ask was poorly framed. We assumed productivity gains were obvious — they aren't.</p>
+        </div>
+        <div class="col-box">
+          <h4>Level 1 — What is stated</h4>
+          <p style="font-size:0.9rem;">"AI hallucinates." · "I still have to test everything — not faster." · "Tools change monthly; can't keep up." The <em>presenting</em> problem, not the underlying one.</p>
+        </div>
+      </div>
+      <div>
+        <div class="col-box good-box" style="margin-bottom:12px;">
+          <h4>Level 2 — Feelings, needs, fears</h4>
+          <p style="font-size:0.9rem;"><em>"Will my manager think I didn't do the work?"</em> · <em>"15 years mastering Java — what was it for?"</em> (identity grief) · <em>"PR queue is the same — it doesn't feel faster."</em> Invisible at Level 1; the real blockers.</p>
+        </div>
+        <div class="col-box good-box">
+          <h4>Level 3 — What is possible</h4>
+          <p style="font-size:0.9rem;"><em>"If you owned the AI quality guidelines, what would they look like?"</em> · <em>"If we freed up 40% of coding time, what would you do?"</em> These questions turned skeptics into authors.</p>
+        </div>
+      </div>
+    </div>
+    <p class="speaker-note">The Coding Agents Policy, the disclosure norms, the Brown Bag forum — all came from Level 2 + 3 listening, not a leadership decree.</p>
+  </div>
+
+  <!-- Slide 9: Non-Linear Thinking -->
+  <div class="slide slide-content slide-principles">
+    <h2>Non-Linear Thinking (4 A's): The Weekly Cadence</h2>
+    <p class="headline">Adoption is not an event you launch — it is a cadence you run.</p>
+    <div class="four-col">
+      <div class="col-box">
+        <h4>Ask</h4>
+        <p style="font-size:0.92rem;">What is each pilot owner <em>not</em> telling us in the status? Curious inquiry over status-grading. <strong>"Where is the bottleneck now?"</strong> — name it before it normalises.</p>
+      </div>
+      <div class="col-box">
+        <h4>Anticipate</h4>
+        <p style="font-size:0.92rem;">Which pilots hit identity-threat in 30 days? Which model update breaks workflows this quarter? Which use case carries ethics/security risk? Prepare for the disillusionment wave <em>before</em> it arrives.</p>
+      </div>
+      <div class="col-box">
+        <h4>Amplify</h4>
+        <p style="font-size:0.92rem;">Spotlight agents shipped to production — but also amplify engineers <strong>building the new skill</strong>: prompt engineering, data literacy, PM partnership. Amplify the new identity, not just the tool.</p>
+      </div>
+      <div class="col-box">
+        <h4>Align</h4>
+        <p style="font-size:0.92rem;">Align with sponsors <em>before</em> the decision. Align on what "productivity" means <em>before</em> dashboards. Align with HR on the career path <em>before</em> engineers ask.</p>
+      </div>
+    </div>
+    <p class="speaker-note">The 4 A's keep you ahead of challenges that move faster than quarterly planning — and in AI, everything does.</p>
+  </div>
+
+  <!-- Slide 10: The Playbook -->
+  <div class="slide slide-content slide-solution">
+    <h2>The Playbook: From Principles to Practice</h2>
+    <p class="headline">A reusable template — principle-derived, challenge-tested, squad-portable.</p>
+    <div class="playbook-grid">
+      <div class="pb-step"><div class="pb-num">1</div><div class="pb-body"><strong>Diagnose adaptive, not technical</strong>Name the real challenges first <span class="pb-tag">Heifetz</span></div></div>
+      <div class="pb-step"><div class="pb-num">2</div><div class="pb-body"><strong>Take the Growth Partner stance</strong>Anticipate, create, communicate impact <span class="pb-tag">Mindshift</span></div></div>
+      <div class="pb-step"><div class="pb-num">3</div><div class="pb-body"><strong>Frame prompt engineering as a career skill</strong>Redesign ladders &amp; rubrics now <span class="pb-tag">VALUE-V</span></div></div>
+      <div class="pb-step"><div class="pb-num">4</div><div class="pb-body"><strong>Build psychological safety first</strong>Stabilise what you can; accept the fear <span class="pb-tag">Trust</span></div></div>
+      <div class="pb-step"><div class="pb-num">5</div><div class="pb-body"><strong>Publish guardrails — incl. ethics &amp; security</strong>From day one, not a bolt-on <span class="pb-tag">VALUE-E + Trust</span></div></div>
+      <div class="pb-step"><div class="pb-num">6</div><div class="pb-body"><strong>Build data &amp; ML literacy</strong>Cut through hype; pursue durable value <span class="pb-tag">VALUE-E</span></div></div>
+      <div class="pb-step"><div class="pb-num">7</div><div class="pb-body"><strong>Measure honestly</strong>Rework, quality, cycle time — not lines <span class="pb-tag">VALUE-E</span></div></div>
+      <div class="pb-step"><div class="pb-num">8</div><div class="pb-body"><strong>Design for the whole SDLC</strong>AI-assisted testing, review, CI/CD <span class="pb-tag">VALUE-E + 4A's</span></div></div>
+      <div class="pb-step"><div class="pb-num">9</div><div class="pb-body"><strong>Co-author with skeptics</strong>The loudest skeptic writes the boundary <span class="pb-tag">Trust-Acceptance</span></div></div>
+      <div class="pb-step"><div class="pb-num">10</div><div class="pb-body"><strong>Listen at Level 2 and 3</strong>Find the fear, then ask what's possible <span class="pb-tag">3 Levels</span></div></div>
+      <div class="pb-step" style="grid-column: span 2;"><div class="pb-num">11</div><div class="pb-body"><strong>Practice the 4 A's weekly</strong>Ask · Anticipate · Amplify · Align — a cadence, not an event <span class="pb-tag">Non-Linear Thinking</span></div></div>
+    </div>
+  </div>
+
+  <!-- Slide 11: Closing -->
+  <div class="slide slide-content slide-outcome">
+    <h2>Closing: The Delta Is the Training</h2>
+    <p class="headline">Same goal. Different leadership choices.</p>
+    <table class="compare">
+      <tr><th>Challenge</th><th>Without the training</th><th>With the training</th></tr>
+      <tr><td class="label">New skill</td><td class="from">"Here's a tool — use it"</td><td class="to">Frame prompt engineering as a career skill</td></tr>
+      <tr><td class="label">Speed of change</td><td class="from">Chase every new tool; teams burn out</td><td class="to">Stabilise principles; let tools change underneath</td></tr>
+      <tr><td class="label">Job fear</td><td class="from">Ignore or dismiss the anxiety</td><td class="to">Name it, accept it, build safety first</td></tr>
+      <tr><td class="label">Must adopt</td><td class="from">Mandate compliance</td><td class="to">Co-author with skeptics; mandate → movement</td></tr>
+      <tr><td class="label">Unclear productivity</td><td class="from">Oversell; measure logins</td><td class="to">Measure honestly; admit AI hallucinates</td></tr>
+      <tr><td class="label">SDLC bottleneck</td><td class="from">Celebrate faster code generation</td><td class="to">Design for the whole pipeline</td></tr>
+      <tr><td class="label">Hype &amp; data gap</td><td class="from">Buy the Gen AI hype</td><td class="to">Build data &amp; ML literacy</td></tr>
+      <tr><td class="label">Ethics &amp; security</td><td class="from">Bolt on later, separate team</td><td class="to">Bake into guardrails; everyone's job</td></tr>
+    </table>
+    <div class="takehome" style="background:rgba(109,40,217,0.08); border-left-color:#6d28d9; color:#6d28d9;">
+      "The technology will keep changing — every quarter, every model release. What will <strong>not</strong> change are the human challenges underneath. This playbook is not a one-time plan; it is a practice. And not adopting that practice is what separates the 15% who reach production from the 85% stuck in pilot purgatory."
+    </div>
+  </div>
+
+</div>
+
+<div class="controls">
+  <button onclick="prevSlide()">← Back</button>
+  <span class="slide-counter"><span id="current">1</span> / <span id="total">11</span></span>
+  <button onclick="nextSlide()">Next →</button>
+</div>
+
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+document.getElementById('total').textContent = totalSlides;
+
+function showSlide(n) {
+  slides[currentSlide].classList.remove('active');
+  currentSlide = (n + totalSlides) % totalSlides;
+  slides[currentSlide].classList.add('active');
+  document.getElementById('current').textContent = currentSlide + 1;
+}
+function nextSlide() { showSlide(currentSlide + 1); }
+function prevSlide() { showSlide(currentSlide - 1); }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+  if (e.key === 'ArrowLeft') prevSlide();
+});
+</script>
+
+</body>
+</html>

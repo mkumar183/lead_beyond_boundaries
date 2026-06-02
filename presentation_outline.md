@@ -2,7 +2,7 @@
 
 > **Goal:** Build a playbook for AI Adoption across the organisation, derived strictly from the principles in [workbook_principles.md](workbook_principles.md). Show the *delta* between the default approach (without the training) and the principled approach (with the training).
 
-> **Length:** 12 slides — title + 10 content + closing.
+> **Length:** 11 slides — title + 9 content + closing.
 
 > **Narrative arc:** Frame the challenge → Show the default approach (and why it fails) → Apply each workbook principle as a concrete move → Synthesise into a playbook.
 
@@ -16,28 +16,27 @@
 ---
 
 ## Slide 2 — The Challenge: Why AI Adoption Is Hard
-**Type:** Problem framing slide
+**Type:** Problem framing slide — three simple groups
 
-**Headline:** *AI Adoption is not a tooling problem. It is an adaptive challenge — and here are the five reasons it stalls.*
+**Headline:** *AI Adoption is not a tooling problem. It is an adaptive challenge — and it stalls for seven reasons, in three groups.*
 
-**The Five Real Challenges:**
+### Group A — The Human Shift *(adaptive, identity-level)*
+1. **A completely new skill, not a tool upgrade.** This is not "use Copilot to write code faster." It is learning **prompt engineering** — a different craft. Engineers still need to understand systems and design, but no longer write the specific syntax themselves. A seismic identity shift, not a training-video fix.
+2. **Speed of change creates fear.** Models and tools are evolving *faster than people can adapt*. What is valid today may be obsolete in months. The velocity itself — not just the technology — is what breeds anxiety and paralysis. People can't find stable ground to stand on.
+3. **Psychological safety is under threat.** Engineers fear losing their jobs. The future of the software engineer feels genuinely uncertain — and uncertainty paralyses rather than motivates.
 
-1. **It is a completely new skill, not a tool upgrade.** AI adoption is not "use Copilot to write code faster." It is learning **prompt engineering** — a fundamentally different craft. Engineers still need to understand systems and design, but they no longer need to know specific syntax and write it themselves. That is a seismic identity shift, not a training-video fix.
+### Group B — The Reality Gap *(why the value is unclear)*
+4. **Real productivity benefits are unclear — and AI hallucinates.** AI generates code fast, but it also produces confident, wrong output. Testing, validating, and ensuring reliability is still slow. The net gain is murky; engineers who find the promise oversold become the hardest skeptics.
+5. **The bottleneck has shifted, not disappeared.** Writing code got dramatically faster — but testing, code review, deployment, and observability did not. The system is only as fast as its slowest step, and that step is no longer the one AI accelerated.
+6. **Hype has hidden the real work.** Gen AI / LLM hype has buried the fact that **real machine learning — supervised and unsupervised — is where much of the durable value lives.** Most engineers are **not trained to work with data**, so they can't yet leverage AI beyond chat-style coding help. We are adopting the hype before building the data literacy.
 
-2. **Psychological safety is under threat.** Engineers fear losing their jobs. Models are evolving at a pace where what is valid today may not be valid in a few months. The future of the software engineer feels genuinely uncertain — and that uncertainty is paralysing, not motivating.
-
-3. **Not adopting is not a choice — but saying that doesn't help.** As leaders, we know the teams *must* adopt and learn. But mandating adoption into a fearful room produces compliance theatre, not real change. The challenge is to convince without coercing.
-
-4. **Real productivity benefits are unclear.** AI generates code fast — but testing, validating, and ensuring outcomes are reliable is still time-consuming. The net gain is murky, and engineers who try it and find the promise oversold become the hardest skeptics to re-engage.
-
-5. **The bottleneck has shifted, not disappeared.** Writing code has become dramatically faster — but other steps in the SDLC (testing, code review, deployment, observability, change management) are still slow. The system is only as fast as its slowest step, and the slowest step is no longer the one AI accelerated.
+### Group C — The Responsibility Gap *(risk we cannot ignore)*
+7. **Ethical AI and security threats.** Bias, transparency, and accountability are now engineering concerns, not legal footnotes. And AI introduces new attack surfaces — data leakage, prompt injection, IP exposure, unvetted dependencies. Move fast *and* stay responsible is the real ask.
 
 **Principle anchor:** Heifetz — *"Adaptive challenges can only be addressed through changes in people's priorities, beliefs, habits, and loyalties."*
 
-**The question this deck answers:** How does each principle from the workbook help us lead through these five challenges — not around them?
+**The question this deck answers:** How does each principle from the workbook help us lead through these challenges — not around them?
 
-
-<Comment> Can we add to above the speed of change. Speed at which models and tools are changing. Thats creating fear as well as people are unable to adapt. 
 ---
 
 ## Slide 3 — Adaptive vs Technical: Diagnosing the Real Problem
@@ -55,11 +54,13 @@
 - **New skill, not new tool:** prompt engineering is a different way of thinking — engineers must learn to direct, not write
 - **Identity under threat:** "I am a backend engineer" is being dissolved — the new role cuts across everything
 - **Fear is rational:** models evolve so fast that mastering today's workflow feels temporary; job uncertainty is real
-- **Productivity is ambiguous:** code is generated faster, but validation, testing, and reliability still consume the time — net gain is not obvious
+- **Productivity is ambiguous:** code is generated faster, but hallucination, validation, testing, and reliability still consume the time — net gain is not obvious
 - **Bottleneck shifted:** writing code was the bottleneck; now testing, review, deployment, and observability are — and nobody accelerated those yet
+- **Hype hides the real work:** chasing Gen AI hype while engineers lack the *data literacy* to use real ML (supervised/unsupervised) is an adaptive learning gap, not a licensing gap
+- **Ethics & security are everyone's job now:** these cannot be "added later" by a separate team — they require new habits in every engineer
 - Requires changing attitudes, values, deep-seated behaviours — not just provisioning licences
 
-**Take-home line:** Every one of our five challenges is adaptive, not technical. Diagnosing this correctly *is* the first leadership move. Get this wrong and every subsequent move misfires.
+**Take-home line:** Every one of these challenges is adaptive, not technical. Diagnosing this correctly *is* the first leadership move. Get this wrong and every subsequent move misfires.
 
 ---
 
@@ -147,15 +148,17 @@
 
 **Concrete moves:**
 - Translate across audiences: "this LLM agent does X" → for an agronomist: *"this changes how a seed recommendation gets made"*; for a PM: *"this collapses discovery-to-prototype from weeks to days"*; for an engineer: *"this is your pair, not your replacement."*
-- Respect the high-power-distance, high-uncertainty-avoidance reality of our culture: don't ask engineers to experiment in public without a published guardrail.
+- **Cut through the hype honestly:** name that Gen AI is one tool, not all of AI. The durable value often sits in *real ML* — supervised and unsupervised learning on our own data. Speaking plainly about what AI is (and isn't) is itself a trust-building act in a hype-saturated room.
+- Respect the high-uncertainty-avoidance reality of our culture: don't ask engineers to experiment in public without a published guardrail.
 - Watch the impact gap: our intent is "empower"; the impact, unmanaged, can land as "evaluate." Close that gap explicitly.
 
 ### **E — Enable, Energise & Engage** → addresses Challenge 4 (unclear productivity), Challenge 5 (SDLC bottleneck)
 *Workbook anchor:* "What is currently making it hard for others to do their best work? What needs to be removed, not added?"
 
 **Concrete moves:**
-- **Publish guardrails *before* pushing usage** — remove the "is AI OK here?" ambiguity that silently blocks adoption.
+- **Publish guardrails *before* pushing usage** — remove the "is AI OK here?" ambiguity that silently blocks adoption. Make ethics and security part of those guardrails from day one, not a later bolt-on.
 - Remove friction: license access, prompt libraries, a Coding Agents Policy, an AI-disclosure norm in PRs — so the easy path is the right path.
+- **Build the missing data literacy.** Engineers can't leverage real ML if they were never trained to work with data. Enable means investing in data and ML fundamentals (supervised/unsupervised) — not just prompt tips — so teams can move beyond chat-style coding help to real value.
 - **Name the bottleneck shift explicitly:** code generation got faster — but testing, review, deployment, and observability did not. Enable means investing in AI-assisted testing, automated review, and CI/CD acceleration — not just more code generation tools. The SDLC is a pipeline; speeding up one stage without enabling the rest creates a traffic jam, not a breakthrough.
 - **Make the productivity conversation honest:** don't oversell. Enable teams to measure what actually improved (rework down, defects caught earlier, cycle time reduced) and what didn't (validation time, review time). Honest measurement builds trust; inflated claims destroy it.
 - Energise through visibility: Brown Bag forums where engineers show *both* what worked and what failed. Failure content is what builds trust, not curated wins.
@@ -174,10 +177,10 @@
 
 **Four quadrants — Trust element → how it builds safety:**
 
-- **Reliability** — *Do what you say.* Publish a Coding Agents Policy and **stick to it**. Don't pivot tooling every quarter — models are already evolving too fast for engineers to feel stable. The one thing leaders *can* stabilise is the framework, the guardrails, and the commitments. If you say "no one loses their job because of AI adoption," that statement must hold. Say it only if you mean it.
-- **Acceptance** — *Don't try to change people.* When a senior engineer says "AI gives wrong suggestions half the time" — they are right, and they are also protecting a decade of invested craft. Accept both truths. When someone says "I'm worried my role won't exist in two years" — that is not resistance. It is a rational reading of the landscape. **Acceptance means creating space for that fear, not dismissing it as negativity.** The workbook says: *Practices that create psychological safety through candour with respect.*
-- **Openness** — *People can take good news or bad news, but not surprises.* Be honest that the productivity benefits are still emerging and uneven. Be transparent that models will keep evolving and today's workflow may change. Share what you *don't* know — "we don't know exactly how roles will evolve, but here is our commitment: we will design that evolution *with you*, not *for you*." Brown Bag sessions surface what didn't work, not just success stories.
-- **Congruence** — *Walk my talk.* Leaders who advocate AI must use it visibly themselves — including struggling with it publicly. If you are asking engineers to learn prompt engineering, show your own learning curve. Bring imperfect AI-drafted artefacts to be co-edited. If you say "not adopting is not a choice" but your own calendar shows no AI learning time, the gap between your words and actions is visible — and trust collapses.
+- **Reliability** — *Do what you say.* Publish a Coding Agents Policy — including **clear ethics and security guardrails** — and **stick to it**. Don't pivot tooling every quarter; models are already evolving too fast for engineers to feel stable. The one thing leaders *can* stabilise is the framework, the guardrails, and the commitments. If you say "no one loses their job because of AI adoption," that statement must hold. Say it only if you mean it.
+- **Acceptance** — *Don't try to change people.* When a senior engineer says "AI gives wrong suggestions half the time" — they are right (AI hallucinates), and they are also protecting a decade of invested craft. Accept both truths. When someone says "I'm worried my role won't exist in two years" — that is not resistance. It is a rational reading of the landscape. **Acceptance means creating space for that fear, not dismissing it as negativity.** The workbook says: *Practices that create psychological safety through candour with respect.*
+- **Openness** — *People can take good news or bad news, but not surprises.* Be honest about the hype: Gen AI is powerful *and* over-marketed; it hallucinates; real value often needs data and ML skills we are still building. Be transparent that models will keep evolving and today's workflow may change. Share what you *don't* know — "we don't know exactly how roles will evolve, but here is our commitment: we will design that evolution *with you*, not *for you*." Brown Bag sessions surface what didn't work, not just success stories.
+- **Congruence** — *Walk my talk.* Leaders who advocate AI must use it visibly themselves — including struggling with it publicly. If you are asking engineers to learn prompt engineering and treat security and ethics as their job, model that yourself. Bring imperfect AI-drafted artefacts to be co-edited. If you say "not adopting is not a choice" but your own calendar shows no AI learning time, the gap between your words and actions is visible — and trust collapses.
 
 **Capstone move:** Co-author AI usage guidelines *with the loudest skeptic in each squad.* People defend what they build — conversion attempts replaced with co-authoring. This is how you turn "not adopting is not a choice" (Challenge 3) from a mandate into a movement.
 
@@ -217,69 +220,47 @@
 
 ---
 
-## Slide 9 — Hofstede: Designing for the Culture We Actually Have
-**Type:** Cultural-dimension cards mapped to design choices
+## Slide 9 — Non-Linear Thinking (4 A's): The Weekly Operating Cadence
+**Type:** Four-card layout (Ask · Anticipate · Amplify · Align)
 
-**Headline:** *We work in a high-power-distance, high-uncertainty-avoidance, collectivist culture. Design for it, don't fight it.*
+**Challenge focus:** all challenges — this is the practice that keeps you ahead of a fast-moving field
 
-**Challenge focus:** Challenge 2 (models evolving too fast / uncertainty), Challenge 3 (must adopt but can't mandate)
+**Headline:** *Adoption is not an event you launch — it is a cadence you run.*
 
-**Four dimensions, four design moves:**
-
-- **High Power Distance** → Identify the *Invisible Influencer* in each squad — the senior engineer whose quiet adoption is the unlock. Co-author with them *before* any town hall. Status comes from rank — use that, don't pretend it doesn't exist. In a high-PDI culture, **Challenge 3 (must adopt)** is best solved not by mandate from the top, but by visible adoption from the respected senior — the squad follows the person they respect, not the email they received.
-
-- **High Uncertainty Avoidance** → This is the dimension that explains why **Challenge 2 hits our teams so hard.** Models evolve every quarter. What engineers learn today may be obsolete in months. In a high-UAI culture, that velocity creates paralysis, not excitement. The design response: **stabilise what you can.** Publish the Coding Agents Policy *first*. Make guardrails durable even as tools change. Tell teams: *"The tools will keep changing — the principles, the guardrails, and your career path will not. Those are ours to hold steady."* Removing ambiguity is the largest single adoption unblocker in a high-UAI culture.
-
-- **Collectivism** → Adoption spreads through the squad, not through the individual. Brown Bag forum (cross-squad learning) is the natural shape; one-on-one champion programs are not. In a collectivist culture, **Challenge 1 (new skill)** is learned together — prompt engineering becomes a shared craft, not an individual certification.
-
-- **Short-term vs Long-term Orientation** → The fear that "this will all change in 6 months" (Challenge 2) is a short-term lens. Reframe: the *specific tools* are short-term; the *meta-skill* (directing AI, understanding systems, partnering with the business) is long-term. Help engineers see they are building a **durable capability**, not chasing a transient tool.
-
-**Take-home line:** Cultural dimensions are not obstacles — they are the operating system. High UAI explains the paralysis; high PDI shows us the lever; collectivism shows us the channel; LTO gives us the reframe. Build for the culture you actually have.
-
----
-
-## Slide 10 — Stakeholder Map + Non-Linear Thinking: The Operating Cadence
-**Type:** Two-column — Stakeholder Map (left) | 4 A's (right)
-
-**Left — Stakeholder Map applied:**
-- Draw the map *before* any town hall
-- **Trust line thickness** identifies which seniors will defend the change publicly
-- **Reciprocity arrows** reveal where we ask too much and offer too little (often: pilot owners burning out)
-- Re-draw quarterly. Thin spots are where to invest deliberately
-
-**Right — Non-Linear Thinking (4 A's) as weekly practice:**
-- **Ask** — What is each pilot owner *not* telling us in the weekly status? Curious inquiry over status-grading. Also ask: *"Where is the bottleneck now?"* — if code generation got faster but testing didn't, the 4 A's force us to name that before it becomes a normalised pattern (Challenge 5)
-- **Anticipate** — Build the radar: which pilots will hit identity-threat resistance in the next 30 days? Which model updates will invalidate current workflows this quarter? Act now on both. Anticipate the productivity-disillusionment wave (Challenge 4) — teams will hit it around week 6–8 of adoption. Prepare the narrative *before* it arrives.
-- **Amplify** — Spotlight the two agents that shipped to production. But also amplify the engineers who are **building the new skill** — the ones learning prompt engineering, redesigning their workflow, partnering with PM. Amplify the *new identity*, not just the new tool (Challenge 1).
-- **Align** — Have alignment conversations with sponsors *before* the moment of decision. Align on what "productivity" actually means *before* dashboards get built. Align with HR on what the new career path looks like *before* engineers ask. Alignment ahead of time is how you convert "not adopting is not a choice" from a threat into a shared commitment (Challenge 3).
+**Non-Linear Thinking (4 A's) as a weekly practice:**
+- **Ask** — What is each pilot owner *not* telling us in the weekly status? Curious inquiry over status-grading. Also ask: *"Where is the bottleneck now?"* — if code generation got faster but testing didn't, the 4 A's force us to name that before it becomes a normalised pattern.
+- **Anticipate** — Build the radar: which pilots will hit identity-threat resistance in the next 30 days? Which model updates will invalidate current workflows this quarter? Which use case carries an ethics or security risk we should catch early? Anticipate the productivity-disillusionment wave — teams typically hit it around week 6–8 of adoption. Prepare the narrative *before* it arrives.
+- **Amplify** — Spotlight the agents that shipped to production. But also amplify the engineers who are **building the new skill** — learning prompt engineering, building data literacy, redesigning their workflow, partnering with PM. Amplify the *new identity*, not just the new tool.
+- **Align** — Have alignment conversations with sponsors *before* the moment of decision. Align on what "productivity" actually means *before* dashboards get built. Align with HR on the new career path *before* engineers ask. Alignment ahead of time is how you convert "not adopting is not a choice" from a threat into a shared commitment.
 
 **Take-home line:** This is not a one-off design — it is a weekly cadence. The 4 A's are how you stay ahead of challenges that move faster than quarterly planning — and in AI, every challenge moves faster than quarterly planning.
 
 ---
 
-## Slide 11 — The Playbook: From Principles to Practice
+## Slide 10 — The Playbook: From Principles to Practice
 **Type:** Synthesis slide — the playbook as a numbered sequence
 
-**Headline:** *The AI Adoption Playbook — derived directly from the workbook.*
+**Headline:** *The AI Adoption Playbook — a reusable template, derived directly from the workbook.*
 
-**The 10-step playbook — each step maps to a challenge and a principle:**
+**The playbook — each step maps to a challenge and a principle:**
 
-1. **Diagnose adaptive, not technical** *(Heifetz)* — name the five real challenges (new skill, job fear, mandate paradox, unclear productivity, SDLC bottleneck) before you design any solution.
+1. **Diagnose adaptive, not technical** *(Heifetz)* — name the real challenges (new skill, speed of change, job fear, unclear productivity, SDLC bottleneck, hype/data gap, ethics & security) before designing any solution.
 2. **Take the Growth Partner stance** *(Mindshift)* — anticipate, create, communicate impact, influence by design. Compliance theatre is the Loyal Soldier's legacy; don't inherit it.
-3. **Frame prompt engineering as a career skill, not a tool tip** *(VALUE-V + Challenge 1)* — visualise the full-stack, business-partnering engineer of 2028. Design learning paths, career ladders, and hiring rubrics for that future now.
-4. **Build psychological safety before pushing adoption** *(Trust-R,A + Challenge 2)* — name the job-fear reality honestly. Stabilise what you can (guardrails, career commitments, learning investment). Accept that the fear is rational; design for it.
-5. **Publish guardrails first** *(VALUE-E + Hofstede UAI + Challenge 2)* — tools will keep changing; guardrails and principles must hold steady. Remove the "is AI OK here?" ambiguity *before* asking anyone to adopt.
-6. **Measure honestly** *(VALUE-E + Challenge 4)* — don't oversell productivity. Measure rework, defect quality, cycle time, and time-to-value — not lines generated. Share what improved and what didn't.
-7. **Design for the whole SDLC, not just code generation** *(VALUE-E + 4A's + Challenge 5)* — invest in AI-assisted testing, automated review, CI/CD acceleration. The bottleneck moved; follow it.
-8. **Co-author with skeptics** *(Trust-Acceptance + Challenge 3)* — the loudest skeptic writes the boundary. This turns "not adopting is not a choice" from a mandate into a co-owned commitment.
-9. **Listen at Level 2 and 3** *(3 Levels + all challenges)* — discover the identity grief behind the objection, the rational fear behind the resistance, and the system insight behind the complaint. Then ask what is possible.
-10. **Practice the 4 A's weekly** *(Non-Linear Thinking)* — Ask what's unspoken, Anticipate the next model shift and the disillusionment wave, Amplify the new identity (not just the new tool), Align with sponsors and HR *before* the decision moment. This is a cadence, not an event — because AI moves faster than quarterly planning.
+3. **Frame prompt engineering as a career skill, not a tool tip** *(VALUE-V)* — visualise the full-stack, business-partnering engineer of the future. Redesign learning paths, career ladders, and hiring rubrics now.
+4. **Build psychological safety before pushing adoption** *(Trust)* — name the job-fear and speed-of-change reality honestly. Stabilise what you can (guardrails, career commitments, learning investment). Accept that the fear is rational; design for it.
+5. **Publish guardrails first — including ethics & security** *(VALUE-E + Trust)* — tools will keep changing; guardrails and principles must hold steady. Bake responsible-AI and security practices into the policy from day one, not as a later bolt-on.
+6. **Build data & ML literacy, not just prompt skills** *(VALUE-E)* — cut through the hype: invest in data and real-ML fundamentals so teams can extract durable value, not just chat-style coding help.
+7. **Measure honestly** *(VALUE-E)* — don't oversell; AI hallucinates and validation is still slow. Measure rework, defect quality, cycle time, and time-to-value — not lines generated. Share what improved and what didn't.
+8. **Design for the whole SDLC, not just code generation** *(VALUE-E + 4A's)* — invest in AI-assisted testing, automated review, CI/CD acceleration. The bottleneck moved; follow it.
+9. **Co-author with skeptics** *(Trust-Acceptance)* — the loudest skeptic writes the boundary. This turns "not adopting is not a choice" from a mandate into a co-owned commitment.
+10. **Listen at Level 2 and 3** *(3 Levels)* — discover the identity grief behind the objection, the rational fear behind the resistance, and the system insight behind the complaint. Then ask what is possible.
+11. **Practice the 4 A's weekly** *(Non-Linear Thinking)* — Ask what's unspoken, Anticipate the next model shift and the disillusionment wave, Amplify the new identity (not just the new tool), Align with sponsors and HR *before* the decision moment. A cadence, not an event.
 
-**Take-home line:** This is the playbook for leading AI adoption in a world where the technology changes every quarter but the human challenges remain constant. It is principle-derived, challenge-tested, and designed for leaders who know that not adopting is not a choice — but mandating is not a strategy.
+**Take-home line:** This is the playbook for leading AI adoption in a world where the technology changes every quarter but the human challenges remain constant. It is principle-derived, challenge-tested, and built to be picked up and reused by any leader, any squad.
 
 ---
 
-## Slide 12 — Closing: The Delta Is the Training
+## Slide 11 — Closing: The Delta Is the Training
 **Type:** Closing slide / mirror of Slide 4
 
 **Headline:** *Same goal. Different leadership choices.*
@@ -288,35 +269,40 @@
 | Challenge | Without the training | With the training |
 |---|---|---|
 | **New skill** | "Here's a tool — use it" | Frame prompt engineering as a career skill; redesign ladders and rubrics |
+| **Speed of change** | Chase every new tool; teams burn out | Stabilise principles & guardrails; let tools change underneath |
 | **Job fear** | Ignore or dismiss the anxiety | Name it, accept it, build psychological safety first |
 | **Must adopt** | Mandate compliance | Co-author with skeptics; convert mandate into movement |
-| **Unclear productivity** | Oversell; measure logins | Measure honestly — rework, quality, cycle time; share what didn't improve |
+| **Unclear productivity** | Oversell; measure logins | Measure honestly — rework, quality, cycle time; admit AI hallucinates |
 | **SDLC bottleneck** | Celebrate faster code generation | Design for the whole pipeline — testing, review, deployment, observability |
+| **Hype & data gap** | Buy the Gen AI hype | Build data & ML literacy; pursue durable value, not just chat help |
+| **Ethics & security** | Bolt on later, separate team | Bake into guardrails from day one; everyone's responsibility |
 | *Overall stance* | Loyal Soldier: react, comply, report | Growth Partner: anticipate, co-create, communicate impact |
 
-**Closing line:** *"The technology will keep changing — every quarter, every model release. What will not change are the five human challenges underneath. The playbook gives us a principle-driven way to lead through all of them. It is not a one-time plan; it is a practice. And not adopting that practice is not a choice — it is what separates the 15% who reach production from the 85% stuck in pilot purgatory."*
+**Closing line:** *"The technology will keep changing — every quarter, every model release. What will not change are the human challenges underneath. This playbook gives us a principle-driven, reusable way to lead through all of them. It is not a one-time plan; it is a practice. And not adopting that practice is not a choice — it is what separates the 15% who reach production from the 85% stuck in pilot purgatory."*
 
 ---
 
 ## Design Notes for the HTML Build (next step)
 
 **Visual structure:**
-- 12 slides, full-screen, keyboard + button navigation (same UX as `KEY_POINTS_PRESENTATION.html`)
+- 11 slides, full-screen, keyboard + button navigation (same UX as `KEY_POINTS_PRESENTATION.html`)
+- Slide 2 (the challenges) in **three clear groups** — Human Shift / Reality Gap / Responsibility Gap — colour-coded for scannability
 - Slide 4 ("without training") in **warm red/orange palette** — discomfort-coded
 - Slide 5 (mindshift) in **transition gradient** — pivot point visual
-- Slides 6-10 (each principle applied) in **blue/principle palette** — methodical, calm
-- Slide 11 (playbook) in **green/solution palette** — culmination
-- Slide 12 (closing delta) in **purple/outcome palette** — same closing chord as the original deck
+- Slides 6-9 (each principle applied) in **blue/principle palette** — methodical, calm
+- Slide 10 (playbook) in **green/solution palette** — culmination
+- Slide 11 (closing delta) in **purple/outcome palette** — same closing chord as the original deck
 
 **Component patterns to reuse from `KEY_POINTS_PRESENTATION.html`:**
-- Two-column compare grid (slides 3, 12)
-- Three-column / four-card grids (slides 7, 8)
-- Numbered playbook list (slide 11)
+- Three-group challenge cards (slide 2)
+- Two-column compare grid (slides 3, 11)
+- Three-column / four-card grids (slides 7, 8, 9)
+- Numbered playbook list (slide 10)
 - Quote callouts for Heifetz / workbook excerpts
 
 **One additional element to add:**
-- Slide 11 needs a numbered playbook visual (not just bullets) — possibly numbered circles + step name + principle tag.
+- Slide 10 needs a numbered playbook visual (not just bullets) — possibly numbered circles + step name + principle tag.
 
 ---
 
-**Next step:** Confirm this outline, then build `AI_ADOPTION_PLAYBOOK_PRESENTATION.html` using these 12 slides.
+**Next step:** Confirm this outline, then build `AI_ADOPTION_PLAYBOOK_PRESENTATION.html` using these 11 slides.

@@ -194,7 +194,7 @@
       <div class="abstract">
         <h3>Abstract</h3>
         <p class="lead">Most enterprise AI adoption efforts fail not because the technology is immature, but because leaders treat an <strong>adaptive challenge</strong> as a <strong>technical</strong> one. They provision licences, mandate usage, and measure logins — and then join the ~85% of organisations whose AI pilots never reach production.</p>
-        <p>This report documents an alternative: an attempt to lead AI adoption across an engineering organisation strictly through the principles of the <em class="term">Lead Beyond Boundaries</em> leadership framework. We frame AI adoption as seven interlocking adaptive challenges across three groups — a <strong>Human Shift</strong> (new skills, the speed of change, and job-loss fear), a <strong>Reality Gap</strong> (unclear productivity, a shifted SDLC bottleneck, and hype obscuring real machine learning), and a <strong>Responsibility Gap</strong> (ethics and security). We then apply each model in the workbook — Heifetz's adaptive/technical distinction, the Loyal-Soldier-to-Growth-Partner mindshift, the VALUE question discipline, the Trust model, the Three Levels of Listening, and Non-Linear Thinking — as a concrete leadership move against a specific challenge. The output is a reusable, eleven-step playbook and a set of institutionalised practices (a Coding Agents Policy, an AI-disclosure norm, and a recurring cross-team Brown Bag forum) that converts adoption from a one-time rollout event into a sustained leadership practice.</p>
+        <p>This report documents an alternative: an attempt to lead AI adoption across an engineering organisation strictly through the principles of the <em class="term">Lead Beyond Boundaries</em> leadership framework. We frame AI adoption as eight interlocking adaptive challenges across three groups — a <strong>Human Shift</strong> (new skills, the speed of change, and job-loss fear), a <strong>Reality Gap</strong> (unclear productivity, a shifted SDLC bottleneck, and hype obscuring real machine learning), and a <strong>Responsibility Gap</strong> (ethics, security, and the principle that accountability remains human even when the agent writes the code). We then apply each model in the workbook — Heifetz's adaptive/technical distinction, the Loyal-Soldier-to-Growth-Partner mindshift, the VALUE question discipline, the Trust model, the Three Levels of Listening, and Non-Linear Thinking — as a concrete leadership move against a specific challenge. The output is a reusable, twelve-step playbook and a set of institutionalised practices (a Coding Agents Policy, an AI-disclosure norm, and a recurring cross-team Brown Bag forum) that converts adoption from a one-time rollout event into a sustained leadership practice.</p>
       </div>
     </section>
 
@@ -205,7 +205,7 @@
     <p>This project asked a single question: <strong>If we lead AI adoption using the workbook's principles rather than the default management reflexes, what changes — in the moves we make, and in the outcomes we get?</strong> The report is structured to show the <em class="term">delta</em> between the two approaches at every step.</p>
 
     <!-- 2 PROBLEM -->
-    <h2 class="section" id="problem"><span class="num">2</span>The Adoption Problem: Seven Challenges in Three Groups</h2>
+    <h2 class="section" id="problem"><span class="num">2</span>The Adoption Problem: Eight Challenges in Three Groups</h2>
     <p>Through structured listening with engineers, engineering managers, and product partners, we found that "AI adoption is hard" decomposes into seven distinct challenges. Grouping them clarifies <em>why</em> a generic rollout fails — each group requires a different leadership response.</p>
 
     <h3 class="sub" id="grp-a">Group A — The Human Shift (identity-level)</h3>
@@ -224,7 +224,8 @@
 
     <h3 class="sub" id="grp-c">Group C — The Responsibility Gap (risk we cannot ignore)</h3>
     <ol start="7">
-      <li><strong>Ethical AI and security threats.</strong> Bias, transparency, and accountability are now engineering concerns, not legal footnotes. AI also introduces new attack surfaces — data leakage, prompt injection, IP exposure, and unvetted dependencies. The real ask is to move fast <em>and</em> stay responsible.</li>
+      <li><strong>Ethical AI and security threats.</strong> Bias, transparency, and fairness are now engineering concerns, not legal footnotes. AI also introduces new attack surfaces — data leakage, prompt injection, IP exposure, and unvetted dependencies. The real ask is to move fast <em>and</em> stay responsible.</li>
+      <li><strong>Accountability stays human, even when the agent writes the code.</strong> This is the single most critical — and most easily forgotten — factor of the whole transition. An AI agent can generate, refactor, test, and even raise a pull request, but it <em>cannot be accountable</em> for the outcome. When an AI-authored change causes an incident, leaks data, or ships a defect, the responsibility does not transfer to the model or its vendor; it remains squarely with the engineer who accepted the work, the manager who approved it, and the sponsor who owns the system. The danger is a <strong>diffusion of responsibility</strong>: as the machine does more of the visible work, humans subtly feel less ownership of the result — "the AI wrote it" becomes an implicit excuse. Left unaddressed, this erodes the review discipline, the testing rigour, and the sense of craftsmanship that quality depends on. Accountability must therefore be made <em>explicit and non-transferable</em>: AI is a tool in the workflow, never a name on the accountability chain.</li>
     </ol>
 
     <blockquote>
@@ -245,6 +246,7 @@
         <tr><td class="label">Bottleneck</td><td class="from">"Celebrate faster coding."</td><td class="to">The constraint moved to testing, review, deploy — follow it.</td></tr>
         <tr><td class="label">Hype / data</td><td class="from">"Roll out more LLM tools."</td><td class="to">A data-literacy gap, not a licensing gap — invest in ML fundamentals.</td></tr>
         <tr><td class="label">Ethics / security</td><td class="from">"Legal will handle it later."</td><td class="to">New habits in every engineer, embedded from day one.</td></tr>
+        <tr><td class="label">Accountability</td><td class="from">"The AI generated it — so the tool owns the risk."</td><td class="to">Accountability is non-transferable; AI is never on the chain. Engineer → EM → sponsor.</td></tr>
       </tbody>
     </table>
     <div class="callout method"><span class="tag">Method note</span>The diagnosis is not academic. Each row dictates a different intervention. The remainder of this report shows how the workbook's models supply those interventions.</div>
@@ -347,7 +349,7 @@
     <p class="lead">Principles only matter if they change behaviour. This section documents the concrete artefacts and practices the framework produced — the "project" part of the report.</p>
 
     <h4 class="subsub">6.1 · Diagnosis &amp; reframing (Heifetz · Mindshift)</h4>
-    <p>We explicitly reclassified AI adoption from a tooling rollout to an adaptive challenge, and named the seven challenges in a shared vocabulary the whole organisation could use. This single reframing changed the success metric from "% logged in" to "rework reduced and reliable outcomes shipped," and shifted leadership posture from waiting for a mandate to anticipating and designing.</p>
+    <p>We explicitly reclassified AI adoption from a tooling rollout to an adaptive challenge, and named the eight challenges in a shared vocabulary the whole organisation could use. This single reframing changed the success metric from "% logged in" to "rework reduced and reliable outcomes shipped," and shifted leadership posture from waiting for a mandate to anticipating and designing.</p>
 
     <h4 class="subsub">6.2 · The Coding Agents Policy — guardrails first (VALUE-E · Trust-Reliability)</h4>
     <p>Rather than push usage and write rules after the first incident, we published a Coding Agents Policy <em>before</em> broad usage. It standardised tool choice per team (removing decision fatigue and ambiguity), embedded ethics and security expectations from day one, and established a clear accountability chain — engineer → engineering manager → sponsor — with <strong>AI never on the accountability chain</strong>. Human-in-the-loop review gates were defined for any AI-assisted change reaching production.</p>
@@ -401,13 +403,14 @@
       <li><strong>Honesty vs momentum.</strong> Admitting that productivity gains are conditional and that AI hallucinates risks slowing enthusiasm. We found the opposite: candour <em>built</em> the trust that sustained adoption, while inflated claims created the skeptics that stalled it.</li>
       <li><strong>Stability vs currency.</strong> Engineers need stable ground, but the tools change monthly. Resolving this meant stabilising the <em>principles and guardrails</em> while letting the <em>tools</em> churn beneath them — separating what must hold steady from what is allowed to move.</li>
       <li><strong>Speed vs correctness.</strong> The pilots showed that the value of AI is unlocked precisely at the human-judgement layer. Leaders who optimise for raw generation speed will degrade quality; those who position humans as the correctness owners capture the gain safely.</li>
+      <li><strong>Automation vs accountability.</strong> The more the agent does, the easier it is for humans to feel they own the result less — a quiet diffusion of responsibility. We countered this by making the accountability chain explicit and non-transferable (engineer → EM → sponsor, with AI never on it), and by treating the human-in-the-loop review gate not as bureaucracy but as the moment where ownership is consciously re-asserted. The lesson: <em>delegating the work is fine; delegating the responsibility is not — and the two must be deliberately kept separate.</em></li>
     </ul>
     <h4 class="subsub">Limitations</h4>
     <p>The quantitative evidence is drawn from early pilots and should be read as directional, not definitive. Cultural factors (high power distance, high uncertainty avoidance, collectivism) shaped which interventions worked; organisations with different cultural profiles should re-derive the specific moves from the same principles rather than copying the tactics wholesale.</p>
 
     <!-- 9 PLAYBOOK -->
     <h2 class="section" id="playbook"><span class="num">9</span>The Playbook — From Principles to Practice</h2>
-    <p class="lead">The synthesis is a reusable, eleven-step playbook. Each step maps to a challenge and a principle, so a leader in any squad can pick it up and run it.</p>
+    <p class="lead">The synthesis is a reusable, twelve-step playbook. Each step maps to a challenge and a principle, so a leader in any squad can pick it up and run it.</p>
     <table>
       <thead><tr><th class="label">#</th><th>Step</th><th>Principle</th></tr></thead>
       <tbody>
@@ -419,13 +422,14 @@
         <tr><td class="label">6</td><td><strong>Build data &amp; ML literacy, not just prompt skills</strong> — cut through the hype toward durable value.</td><td class="to">VALUE-E</td></tr>
         <tr><td class="label">7</td><td><strong>Measure honestly</strong> — rework, defect quality, cycle time, time-to-value; share what didn't improve.</td><td class="to">VALUE-E</td></tr>
         <tr><td class="label">8</td><td><strong>Design for the whole SDLC</strong> — AI-assisted testing, automated review, CI/CD; follow the bottleneck.</td><td class="to">VALUE-E + 4A's</td></tr>
-        <tr><td class="label">9</td><td><strong>Co-author with skeptics</strong> — the loudest skeptic writes the boundary.</td><td class="to">Trust-Acceptance</td></tr>
-        <tr><td class="label">10</td><td><strong>Listen at Level 2 and 3</strong> — find the fear behind the objection, then ask what is possible.</td><td class="to">3 Levels</td></tr>
-        <tr><td class="label">11</td><td><strong>Practice the 4 A's weekly</strong> — Ask, Anticipate, Amplify, Align — a cadence, not an event.</td><td class="to">Non-Linear Thinking</td></tr>
+        <tr><td class="label">9</td><td><strong>Keep accountability human and explicit</strong> — agents do the work, but responsibility never transfers; engineer → EM → sponsor, AI never on the chain.</td><td class="to">VALUE-E + Trust-Reliability</td></tr>
+        <tr><td class="label">10</td><td><strong>Co-author with skeptics</strong> — the loudest skeptic writes the boundary.</td><td class="to">Trust-Acceptance</td></tr>
+        <tr><td class="label">11</td><td><strong>Listen at Level 2 and 3</strong> — find the fear behind the objection, then ask what is possible.</td><td class="to">3 Levels</td></tr>
+        <tr><td class="label">12</td><td><strong>Practice the 4 A's weekly</strong> — Ask, Anticipate, Amplify, Align — a cadence, not an event.</td><td class="to">Non-Linear Thinking</td></tr>
       </tbody>
     </table>
 
-    <div class="figure">         THE SEVEN CHALLENGES                    THE PRINCIPLED RESPONSE
+    <div class="figure">         THE EIGHT CHALLENGES                    THE PRINCIPLED RESPONSE
   ┌──────────────────────────────┐         ┌──────────────────────────────┐
   │  A · Human Shift             │         │  Diagnose adaptive (Heifetz) │
   │    1 new skill               │ ──────▶ │  Growth Partner stance       │
@@ -437,8 +441,9 @@
   │    5 shifted bottleneck      │         │  Design for whole SDLC       │
   │    6 hype vs real ML         │         │  Build data &amp; ML literacy    │
   ├──────────────────────────────┤         ├──────────────────────────────┤
-  │  C · Responsibility Gap      │         │  Guardrails first            │
-  │    7 ethics &amp; security       │ ──────▶ │  (ethics &amp; security day one) │
+  │  C · Responsibility Gap      │         │  Guardrails first (day one)  │
+  │    7 ethics &amp; security       │ ──────▶ │  Accountability stays human  │
+  │    8 human accountability    │         │  (engineer → EM → sponsor)   │
   └──────────────────────────────┘         └──────────────────────────────┘
                           │                          │
                           └──────────┬───────────────┘

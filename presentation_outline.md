@@ -36,6 +36,8 @@
 
 **The question this deck answers:** How does each principle from the workbook help us lead through these five challenges — not around them?
 
+
+<Comment> Can we add to above the speed of change. Speed at which models and tools are changing. Thats creating fear as well as people are unable to adapt. 
 ---
 
 ## Slide 3 — Adaptive vs Technical: Diagnosing the Real Problem

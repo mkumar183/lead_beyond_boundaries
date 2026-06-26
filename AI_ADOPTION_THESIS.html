@@ -194,7 +194,7 @@
       <div class="abstract">
         <h3>Abstract</h3>
         <p class="lead">Most enterprise AI adoption efforts fail not because the technology is immature, but because leaders treat an <strong>adaptive challenge</strong> as a <strong>technical</strong> one. They provision licences, mandate usage, and measure logins — and then join the ~85% of organisations whose AI pilots never reach production.</p>
-        <p>This report documents an alternative: an attempt to lead AI adoption across an engineering organisation strictly through the principles of the <em class="term">Lead Beyond Boundaries</em> leadership framework. We frame AI adoption as eight interlocking adaptive challenges across three groups — a <strong>Human Shift</strong> (new skills, the speed of change, and job-loss fear), a <strong>Reality Gap</strong> (unclear productivity, a shifted SDLC bottleneck, and hype obscuring real machine learning), and a <strong>Responsibility Gap</strong> (ethics, security, and the principle that accountability remains human even when the agent writes the code). We then apply each model in the workbook — Heifetz's adaptive/technical distinction, the Loyal-Soldier-to-Growth-Partner mindshift, the VALUE question discipline, the Trust model, the Three Levels of Listening, and Non-Linear Thinking — as a concrete leadership move against a specific challenge. The output is a reusable, twelve-step playbook and a set of institutionalised practices (a Coding Agents Policy, an AI-disclosure norm, and a recurring cross-team Brown Bag forum) that converts adoption from a one-time rollout event into a sustained leadership practice.</p>
+        <p>This report documents an alternative: an attempt to lead AI adoption across an engineering organisation strictly through the principles of the <em class="term">Lead Beyond Boundaries</em> leadership framework. We frame AI adoption as eight interlocking adaptive challenges across three groups — a <strong>Human Shift</strong> (new skills, the speed of change, and job-loss fear), a <strong>Reality Gap</strong> (unclear productivity, a shifted SDLC bottleneck, and hype obscuring real machine learning), and a <strong>Responsibility Gap</strong> (ethics, security, and the principle that accountability remains human even when the agent writes the code). We then apply each model in the workbook — Heifetz's adaptive/technical distinction, the Loyal-Soldier-to-Growth-Partner mindset shift, the VALUE question discipline, the Trust model, the Three Levels of Listening, and Non-Linear Thinking — as a concrete leadership move against a specific challenge. The output is a reusable, twelve-step playbook and a set of institutionalised practices (a Coding Agents Policy, an AI-disclosure norm, and a recurring cross-team Brown Bag forum) that converts adoption from a one-time rollout event into a sustained leadership practice.</p>
       </div>
     </section>
 
@@ -206,7 +206,7 @@
 
     <!-- 2 PROBLEM -->
     <h2 class="section" id="problem"><span class="num">2</span>The Adoption Problem: Eight Challenges in Three Groups</h2>
-    <p>Through structured listening with engineers, engineering managers, and product partners, we found that "AI adoption is hard" decomposes into seven distinct challenges. Grouping them clarifies <em>why</em> a generic rollout fails — each group requires a different leadership response.</p>
+    <p>Through structured listening with engineers, engineering managers, and product partners, we found that "AI adoption is hard" decomposes into eight distinct challenges. Grouping them clarifies <em>why</em> a generic rollout fails — each group requires a different leadership response.</p>
 
     <h3 class="sub" id="grp-a">Group A — The Human Shift (identity-level)</h3>
     <ol>
@@ -218,14 +218,14 @@
     <h3 class="sub" id="grp-b">Group B — The Reality Gap (why the value is unclear)</h3>
     <ol start="4">
       <li><strong>Real productivity benefits are unclear — and AI hallucinates.</strong> AI generates code quickly, but it also produces confident, wrong output. Testing, validating, and ensuring reliability remain slow. The net gain is murky; engineers who try AI and find the promise oversold become the hardest skeptics to re-engage.</li>
-      <li><strong>The bottleneck has shifted, not disappeared.</strong> Writing code became dramatically faster — but testing, code review, deployment, and observability did not. A system is only as fast as its slowest step, and the slowest step is no longer the one AI accelerated.</li>
+      <li><strong>The bottleneck has shifted, not disappeared.</strong> AI makes writing code easy and fast — but at production scale, the time to actually finish a task does not fall nearly as much. The extra vigilance, review, and testing needed to trust AI output consumes much of the gain, because the technology is not yet mature or reliable enough to accept unchecked. Testing, code review, deployment, and observability did not speed up. A system is only as fast as its slowest step, and the slowest step is no longer the one AI accelerated.</li>
       <li><strong>Hype has hidden the real work.</strong> Generative-AI / LLM hype has obscured that <strong>real machine learning — supervised and unsupervised — is where much of the durable value lives.</strong> Most engineers were never trained to work with data, so they cannot yet leverage AI beyond chat-style coding help. We are adopting the hype before building the data literacy.</li>
     </ol>
 
     <h3 class="sub" id="grp-c">Group C — The Responsibility Gap (risk we cannot ignore)</h3>
     <ol start="7">
       <li><strong>Ethical AI and security threats.</strong> Bias, transparency, and fairness are now engineering concerns, not legal footnotes. AI also introduces new attack surfaces — data leakage, prompt injection, IP exposure, and unvetted dependencies. The real ask is to move fast <em>and</em> stay responsible.</li>
-      <li><strong>Accountability stays human, even when the agent writes the code.</strong> This is the single most critical — and most easily forgotten — factor of the whole transition. An AI agent can generate, refactor, test, and even raise a pull request, but it <em>cannot be accountable</em> for the outcome. When an AI-authored change causes an incident, leaks data, or ships a defect, the responsibility does not transfer to the model or its vendor; it remains squarely with the engineer who accepted the work, the manager who approved it, and the sponsor who owns the system. The danger is a <strong>diffusion of responsibility</strong>: as the machine does more of the visible work, humans subtly feel less ownership of the result — "the AI wrote it" becomes an implicit excuse. Left unaddressed, this erodes the review discipline, the testing rigour, and the sense of craftsmanship that quality depends on. Accountability must therefore be made <em>explicit and non-transferable</em>: AI is a tool in the workflow, never a name on the accountability chain.</li>
+      <li><strong>Accountability stays human, even when the agent writes the code.</strong> This is the most critical — and most easily forgotten — factor of the transition. An agent can generate, refactor, test, and even raise a pull request, but it <em>cannot be accountable</em> for the outcome. When AI-authored code causes an incident or ships a defect, responsibility stays with the engineer who accepted it, the manager who approved it, and the sponsor who owns the system — never the model or its vendor. The danger is a <strong>diffusion of responsibility</strong>: as the machine does more visible work, people feel less ownership, and "the AI wrote it" becomes a quiet excuse that erodes review, testing, and craftsmanship. Accountability must stay <em>explicit and non-transferable</em>: AI is a tool in the workflow, never a name on the accountability chain.</li>
     </ol>
 
     <blockquote>
@@ -239,8 +239,8 @@
     <table>
       <thead><tr><th class="label">Challenge</th><th>The technical (wrong) reading</th><th>The adaptive (correct) reading</th></tr></thead>
       <tbody>
-        <tr><td class="label">New skill</td><td class="from">"Give them a tool and a tutorial."</td><td class="to">Prompt engineering is a new way of thinking — learn to direct, not write.</td></tr>
-        <tr><td class="label">Speed of change</td><td class="from">"Keep buying the latest tool."</td><td class="to">Stabilise principles and guardrails while tools churn beneath them.</td></tr>
+        <tr><td class="label">New skill</td><td class="from">"Give them a tool and a tutorial."</td><td class="to">Leveraging AI effectively is a new skill and way of working — learn to direct, not just write.</td></tr>
+        <tr><td class="label">Speed of change</td><td class="from">"Keep buying the latest tool."</td><td class="to">Stabilise principles and guardrails while tools churn beneath them. Getting teams to use AI consistently and with shared best practices at scale takes time for them to align on process.</td></tr>
         <tr><td class="label">Job fear</td><td class="from">"Reassure them in a town hall."</td><td class="to">Job uncertainty is rational; it must be designed for, not dismissed.</td></tr>
         <tr><td class="label">Productivity</td><td class="from">"Count lines generated."</td><td class="to">Hallucination and validation consume the gains; measure real outcomes.</td></tr>
         <tr><td class="label">Bottleneck</td><td class="from">"Celebrate faster coding."</td><td class="to">The constraint moved to testing, review, deploy — follow it.</td></tr>
@@ -271,8 +271,8 @@
     <h2 class="section" id="framework"><span class="num">5</span>Conceptual Framework: The Principles as Leadership Moves</h2>
     <p class="lead">The framework is not a menu of slogans; it is a sequence of disciplines, each answering a specific challenge. The following sub-sections take each model from the workbook and show the concrete move it produced.</p>
 
-    <h3 class="sub" id="mindshift">5.1 · The Mindshift: Loyal Soldier → Growth Partner</h3>
-    <p>The framework does not change the goal (adopt AI well); it changes the <strong>leadership stance</strong>. This is the pivot on which every later move depends.</p>
+    <h3 class="sub" id="mindshift">5.1 · The Mindset Shift: Loyal Soldier → Growth Partner — A Cultural Change</h3>
+    <p>The framework does not change the goal (adopt AI well); it changes the <strong>leadership stance</strong> and, more deeply, the <strong>culture</strong>. AI adoption needs a <strong>growth-partner culture</strong> — one where people feel safe to speak up, challenge the status quo, and drive change rather than wait for a mandate. This cultural shift is the pivot on which every later move depends.</p>
     <table>
       <thead><tr><th>From: Loyal Soldier</th><th>To: Growth Partner</th><th class="label">Applied to AI adoption</th></tr></thead>
       <tbody>
@@ -289,15 +289,14 @@
     <div class="pcard">
       <h4>V — Visualise</h4>
       <span class="principle">Anchor: "If this succeeds beyond expectations, what is different in 3–5 years?"</span>
-      <p>Visualise is a deliberate act of imagining the <strong>ideal future state</strong> so today's decisions can be reverse-engineered from it. The prompt we put to leaders:</p>
-      <blockquote style="margin:12px 0;">How do you visualise a sprint team building digital applications three to five years from now — how will the <em>roles</em>, <em>processes</em>, <em>features</em>, and <em>people</em> have transformed, and what is the ideal state we are steering toward?</blockquote>
+      <p>Visualise helps teams <strong>see the future of engineering</strong> — how roles and work will change — so today's decisions can be reverse-engineered from it. The question to put on the table: <em>how will a sprint team building digital applications look in three to five years, and what questions should we be asking now?</em></p>
       <ul>
-        <li><strong>Roles —</strong> boundaries dissolve; a "frontend" or "backend" engineer becomes a <strong>full-stack engineer across dev, QA, DevOps, and data</strong>. Which roles remain, merge, or are entirely new (agent designer, AI quality owner)?</li>
-        <li><strong>Processes —</strong> an <strong>AI-enabled SDLC</strong> where humans direct and verify while agents draft and execute; the centre of gravity moves to specification, review, and evaluation.</li>
-        <li><strong>Features &amp; applications —</strong> software gets far cheaper to build. Are we ready for <strong>10× more ideas reaching production</strong>, or 10× fewer engineers on the same roadmap?</li>
-        <li><strong>People &amp; skills —</strong> the differentiator shifts from "can you code this" to <strong>"do you understand the business?"</strong> — engineers as growth partners owning outcomes.</li>
+        <li><strong>Roles —</strong> boundaries dissolve; specialists become <strong>full-stack engineers across dev, QA, DevOps, and data</strong>. Which roles merge, disappear, or are entirely new (agent designer, AI quality owner)?</li>
+        <li><strong>Processes —</strong> an <strong>AI-enabled SDLC</strong> where humans direct and verify while agents draft and execute.</li>
+        <li><strong>Features —</strong> software gets far cheaper to build. Are we ready for <strong>10× more ideas reaching production</strong>?</li>
+        <li><strong>People —</strong> the differentiator shifts from "can you code this" to <strong>"do you understand the business?"</strong></li>
       </ul>
-      <p>The implication: career ladders, hiring rubrics, and the definition of "senior" must be rewritten now. <strong>Prepare by working backwards from the visualised ideal state.</strong></p>
+      <p>The implication: career ladders, hiring rubrics, and the definition of "senior" must be rewritten now — working backwards from the visualised ideal state.</p>
     </div>
     <div class="pcard">
       <h4>A — Anticipate &amp; Ask</h4>
@@ -347,17 +346,17 @@
     </div>
 
     <h3 class="sub" id="trust">5.3 · The Trust Model — Building Psychological Safety</h3>
-    <p><strong>Trust is the first move, not a later one.</strong> The strongest temptation in AI adoption is to jump straight to implementation — tools, pilots, dashboards — and treat the human reaction as something to manage afterwards. That sequence fails. Engineers cannot adopt what they fear will replace them, and fear is not argued away by a better demo. So before any rollout, leaders must deliberately <em>build trust</em>. The Trust model gives four concrete factors to build it with — and each maps directly onto a fear AI creates:</p>
+    <p><strong>Trust is the first move, not a later one.</strong> Because AI adoption is an <em>adaptive</em> challenge — it asks people to change identity, habits, and beliefs — it cannot be mandated, only mobilised. That demands <strong>high trust and a growth-partner culture</strong>: engineers cannot adopt what they fear will replace them, and fear is not argued away by a better demo. So before any rollout, leaders must deliberately <em>build trust</em>. The Trust model gives four factors, each answering a fear AI creates:</p>
     <ul>
-      <li><strong>Reliability — consistent, repeated messaging, especially around purpose and job security.</strong> Say the same thing about the cause (leading agriculture with AI) and about people's futures, every time, in every forum. Publish a Coding Agents Policy and <em>stick to it</em>. The single most stabilising act is a clear, unwavering line — <em>"no one loses their job because of AI adoption"</em> — that is then never contradicted. Eliminating the fear of job threat is the precondition for everything else.</li>
-      <li><strong>Acceptance — accept the change first, then help people build themselves up.</strong> Leaders must visibly accept that the world has changed and model adapting to it; only then can they ask the same of others. Accept the difficulty people face — "AI is wrong half the time" (true; it hallucinates) and "my role won't exist in two years" (a rational fear, not negativity) — and respond by <strong>using AI to build people up, not replace them</strong>: motivate, coach, and resource them to overcome the very challenges they name. This is the workbook's <em class="term">candour with respect</em>.</li>
-      <li><strong>Openness — being open to suggestions makes everyone a growth partner.</strong> When leaders genuinely invite input and let it shape the solution, adoption stops being something done <em>to</em> engineers and becomes something built <em>by</em> them. The solution evolves from the ground up: be honest about the hype and hallucination, share what you do <em>not</em> know ("we'll design how roles evolve <em>with</em> you"), and let Brown Bag sessions surface what didn't work, not only the wins.</li>
-      <li><strong>Congruence — walk the talk.</strong> Leaders who advocate AI must use it visibly themselves, including struggling with it in public. If a leader preaches adoption but shows no AI learning time on their own calendar, the gap between word and action is visible — and the trust built by the other three factors collapses.</li>
+      <li><strong>Reliability —</strong> consistent, repeated messaging on purpose and job security. Publish a Coding Agents Policy and hold one unwavering line — <em>"no one loses their job because of AI adoption"</em> — that is never contradicted. Removing the fear of job loss is the precondition for everything else.</li>
+      <li><strong>Acceptance —</strong> accept the change first, then build people up. Leaders model adapting before asking others to; they accept the honest difficulty ("AI is wrong half the time," "my role may not exist in two years") and respond by <strong>using AI to grow people, not replace them</strong>. This is the workbook's <em class="term">candour with respect</em>.</li>
+      <li><strong>Openness —</strong> inviting input makes everyone a growth partner. When input genuinely shapes the solution, adoption becomes something built <em>by</em> engineers, not done <em>to</em> them — and Brown Bag sessions surface what didn't work, not only the wins.</li>
+      <li><strong>Congruence —</strong> walk the talk. Leaders who advocate AI must visibly use it themselves, struggling with it in public. A leader who preaches adoption with no AI learning on their own calendar collapses the trust the other three factors built.</li>
     </ul>
     <div class="callout finding"><span class="tag">Capstone move</span>Co-author the AI usage guidelines <em>with the loudest skeptic in each squad.</em> People defend what they build — so we replaced conversion attempts with co-authoring, turning "not adopting is not a choice" from a mandate into a movement. This is trust-building and adoption in a single act.</div>
 
     <h3 class="sub" id="listening">5.4 · Three Levels of Listening</h3>
-    <p>Most adoption-discovery conversations stop at Level 1 — the stated objection. The real challenges only surface at Levels 2 and 3. The table below shows what each level revealed.</p>
+    <p>Leaders accelerate AI adoption by listening past the stated objection. Most discovery conversations stop at Level 1 — what is said — where the real blockers stay hidden. By deliberately listening at Levels 2 and 3, a leader surfaces the identity fears actually stalling adoption, and asks the question that turns skeptics into co-authors of the solution. The table below shows what each level revealed.</p>
     <table>
       <thead><tr><th class="label">Level</th><th>What we heard</th><th>What it actually was</th></tr></thead>
       <tbody>
@@ -370,8 +369,8 @@
     <div class="callout finding"><span class="tag">Finding</span>Every institutionalised practice in this project — the Coding Agents Policy, the AI-disclosure norm, the Brown Bag forum, the SDLC-bottleneck redesign — emerged from Level 2 and Level 3 listening, not from a leadership decree.</div>
 
     <h3 class="sub" id="nonlinear">5.5 · Non-Linear Thinking — Building for a Different Future</h3>
-    <p>The most common mistake is to apply AI <em>linearly</em> — asking only "how do we do the same work faster?" Genuine non-linear thinking asks a different question entirely: <strong>not how to speed up today's development, but what we would build if we were designing for a fundamentally different future.</strong> The same AI that writes code faster also changes <em>what software is</em> — and leaders who only optimise the current pipeline will miss the larger shift.</p>
-    <p>Concretely, non-linear thinking means anticipating that the applications themselves transform:</p>
+    <p>The most common mistake is to apply AI <em>linearly</em> — asking only "how do we do the same work faster?" Non-linear thinking takes a <strong>leap into the future of engineering</strong>: it questions existing processes and workflows rather than just speeding them up, then sets up safe experimentation for slow, steady change. The same AI that writes code faster also changes <em>what software is</em> — and leaders who only optimise the current pipeline miss the larger shift.</p>
+    <p>Concretely, it means anticipating that the applications themselves transform:</p>
     <ul>
       <li><strong>Interfaces shrink —</strong> applications become more <em>voice-oriented</em> and conversational; the screen-and-form paradigm gives way to intent expressed naturally and fulfilled by agents.</li>
       <li><strong>Less UI, more ambient —</strong> fewer explicit interfaces, more <em>IoT and sensor-driven</em> experiences in the field, where software acts on the world directly rather than waiting for a user to click.</li>
@@ -425,6 +424,7 @@
     </div>
     <p>The test-quality comparison is the more important finding: <strong>naïve AI test generation</strong> reached 78% coverage but with a 30% false-positive rate (judged "never use"), whereas a <strong>human-led three-stage AI flow</strong> reached 82% coverage with only 5% false positives (judged "best"). The squad explicitly chose the safer path — evidence that the "measure honestly" discipline (VALUE-E) changed real engineering decisions, not just rhetoric.</p>
     <div class="callout finding"><span class="tag">Finding</span>AI delivered genuine speed gains <em>only</em> when paired with human-owned correctness. Unsupervised AI output failed the team's own quality bar. This directly validates the Reality-Gap framing: productivity is real but conditional, and the condition is human judgement.</div>
+    <div class="callout risk"><span class="tag">Scale caveat</span>These results come from a small, contained experiment, where change is easy to direct and measure. A pilot showing high impact is not the same as the organisation realising it. Reproducing such gains across many teams is a far larger undertaking — it demands broader organisational thinking, shared processes, and the cultural and structural changes this report's playbook is built to drive.</div>
 
     <h3 class="sub">7.2 · Qualitative &amp; structural outcomes</h3>
     <table>
@@ -492,7 +492,7 @@
                                      ▼
                        WEEKLY 4 A's CADENCE (practice, not event)
                      Ask · Anticipate · Amplify · Align</div>
-    <p class="figcap">Figure 1 — The seven adaptive challenges and the principle-driven responses, bound by a weekly cadence.</p>
+    <p class="figcap">Figure 1 — The eight adaptive challenges and the principle-driven responses, bound by a weekly cadence.</p>
 
     <!-- 10 CONCLUSION -->
     <h2 class="section" id="conclusion"><span class="num">10</span>Conclusion</h2>
@@ -504,7 +504,7 @@
     <ul>
       <li>Heifetz, R. — <em>Adaptive vs Technical Challenges</em>; the Dance/Balcony distinction. (Leadership on the Line.)</li>
       <li>Hofstede, G. — <em>Cultural Dimensions</em> (Power Distance, Uncertainty Avoidance, Individualism/Collectivism, Long-/Short-term Orientation).</li>
-      <li><em>Lead Beyond Boundaries</em> workbook — Syngenta, facilitated by Purple Cow Consulting: VALUE framework, Trust model, Three Levels of Listening, Non-Linear Thinking (4 A's), Loyal-Soldier-to-Growth-Partner mindshift. See <a class="inline" href="workbook_principles.md">workbook_principles.md</a>.</li>
+      <li><em>Lead Beyond Boundaries</em> workbook — Syngenta, facilitated by Purple Cow Consulting: VALUE framework, Trust model, Three Levels of Listening, Non-Linear Thinking (4 A's), Loyal-Soldier-to-Growth-Partner mindset shift. See <a class="inline" href="workbook_principles.md">workbook_principles.md</a>.</li>
       <li>Companion artefact: <a class="inline" href="AI_ADOPTION_PLAYBOOK_PRESENTATION.html">AI Adoption Playbook — slide presentation</a>.</li>
     </ul>
 

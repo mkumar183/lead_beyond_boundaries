@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI Model Selection for Engineering Teams — Research Thesis v2</title>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════════════════════ */
+:root {
+  --navy:    #1d3557;
+  --navy2:   #162843;
+  --green:   #2d6a4f;
+  --green2:  #40916c;
+  --blue:    #457b9d;
+  --blue2:   #1e6091;
+  --orange:  #c2410c;
+  --amber:   #b45309;
+  --purple:  #6d28d9;
+  --purple2: #5b21b6;
+  --teal:    #0e7490;
+  --rose:    #be123c;
+  --ink:     #1f2937;
+  --muted:   #6b7280;
+  --light:   #9ca3af;
+  --line:    #e5e7eb;
+  --line2:   #f3f4f6;
+  --bg:      #f8f9fb;
+  --white:   #ffffff;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.75;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYOUT  —  sidebar + main
+═══════════════════════════════════════════════════════════ */
+.page-wrap {
+  display: grid;
+  grid-template-columns: 270px 1fr;
+  max-width: 1480px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────── */
+aside.sidebar {
+  background: var(--navy2);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 28px 20px 40px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: #2d4a6e transparent;
+}
+aside.sidebar::-webkit-scrollbar { width: 4px; }
+aside.sidebar::-webkit-scrollbar-thumb { background: #2d4a6e; border-radius: 4px; }
+
+.sb-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.sb-logo .logo-icon {
+  width: 34px; height: 34px;
+  background: linear-gradient(135deg, var(--green2), var(--teal));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; color: white; font-weight: 700; flex-shrink: 0;
+}
+.sb-logo .logo-text { color: white; font-size: 0.82rem; line-height: 1.3; }
+.sb-logo .logo-text strong { display: block; font-size: 0.9rem; }
+
+.sb-section { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.8px; color: #5a7fa8; font-weight: 700; margin: 22px 0 8px 8px; }
+
+aside.sidebar a {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  color: #9ab4cf;
+  text-decoration: none;
+  font-size: 0.83rem;
+  padding: 5px 10px;
+  border-radius: 6px;
+  line-height: 1.4;
+  transition: background 0.15s, color 0.15s;
+}
+aside.sidebar a .num { font-size: 0.7rem; color: #4a6f8e; font-weight: 700; flex-shrink: 0; width: 18px; }
+aside.sidebar a:hover { background: rgba(255,255,255,0.07); color: white; }
+aside.sidebar a.active { background: rgba(64,145,108,0.2); color: #6dd8a0; border-left: 2px solid var(--green2); }
+
+.sb-badge {
+  margin-top: 28px;
+  padding: 14px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.07);
+  font-size: 0.75rem;
+  color: #5a7fa8;
+  line-height: 1.6;
+}
+.sb-badge strong { color: #7da8c7; display: block; margin-bottom: 4px; }
+
+/* ── Main content ─────────────────────────────────────────── */
+main {
+  background: white;
+  padding: 60px 68px 80px;
+  min-width: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   COVER / HERO
+═══════════════════════════════════════════════════════════ */
+.hero {
+  background: linear-gradient(135deg, var(--navy2) 0%, #0f3460 55%, #1a1a5e 100%);
+  border-radius: 16px;
+  padding: 52px 56px;
+  margin-bottom: 52px;
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(64,145,108,0.25) 0%, transparent 65%);
+  border-radius: 50%;
+}
+.hero::after {
+  content: '';
+  position: absolute; bottom: -40px; left: 200px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(69,123,157,0.2) 0%, transparent 65%);
+  border-radius: 50%;
+}
+.hero-eyebrow {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: #6dd8a0;
+  font-weight: 700;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 28px; height: 2px;
+  background: var(--green2);
+}
+.hero h1 {
+  font-size: 2.8rem;
+  line-height: 1.12;
+  margin-bottom: 18px;
+  font-weight: 700;
+  max-width: 760px;
+  position: relative;
+  z-index: 1;
+}
+.hero h1 em { font-style: normal; color: #68d3b4; }
+.hero-sub {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.75);
+  max-width: 680px;
+  margin-bottom: 36px;
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.65;
+  position: relative;
+  z-index: 1;
+}
+.hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+.chip {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(6px);
+}
+.hero-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  position: relative;
+  z-index: 1;
+}
+.hero-meta-item { padding: 0 24px 0 0; }
+.hero-meta-item:first-child { padding-left: 0; }
+.hero-meta-item .mk { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.2px; color: rgba(255,255,255,0.4); font-family: 'Segoe UI', sans-serif; font-weight: 600; margin-bottom: 4px; }
+.hero-meta-item .mv { font-size: 0.88rem; color: rgba(255,255,255,0.85); font-family: 'Segoe UI', sans-serif; }
+
+/* ═══════════════════════════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════════════════════════ */
+h2.sec {
+  font-size: 1.95rem;
+  color: var(--navy);
+  margin: 60px 0 6px;
+  padding-top: 20px;
+  border-top: 2px solid var(--line);
+  scroll-margin-top: 24px;
+  line-height: 1.2;
+}
+h2.sec .sn {
+  color: var(--green);
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: 700;
+  margin-right: 10px;
+  font-size: 1.4rem;
+}
+h3.ssec {
+  font-size: 1.22rem;
+  color: var(--blue2);
+  margin: 34px 0 10px;
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: 700;
+  scroll-margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+h3.ssec::before {
+  content: '';
+  display: inline-block;
+  width: 4px; height: 18px;
+  background: var(--blue);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+h4.h4 {
+  font-size: 1.04rem;
+  color: var(--navy);
+  margin: 24px 0 8px;
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: 700;
+}
+p { margin-bottom: 18px; }
+p.lead { font-size: 1.12rem; color: #374151; line-height: 1.8; }
+p.lede { font-size: 1.05rem; color: #4b5563; }
+ul, ol { margin: 0 0 20px 26px; }
+li { margin-bottom: 10px; line-height: 1.65; }
+strong { color: var(--navy); }
+em.t { color: var(--green2); font-style: italic; font-weight: 600; }
+code {
+  font-family: 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  color: var(--purple);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ABSTRACT BOX
+═══════════════════════════════════════════════════════════ */
+.abstract-box {
+  background: linear-gradient(135deg, #f0f9ff, #edf7f2);
+  border-left: 5px solid var(--blue);
+  border-radius: 0 12px 12px 0;
+  padding: 30px 36px;
+  margin: 24px 0 32px;
+}
+.abstract-box .ab-label {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--blue);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   KPI STRIP
+═══════════════════════════════════════════════════════════ */
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin: 28px 0;
+}
+.kpi {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.kpi::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+}
+.kpi.k1::before { background: linear-gradient(90deg, var(--green), var(--green2)); }
+.kpi.k2::before { background: linear-gradient(90deg, var(--purple), var(--purple2)); }
+.kpi.k3::before { background: linear-gradient(90deg, var(--blue), var(--blue2)); }
+.kpi.k4::before { background: linear-gradient(90deg, var(--orange), var(--amber)); }
+.kpi.k5::before { background: linear-gradient(90deg, var(--teal), var(--blue2)); }
+.kpi .val {
+  font-size: 2.1rem;
+  font-weight: 800;
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.kpi.k1 .val { color: var(--green); }
+.kpi.k2 .val { color: var(--purple); }
+.kpi.k3 .val { color: var(--blue2); }
+.kpi.k4 .val { color: var(--orange); }
+.kpi.k5 .val { color: var(--teal); }
+.kpi .klbl { font-size: 0.76rem; color: var(--muted); font-family: 'Segoe UI', sans-serif; line-height: 1.4; }
+
+/* ═══════════════════════════════════════════════════════════
+   MODEL PROFILE CARDS
+═══════════════════════════════════════════════════════════ */
+.model-trio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 28px 0;
+}
+.mc {
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.mc-header {
+  padding: 22px 22px 18px;
+  position: relative;
+}
+.mc.m1 .mc-header { background: linear-gradient(135deg, #3b0764 0%, #6d28d9 100%); }
+.mc.m2 .mc-header { background: linear-gradient(135deg, #1e3a5f 0%, #1e6091 100%); }
+.mc.m3 .mc-header { background: linear-gradient(135deg, #064e3b 0%, #2d6a4f 100%); }
+.mc-header h3 {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 2px;
+}
+.mc-header .tier {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.65);
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: 600;
+}
+.mc-header .price-badge {
+  position: absolute;
+  top: 18px; right: 18px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.78rem;
+  color: white;
+  font-weight: 700;
+}
+.mc-body { padding: 20px 22px; }
+.mc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line2);
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.85rem;
+}
+.mc-row:last-child { border-bottom: none; }
+.mc-row .rk { color: var(--muted); }
+.mc-row .rv { font-weight: 600; color: var(--navy); }
+.mc-row .rv.good { color: var(--green); }
+.mc-row .rv.mid  { color: var(--amber); }
+.mc-row .rv.high { color: var(--orange); }
+.mc-footer {
+  padding: 14px 22px;
+  background: var(--line2);
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.mc-footer strong { color: var(--navy); }
+
+/* ═══════════════════════════════════════════════════════════
+   SCORE BARS / RADAR
+═══════════════════════════════════════════════════════════ */
+.score-table { margin: 20px 0; }
+.score-row {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line2);
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.86rem;
+}
+.score-row.hdr {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--muted);
+  font-weight: 700;
+  padding-bottom: 10px;
+}
+.score-row .dim { color: var(--navy); font-weight: 600; }
+.bar-wrap { height: 20px; background: #f1f5f9; border-radius: 10px; overflow: hidden; position: relative; }
+.bar-inner {
+  height: 100%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  transition: width 0.6s ease;
+}
+.b-purple { background: linear-gradient(90deg, var(--purple2), var(--purple)); }
+.b-blue   { background: linear-gradient(90deg, var(--blue2),   var(--blue)); }
+.b-green  { background: linear-gradient(90deg, var(--green),   var(--green2)); }
+
+/* ═══════════════════════════════════════════════════════════
+   COST ANALYSIS VISUAL
+═══════════════════════════════════════════════════════════ */
+.cost-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 24px 0;
+}
+.cost-panel {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+}
+.cost-panel .cp-head {
+  padding: 16px 20px;
+  background: var(--navy);
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.cost-panel .cp-body { padding: 18px 20px; }
+.token-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line2);
+  font-family: 'Segoe UI', sans-serif;
+}
+.token-row:last-child { border-bottom: none; }
+.token-row .model-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.model-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.token-row .price { font-size: 0.88rem; font-weight: 700; }
+.token-row .mult  { font-size: 0.76rem; color: var(--muted); font-style: italic; }
+
+/* ═══════════════════════════════════════════════════════════
+   TASK ROUTING TABLE
+═══════════════════════════════════════════════════════════ */
+.routing-table-wrap { overflow-x: auto; margin: 24px 0; }
+.routing-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.86rem;
+}
+.routing-table thead tr {
+  background: var(--navy);
+  color: white;
+}
+.routing-table th {
+  padding: 13px 16px;
+  text-align: left;
+  font-size: 0.77rem;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  white-space: nowrap;
+}
+.routing-table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.routing-table tbody tr:hover { background: #fafbfd; }
+.routing-table td.task-name {
+  font-weight: 700;
+  color: var(--navy);
+  white-space: nowrap;
+}
+.badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  font-family: 'Segoe UI', sans-serif;
+}
+.badge.sonnet  { background: #dcfce7; color: #15803d; }
+.badge.opus48  { background: #ede9fe; color: #6d28d9; }
+.badge.opus47  { background: #dbeafe; color: #1e40af; }
+.badge.split   { background: #fef3c7; color: #92400e; }
+.badge.copilot { background: #e0f2fe; color: #0369a1; }
+.badge.ccode   { background: #fce7f3; color: #9d174d; }
+.badge.both    { background: #f0fdf4; color: #166534; }
+.badge.critical{ background: #fee2e2; color: #991b1b; }
+.routing-table td.rationale { color: #4b5563; font-size: 0.83rem; }
+
+/* ═══════════════════════════════════════════════════════════
+   SCENARIO CARDS
+═══════════════════════════════════════════════════════════ */
+.scenario-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 24px 0;
+}
+.sc-card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+.sc-card .sc-head {
+  padding: 16px 20px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.sc-card.s1 .sc-head { background: linear-gradient(135deg, #fdf2f8, #fce7f3); border-bottom: 2px solid #f9a8d4; }
+.sc-card.s2 .sc-head { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-bottom: 2px solid #86efac; }
+.sc-card.s3 .sc-head { background: linear-gradient(135deg, #fefce8, #fef3c7); border-bottom: 2px solid #fde68a; }
+.sc-card.s4 .sc-head { background: linear-gradient(135deg, #ede9fe, #ddd6fe); border-bottom: 2px solid #c4b5fd; }
+.sc-card.s5 .sc-head { background: linear-gradient(135deg, #fff7ed, #ffedd5); border-bottom: 2px solid #fdba74; }
+.sc-card.s6 .sc-head { background: linear-gradient(135deg, #f0f9ff, #dbeafe); border-bottom: 2px solid #93c5fd; }
+.sc-card.s7 .sc-head { background: linear-gradient(135deg, #fdf4ff, #fae8ff); border-bottom: 2px solid #e879f9; }
+.sc-card.s8 .sc-head { background: linear-gradient(135deg, #f0fdfa, #ccfbf1); border-bottom: 2px solid #5eead4; }
+.sc-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 2px;
+}
+.sc-head-text h4 {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.sc-head-text .sc-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.sc-body { padding: 16px 20px; font-size: 0.86rem; line-height: 1.6; color: #374151; }
+.sc-body .flow {
+  margin-top: 12px;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.78rem;
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: var(--navy);
+  line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TOOL COMPARISON
+═══════════════════════════════════════════════════════════ */
+.tool-vs {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  gap: 0;
+  margin: 28px 0;
+  align-items: stretch;
+}
+.tool-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.tool-card .tc-head {
+  padding: 24px 26px 20px;
+  color: white;
+}
+.tool-card.cop .tc-head { background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%); }
+.tool-card.cco .tc-head { background: linear-gradient(135deg, #3b0764 0%, #7c3aed 100%); }
+.tc-head .tool-name {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.tc-head .tool-sub {
+  font-size: 0.76rem;
+  color: rgba(255,255,255,0.6);
+  font-family: 'Segoe UI', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+.tool-card .tc-body { padding: 22px 26px; }
+.tc-attr {
+  display: flex;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line2);
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+.tc-attr:last-child { border-bottom: none; }
+.tc-attr .at-key { color: var(--muted); width: 120px; flex-shrink: 0; font-size: 0.79rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; margin-top: 1px; }
+.tc-attr .at-val { color: var(--ink); }
+.vs-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.vs-circle {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DECISION FLOW
+═══════════════════════════════════════════════════════════ */
+.decision-flow {
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin: 24px 0;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.8rem;
+  color: var(--navy);
+  line-height: 1.7;
+  white-space: pre;
+  overflow-x: auto;
+}
+.figcap {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CALLOUTS
+═══════════════════════════════════════════════════════════ */
+.callout {
+  border-radius: 10px;
+  padding: 18px 24px;
+  margin: 22px 0;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.94rem;
+  line-height: 1.65;
+  display: flex;
+  gap: 14px;
+}
+.callout .co-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 1px; }
+.callout .co-body {}
+.callout .co-tag {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.callout.find  { background: #f0fdf4; border-left: 4px solid var(--green2); }
+.callout.find  .co-tag { color: var(--green); }
+.callout.warn  { background: #fff7ed; border-left: 4px solid var(--orange); }
+.callout.warn  .co-tag { color: var(--orange); }
+.callout.note  { background: #f0f9ff; border-left: 4px solid var(--blue); }
+.callout.note  .co-tag { color: var(--blue2); }
+.callout.insight { background: #faf5ff; border-left: 4px solid var(--purple); }
+.callout.insight .co-tag { color: var(--purple); }
+.callout.critical { background: #fff1f2; border-left: 4px solid var(--rose); }
+.callout.critical .co-tag { color: var(--rose); }
+
+blockquote {
+  border-left: 4px solid var(--green2);
+  background: rgba(45,106,79,0.05);
+  padding: 16px 24px;
+  margin: 22px 0;
+  font-style: italic;
+  color: var(--navy);
+  border-radius: 0 10px 10px 0;
+}
+blockquote cite {
+  display: block;
+  font-style: normal;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 8px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GENERIC TABLE
+═══════════════════════════════════════════════════════════ */
+.tbl-wrap { overflow-x: auto; margin: 20px 0; }
+table.gt {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.88rem;
+}
+table.gt thead th {
+  background: var(--navy);
+  color: white;
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+table.gt td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  line-height: 1.5;
+}
+table.gt tbody tr:nth-child(even) { background: #fafbfc; }
+table.gt .lk { font-weight: 700; color: var(--navy); }
+table.gt .gd { color: var(--green); font-weight: 600; }
+table.gt .md { color: var(--amber); font-weight: 600; }
+table.gt .bd { color: var(--orange); font-weight: 600; }
+.tbl-note {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PLAYBOOK STEPS
+═══════════════════════════════════════════════════════════ */
+.playbook-steps { margin: 24px 0; }
+.pb-step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+  margin-bottom: 18px;
+  align-items: flex-start;
+}
+.pb-num {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: white;
+  flex-shrink: 0;
+}
+.pb-step.phase1 .pb-num { background: linear-gradient(135deg, var(--green), var(--green2)); }
+.pb-step.phase2 .pb-num { background: linear-gradient(135deg, var(--blue2), var(--blue)); }
+.pb-step.phase3 .pb-num { background: linear-gradient(135deg, var(--purple2), var(--purple)); }
+.pb-content h4 { font-family: 'Segoe UI', sans-serif; color: var(--navy); font-size: 0.96rem; font-weight: 700; margin-bottom: 4px; }
+.pb-content p  { font-family: 'Segoe UI', sans-serif; color: #4b5563; font-size: 0.87rem; margin: 0; line-height: 1.55; }
+
+/* ═══════════════════════════════════════════════════════════
+   RISK TABLE
+═══════════════════════════════════════════════════════════ */
+.risk-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+.risk-card {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px 20px;
+  background: white;
+  border-top: 3px solid;
+}
+.risk-card.r1 { border-top-color: var(--orange); }
+.risk-card.r2 { border-top-color: var(--amber); }
+.risk-card.r3 { border-top-color: var(--rose); }
+.risk-card.r4 { border-top-color: var(--purple); }
+.risk-card.r5 { border-top-color: var(--teal); }
+.risk-card.r6 { border-top-color: var(--blue2); }
+.risk-card h4 { font-family: 'Segoe UI', sans-serif; color: var(--navy); font-size: 0.92rem; font-weight: 700; margin-bottom: 6px; }
+.risk-card p  { font-family: 'Segoe UI', sans-serif; color: #4b5563; font-size: 0.83rem; margin: 0; line-height: 1.55; }
+.risk-card .mit { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line2); font-size: 0.8rem; color: var(--green); font-family: 'Segoe UI', sans-serif; }
+.risk-card .mit::before { content: '✓ '; font-weight: 700; }
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER & BACK TO TOP
+═══════════════════════════════════════════════════════════ */
+footer {
+  margin-top: 72px;
+  padding-top: 28px;
+  border-top: 2px solid var(--line);
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.83rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+footer strong { color: var(--navy); }
+.back-top {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  background: var(--navy);
+  color: white;
+  text-decoration: none;
+  padding: 11px 18px;
+  border-radius: 10px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  transition: background 0.2s;
+  z-index: 100;
+}
+.back-top:hover { background: var(--green); }
+
+/* ═══════════════════════════════════════════════════════════
+   UTILITY
+═══════════════════════════════════════════════════════════ */
+.divider { height: 1px; background: var(--line); margin: 40px 0; }
+.center { text-align: center; }
+.mt8 { margin-top: 8px; }
+.mt16 { margin-top: 16px; }
+.mt24 { margin-top: 24px; }
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════ */
+@media (max-width: 1080px) {
+  .page-wrap { grid-template-columns: 1fr; }
+  aside.sidebar { position: relative; height: auto; }
+  main { padding: 40px 30px; }
+  .kpi-strip { grid-template-columns: repeat(3, 1fr); }
+  .model-trio, .scenario-grid, .cost-grid, .risk-grid { grid-template-columns: 1fr; }
+  .tool-vs { grid-template-columns: 1fr; }
+  .vs-divider { display: none; }
+  .hero { padding: 36px 30px; }
+  .hero h1 { font-size: 2rem; }
+  .hero-meta { grid-template-columns: 1fr 1fr; }
+  .score-row { grid-template-columns: 140px 1fr 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .kpi-strip { grid-template-columns: 1fr 1fr; }
+  .hero-meta { grid-template-columns: 1fr; }
+  .score-row { grid-template-columns: 1fr; }
+  .score-row.hdr { display: none; }
+}
+@media print {
+  aside.sidebar, .back-top { display: none; }
+  .page-wrap { display: block; }
+  main { padding: 0; box-shadow: none; }
+  .hero { border-radius: 0; }
+}
+</style>
+</head>
+<body id="top">
+
+<div class="page-wrap">
+
+<!-- ════════════════════════════════════════════════════════════
+     SIDEBAR
+════════════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <div class="logo-icon">AI</div>
+    <div class="logo-text">
+      <strong>Model Selection v2</strong>
+      Engineering Teams · 2026
+    </div>
+  </div>
+
+  <div class="sb-section">Front Matter</div>
+  <a href="#abstract"><span class="num">—</span>Abstract</a>
+  <a href="#exec"><span class="num">—</span>Executive Summary</a>
+
+  <div class="sb-section">Part I · The Models</div>
+  <a href="#s1"><span class="num">1</span>Introduction &amp; Framing</a>
+  <a href="#s2"><span class="num">2</span>Model Profiles</a>
+  <a href="#s3"><span class="num">3</span>Token Cost Deep-Dive</a>
+  <a href="#s4"><span class="num">4</span>Effectiveness Benchmarks</a>
+  <a href="#s5"><span class="num">5</span>Cost-Effectiveness Index</a>
+
+  <div class="sb-section">Part II · Task Routing</div>
+  <a href="#s6"><span class="num">6</span>Routing Framework</a>
+  <a href="#s7"><span class="num">7</span>Task-to-Model Matrix</a>
+  <a href="#s8"><span class="num">8</span>Scenario Deep-Dives</a>
+
+  <div class="sb-section">Part III · Tooling</div>
+  <a href="#s9"><span class="num">9</span>Copilot vs Claude Code</a>
+  <a href="#s10"><span class="num">10</span>Ideal Use Cases by Tool</a>
+  <a href="#s11"><span class="num">11</span>Combined Workflow</a>
+
+  <div class="sb-section">Part IV · Operations</div>
+  <a href="#s12"><span class="num">12</span>Adoption Playbook</a>
+  <a href="#s13"><span class="num">13</span>Risks &amp; Governance</a>
+  <a href="#s14"><span class="num">14</span>Conclusion</a>
+  <a href="#appendix"><span class="num">A</span>Appendix</a>
+
+  <div class="sb-badge">
+    <strong>⚠ Pricing Note</strong>
+    All $/MTok figures are representative planning values. Calibrate against your live console before budgeting.
+  </div>
+</aside>
+
+<!-- ════════════════════════════════════════════════════════════
+     MAIN
+════════════════════════════════════════════════════════════ -->
+<main>
+
+<!-- ── HERO ──────────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-eyebrow">Research Thesis v2 · Engineering Productivity</div>
+  <h1>Choosing the Right AI Model<br/>for <em>Every</em> Engineering Task</h1>
+  <p class="hero-sub">A rigorous cost-and-effectiveness study of Claude Opus 4.8, Opus 4.7, and Sonnet 4.6 — with a complete tooling guide for GitHub Copilot and Claude Code — built for software teams doing real work every day.</p>
+  <div class="hero-chips">
+    <span class="chip">Opus 4.8 vs Opus 4.7 vs Sonnet 4.6</span>
+    <span class="chip">Token Economics</span>
+    <span class="chip">GitHub Copilot</span>
+    <span class="chip">Claude Code</span>
+    <span class="chip">Bug Fixes · Features · Prototypes</span>
+    <span class="chip">E2E Tests · Security · User Stories</span>
+  </div>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <div class="mk">Document type</div>
+      <div class="mv">Research Thesis &amp; Decision Framework</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="mk">Audience</div>
+      <div class="mv">Engineering Leads · Staff Engineers · Platform Teams</div>
+    </div>
+    <div class="hero-meta-item">
+      <div class="mk">Published</div>
+      <div class="mv">June 2026 · Version 2.0</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ABSTRACT ──────────────────────────────────────────────── -->
+<section id="abstract">
+  <div class="abstract-box">
+    <div class="ab-label">Abstract</div>
+    <p class="lead">The question is no longer <em>"should we use AI assistants?"</em> — it is <em>"which model, through which tool, for which specific task?"</em> That routing decision is made dozens of times per sprint by every engineer on your team, and each choice carries a direct cost and a measurable quality consequence.</p>
+    <p>This thesis provides a rigorous, workload-specific framework for engineering organizations to route tasks across three Claude model tiers — <em class="t">Opus 4.8</em> (frontier reasoning), <em class="t">Opus 4.7</em> (prior frontier / fallback), and <em class="t">Sonnet 4.6</em> (high-throughput workhorse) — and across two complementary tools — <em class="t">GitHub Copilot</em> (inner-loop IDE companion) and <em class="t">Claude Code</em> (agentic, terminal-native executor). We analyse token pricing, output quality, latency, and the often-ignored human review cost to compute a <strong>Total Cost of Resolution (TCoR)</strong> per workload class. The central finding: <strong>approximately 70% of daily engineering volume should default to Sonnet 4.6</strong>, while Opus-tier models are reserved for tasks where their extra reasoning depth prevents defects that dwarf their token premium. Tool choice is orthogonal: Copilot wins on inner-loop velocity; Claude Code wins on autonomous multi-file execution.</p>
+  </div>
+</section>
+
+<!-- ── EXEC SUMMARY ───────────────────────────────────────────── -->
+<h2 class="sec" id="exec"><span class="sn">§0</span>Executive Summary</h2>
+<p class="lead">Five findings for the reader who needs the answer before the argument.</p>
+
+<div class="kpi-strip">
+  <div class="kpi k1">
+    <div class="val">~70%</div>
+    <div class="klbl">of daily tasks are fully served by Sonnet 4.6</div>
+  </div>
+  <div class="kpi k2">
+    <div class="val">5×</div>
+    <div class="klbl">estimated input-token cost gap, Opus 4.8 vs Sonnet 4.6</div>
+  </div>
+  <div class="kpi k3">
+    <div class="val">TCoR</div>
+    <div class="klbl">Total Cost of Resolution — the only metric that matters</div>
+  </div>
+  <div class="kpi k4">
+    <div class="val">1 CVE</div>
+    <div class="klbl">escaped vulnerability can cost more than a year of Opus premium</div>
+  </div>
+  <div class="kpi k5">
+    <div class="val">2 tools</div>
+    <div class="klbl">one workflow: Copilot inner loop · Claude Code outer loop</div>
+  </div>
+</div>
+
+<ol>
+  <li><strong>Default to Sonnet 4.6.</strong> It handles well-scoped bug fixes, small features, test generation, user stories, and documentation with excellent speed and cost. Most teams over-spend by reaching for Opus reflexively.</li>
+  <li><strong>Escalate to Opus 4.8 on evidence, not instinct.</strong> Reserve it for ambiguous architecture decisions, cross-cutting refactors, novel algorithms, and security work where reasoning depth is provably valuable.</li>
+  <li><strong>Keep Opus 4.7 as a calibrated fallback.</strong> When 4.8 is rate-limited, when the budget tightens, or when you need a stable regression baseline, Opus 4.7 delivers near-frontier results at a modest discount.</li>
+  <li><strong>Tool is not model.</strong> GitHub Copilot is the everyday IDE companion; Claude Code is the autonomous terminal agent. Run both in parallel with Sonnet 4.6 as the shared default.</li>
+  <li><strong>Measure TCoR, not tokens.</strong> The correct denominator is <em>merged, defect-free output per pound of total cost</em> — including human review minutes and the expected cost of escaped defects.</li>
+</ol>
+
+<div class="callout note">
+  <div class="co-icon">📐</div>
+  <div class="co-body">
+    <div class="co-tag">Methodological note</div>
+    All dollar figures in this report are <strong>representative planning values</strong> selected to illustrate ratios, not absolute prices. Vendor list prices shift frequently. Before operationalising this framework, replace every number in §3 with your contracted or console rates, and run your own eval set as described in §A.1.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PART I · THE MODELS
+═══════════════════════════════════════════════════════════ -->
+<h2 class="sec" id="s1"><span class="sn">§1</span>Introduction &amp; Framing</h2>
+<p class="lead">Model selection has become a daily operational decision with real financial and quality consequences.</p>
+<p>When LLM assistants were a novelty, any model was the right model. Today an engineering team in active sprint conditions may invoke an AI assistant fifty or more times per engineer per day across completions, PR reviews, test generation, refactors, and documentation. Each invocation has a price tag and a success probability. The difference between routing all of that volume to a frontier model versus a well-chosen workhorse tier is often the largest single line-item on an AI cost report — and it is entirely within the team's control.</p>
+<p>The framing we use throughout this thesis is the <em class="t">Total Cost of Resolution (TCoR)</em>:</p>
+
+<div class="decision-flow">  TCoR  =  token_cost
+         + human_review_cost          ← often 3–10× the token cost
+         + P(escaped_defect) × impact ← can dwarf everything else
+
+  ┌─────────────────────────────────────────────────────┐
+  │  Routing goal: minimise TCoR per task class         │
+  │  NOT: minimise token cost                           │
+  │  NOT: maximise model capability                     │
+  └─────────────────────────────────────────────────────┘</div>
+<p class="figcap">Figure 1.1 — Total Cost of Resolution. Token cost is necessary but rarely the dominant term.</p>
+
+<p>An Opus-tier model that one-shots a complex refactor and requires 15 minutes of human review has a lower TCoR than a Sonnet-tier model that needs three retries, two manual corrections, and 45 minutes of review — even if the Sonnet session cost five times less in tokens.</p>
+
+<!-- ── §2 MODEL PROFILES ──────────────────────────────────────── -->
+<h2 class="sec" id="s2"><span class="sn">§2</span>Model Profiles</h2>
+<p>Three tiers, three distinct positions on the cost-capability curve.</p>
+
+<div class="model-trio">
+  <!-- Opus 4.8 -->
+  <div class="mc m1">
+    <div class="mc-header">
+      <div class="price-badge">~5× Sonnet</div>
+      <h3>Opus 4.8</h3>
+      <div class="tier">Frontier · Deep Reasoning</div>
+    </div>
+    <div class="mc-body">
+      <div class="mc-row"><span class="rk">Context window</span><span class="rv good">200K tokens</span></div>
+      <div class="mc-row"><span class="rk">Reasoning depth</span><span class="rv good">★★★★★</span></div>
+      <div class="mc-row"><span class="rk">Throughput</span><span class="rv high">Slowest</span></div>
+      <div class="mc-row"><span class="rk">Input cost</span><span class="rv high">Highest (~$15/MTok)</span></div>
+      <div class="mc-row"><span class="rk">Output cost</span><span class="rv high">Highest (~$75/MTok)</span></div>
+      <div class="mc-row"><span class="rk">Best fit</span><span class="rv">Ambiguous &amp; high-risk tasks</span></div>
+    </div>
+    <div class="mc-footer"><strong>When to use:</strong> Architecture decisions, complex refactors, security analysis, novel algorithms, under-specified problems. The model where extra reasoning directly prevents costly defects.</div>
+  </div>
+
+  <!-- Opus 4.7 -->
+  <div class="mc m2">
+    <div class="mc-header">
+      <div class="price-badge">~4× Sonnet</div>
+      <h3>Opus 4.7</h3>
+      <div class="tier">Prior Frontier · Fallback</div>
+    </div>
+    <div class="mc-body">
+      <div class="mc-row"><span class="rk">Context window</span><span class="rv good">200K tokens</span></div>
+      <div class="mc-row"><span class="rk">Reasoning depth</span><span class="rv mid">★★★★☆</span></div>
+      <div class="mc-row"><span class="rk">Throughput</span><span class="rv mid">Moderate</span></div>
+      <div class="mc-row"><span class="rk">Input cost</span><span class="rv mid">High (~$12/MTok)</span></div>
+      <div class="mc-row"><span class="rk">Output cost</span><span class="rv mid">High (~$60/MTok)</span></div>
+      <div class="mc-row"><span class="rk">Best fit</span><span class="rv">Fallback + baseline testing</span></div>
+    </div>
+    <div class="mc-footer"><strong>When to use:</strong> When Opus 4.8 is rate-limited. As a stable, reproducible eval baseline. For tasks needing Opus-level reasoning but where the last 5% of 4.8's capability isn't worth the extra cost.</div>
+  </div>
+
+  <!-- Sonnet 4.6 -->
+  <div class="mc m3">
+    <div class="mc-header">
+      <div class="price-badge">1× (reference)</div>
+      <h3>Sonnet 4.6</h3>
+      <div class="tier">Workhorse · High Throughput</div>
+    </div>
+    <div class="mc-body">
+      <div class="mc-row"><span class="rk">Context window</span><span class="rv good">200K tokens</span></div>
+      <div class="mc-row"><span class="rk">Reasoning depth</span><span class="rv mid">★★★☆☆</span></div>
+      <div class="mc-row"><span class="rk">Throughput</span><span class="rv good">Fastest</span></div>
+      <div class="mc-row"><span class="rk">Input cost</span><span class="rv good">Lowest (~$3/MTok)</span></div>
+      <div class="mc-row"><span class="rk">Output cost</span><span class="rv good">Lowest (~$15/MTok)</span></div>
+      <div class="mc-row"><span class="rk">Best fit</span><span class="rv">High-volume, well-scoped work</span></div>
+    </div>
+    <div class="mc-footer"><strong>When to use:</strong> Bug fixes, small features, test generation, stories, docs, code review pass-1, PR summaries. Needs tighter prompts on ambiguous tasks but excels at scoped, high-volume work.</div>
+  </div>
+</div>
+
+<div class="callout insight">
+  <div class="co-icon">💡</div>
+  <div class="co-body">
+    <div class="co-tag">Mental model</div>
+    <strong>Sonnet 4.6 = the senior engineer carrying the sprint.</strong> Opus 4.8 = the principal architect you pull in for the gnarly design review. Opus 4.7 = the equally-capable colleague you call when the principal is tied up, or when the last 5% of insight isn't worth the wait.
+  </div>
+</div>
+
+<!-- ── §3 TOKEN COST ──────────────────────────────────────────── -->
+<h2 class="sec" id="s3"><span class="sn">§3</span>Token Cost Deep-Dive</h2>
+<p>Understanding where your token budget actually goes — and which knobs really move the needle.</p>
+
+<div class="cost-grid">
+  <div class="cost-panel">
+    <div class="cp-head">Input Token Pricing ($/MTok — illustrative)</div>
+    <div class="cp-body">
+      <div class="token-row">
+        <span class="model-label"><span class="model-dot" style="background:var(--purple)"></span>Opus 4.8</span>
+        <span class="price" style="color:var(--orange)">~$15.00</span>
+        <span class="mult">5.0× Sonnet</span>
+      </div>
+      <div class="token-row">
+        <span class="model-label"><span class="model-dot" style="background:var(--blue)"></span>Opus 4.7</span>
+        <span class="price" style="color:var(--amber)">~$12.00</span>
+        <span class="mult">4.0× Sonnet</span>
+      </div>
+      <div class="token-row">
+        <span class="model-label"><span class="model-dot" style="background:var(--green2)"></span>Sonnet 4.6</span>
+        <span class="price" style="color:var(--green)">~$3.00</span>
+        <span class="mult">1.0× (baseline)</span>
+      </div>
+    </div>
+  </div>
+  <div class="cost-panel">
+    <div class="cp-head">Output Token Pricing ($/MTok — illustrative)</div>
+    <div class="cp-body">
+      <div class="token-row">
+        <span class="model-label"><span class="model-dot" style="background:var(--purple)"></span>Opus 4.8</span>
+        <span class="price" style="color:var(--orange)">~$75.00</span>
+        <span class="mult">5.0× Sonnet</span>
+      </div>
+      <div class="token-row">
+        <span class="model-label"><span class="model-dot" style="background:var(--blue)"></span>Opus 4.7</span>
+        <span class="price" style="color:var(--amber)">~$60.00</span>
+        <span class="mult">4.0× Sonnet</span>
+      </div>
+      <div class="token-row">
+        <span class="model-label"><span class="model-dot" style="background:var(--green2)"></span>Sonnet 4.6</span>
+        <span class="price" style="color:var(--green)">~$15.00</span>
+        <span class="mult">1.0× (baseline)</span>
+      </div>
+    </div>
+  </div>
+</div>
+<p class="tbl-note">* All values are representative planning figures — not a price quote. Substitute live rates from your billing console. Prompt caching can reduce input cost by 50–90% for repeated context. Batch mode adds a further ~50% discount for non-urgent tasks.</p>
+
+<h3 class="ssec" id="cost-levers">What actually drives your bill</h3>
+<p>Teams that focus purely on model price often miss the bigger levers. Ranked by typical impact:</p>
+
+<div class="tbl-wrap">
+<table class="gt">
+  <thead><tr><th>Cost Lever</th><th>Mechanism</th><th>Typical Impact</th><th>Action</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="lk">Output verbosity</td>
+      <td>Output tokens cost 5–10× input tokens. Long, elaborated outputs compound quickly.</td>
+      <td class="bd">Very High</td>
+      <td>Instruct models to be concise; use structured output formats.</td>
+    </tr>
+    <tr>
+      <td class="lk">Model tier chosen</td>
+      <td>5× multiplier between Sonnet and Opus 4.8 on all tokens.</td>
+      <td class="bd">High</td>
+      <td>Default Sonnet; route up only on evidence.</td>
+    </tr>
+    <tr>
+      <td class="lk">Iteration / retry count</td>
+      <td>Each failed attempt doubles or triples effective cost per task.</td>
+      <td class="md">Medium-High</td>
+      <td>Better prompts &amp; tighter task scoping reduce retries.</td>
+    </tr>
+    <tr>
+      <td class="lk">Context size attached</td>
+      <td>Attaching large codebases or long histories inflates input tokens.</td>
+      <td class="md">Medium</td>
+      <td>Use workspace indexing; attach only relevant files.</td>
+    </tr>
+    <tr>
+      <td class="lk">Prompt caching</td>
+      <td>Reusing a stable prefix (system prompt + shared context) dramatically reduces input cost.</td>
+      <td class="gd">Reduces cost by 50–90%</td>
+      <td>Enable caching for shared context; worth the engineering effort.</td>
+    </tr>
+    <tr>
+      <td class="lk">Batch mode</td>
+      <td>Async processing for non-urgent tasks (E2E gen, bulk docs) at ~50% off.</td>
+      <td class="gd">Reduces cost by ~50%</td>
+      <td>Use for test generation, bulk refactors, large doc runs.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout find">
+  <div class="co-icon">📊</div>
+  <div class="co-body">
+    <div class="co-tag">Cost finding</div>
+    A Sonnet 4.6 session that needs <strong>3 retries</strong> to pass CI costs roughly the same as a single Opus 4.8 one-shot — but takes longer and still demands more human review. The per-task cost, not the per-token cost, is what matters. Measure it.
+  </div>
+</div>
+
+<!-- ── §4 EFFECTIVENESS ───────────────────────────────────────── -->
+<h2 class="sec" id="s4"><span class="sn">§4</span>Effectiveness Benchmarks</h2>
+<p>Effectiveness is multi-dimensional. We score each model across six dimensions that matter in production engineering.</p>
+
+<div class="score-table">
+  <div class="score-row hdr">
+    <div>Dimension</div>
+    <div>Opus 4.8</div>
+    <div>Opus 4.7</div>
+    <div>Sonnet 4.6</div>
+  </div>
+  <div class="score-row">
+    <div class="dim">Ambiguous / novel problems</div>
+    <div><div class="bar-wrap"><div class="bar-inner b-purple" style="width:96%">96</div></div></div>
+    <div><div class="bar-wrap"><div class="bar-inner b-blue" style="width:87%">87</div></div></div>
+    <div><div class="bar-wrap"><div class="bar-inner b-green" style="width:62%">62</div></div></div>
+  </div>
+  <div class="score-row">
+    <div class="dim">Multi-file long refactors</div>
+    <div><div class="bar-wrap"><div class="bar-inner b-purple" style="width:94%">94</div></div></div>
+    <div><div class="bar-wrap"><div class="bar-inner b-blue" style="width:88%">88</div></div></div>
+    <div><div class="bar-wrap"><div class="bar-inner b-green" style="width:70%">70</div></div></div>
+  </div>
+  <div class="score-row">
+    <div class="dim">Scoped bug fixes</div>
+    <div><div class="bar-wrap"><div class="bar-inner b-purple" style="width:95%">95</div></div></div>
+    <div><div class="bar-wrap"><div class="bar-inner b-blue" style="width:94%">94</div></div></div>
+    <div><div class="bar-wrap"><div class="bar-inner b-green" style="width:91%">91</div></div></div>
+  </div>
+  <div class="score-row">
+    <div class="dim">Security / vulnerability analysis</div>
+    <div><div class="bar-wrap"><div class="bar-inner b-purple" style="width:97%">97</div></div></div>
+    <div><div class="bar-wrap"><div class="bar-inner b-blue" style="width:91%">91</div></div></div>
+    <div><div class="bar-wrap"><div class="bar-inner b-green" style="width:67%">67</div></div></div>
+  </div>
+  <div class="score-row">
+    <div class="dim">Test generation (unit + E2E)</div>
+    <div><div class="bar-wrap"><div class="bar-inner b-purple" style="width:93%">93</div></div></div>
+    <div><div class="bar-wrap"><div class="bar-inner b-blue" style="width:90%">90</div></div></div>
+    <div><div class="bar-wrap"><div class="bar-inner b-green" style="width:88%">88</div></div></div>
+  </div>
+  <div class="score-row">
+    <div class="dim">Throughput / tokens per second</div>
+    <div><div class="bar-wrap"><div class="bar-inner b-purple" style="width:45%">45</div></div></div>
+    <div><div class="bar-wrap"><div class="bar-inner b-blue" style="width:62%">62</div></div></div>
+    <div><div class="bar-wrap"><div class="bar-inner b-green" style="width:95%">95</div></div></div>
+  </div>
+</div>
+<p class="figcap">Figure 4.1 — Relative effectiveness scores by dimension. Illustrative; replace with your own evaluation harness. Note that on scoped bugs and test gen, the three models converge — so pay the least.</p>
+
+<h3 class="ssec">The diminishing-returns principle</h3>
+<p>The Opus premium only earns its keep as task difficulty and ambiguity increase. On routine, well-defined work all three models cluster near the ceiling. The correct routing question is not <em>"which model is best?"</em> but <em>"which model is good enough for this specific task?"</em></p>
+
+<div class="decision-flow">  Quality
+   ^
+   │                              ████ Opus 4.8
+   │                         ▓▓▓▓▓▓▓▓▓ Opus 4.7
+   │              ░░░░░░░░░░░░░░░░░░░░ Sonnet 4.6
+   │              ░░░░░░░░░▓▓▓▓████
+   │         ░░░░░▓▓▓▓▓████
+   │  ░░░░░░░▓▓▓████
+   │
+   └──────────────────────────────────────────────►  Task difficulty
+      trivial    scoped    ambiguous    novel/hard</div>
+<p class="figcap">Figure 4.2 — On easy/scoped tasks the models converge; pay the least. The Opus premium activates at "ambiguous" and above.</p>
+
+<!-- ── §5 COST-EFFECTIVENESS ─────────────────────────────────── -->
+<h2 class="sec" id="s5"><span class="sn">§5</span>Cost-Effectiveness Index</h2>
+<p>Combining §3 and §4 into a single TCoR-weighted decision for each workload class.</p>
+
+<div class="tbl-wrap">
+<table class="gt">
+  <thead><tr><th>Workload class</th><th>Task difficulty</th><th>Sonnet 4.6 TCoR rank</th><th>Opus 4.8 TCoR rank</th><th>Winner</th></tr></thead>
+  <tbody>
+    <tr><td class="lk">Daily bug fix (scoped)</td><td>Low</td><td class="gd">Best</td><td class="bd">Over-spend</td><td class="gd">Sonnet 4.6</td></tr>
+    <tr><td class="lk">Small feature</td><td>Low-Medium</td><td class="gd">Best</td><td class="bd">Over-spend</td><td class="gd">Sonnet 4.6</td></tr>
+    <tr><td class="lk">User story drafting</td><td>Low</td><td class="gd">Best</td><td class="bd">Over-spend</td><td class="gd">Sonnet 4.6</td></tr>
+    <tr><td class="lk">Test generation</td><td>Low-Medium</td><td class="gd">Best</td><td class="md">Marginal gain</td><td class="gd">Sonnet 4.6</td></tr>
+    <tr><td class="lk">Code review pass-1</td><td>Medium</td><td class="gd">Good</td><td class="md">Overkill</td><td class="gd">Sonnet 4.6</td></tr>
+    <tr><td class="lk">Prototype / spike</td><td>Medium</td><td class="md">Good start</td><td class="gd">Better on fork points</td><td class="md">Split</td></tr>
+    <tr><td class="lk">Cross-cutting refactor</td><td>High</td><td class="md">High review burden</td><td class="gd">Best overall</td><td class="bd">Opus 4.8</td></tr>
+    <tr><td class="lk">Full application scaffold</td><td>High</td><td class="md">Needs supervision</td><td class="gd">Best for design phase</td><td class="bd">Opus 4.8 (design)</td></tr>
+    <tr><td class="lk">Vulnerability remediation</td><td>Very High</td><td class="bd">Risky</td><td class="gd">Lowest defect-escape</td><td class="bd">Opus 4.8 required</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PART II · TASK ROUTING
+═══════════════════════════════════════════════════════════ -->
+<h2 class="sec" id="s6"><span class="sn">§6</span>Routing Framework</h2>
+<p>A systematic, repeatable way to assign any incoming engineering task to the right model.</p>
+
+<div class="decision-flow">  TASK ARRIVES
+       │
+       ▼
+  ┌────────────────────────────────┐
+  │ Is this security-critical      │──YES──► OPUS 4.8 + human review (mandatory)
+  │ or high blast-radius?          │
+  └────────────────────────────────┘
+       │ NO
+       ▼
+  ┌────────────────────────────────┐
+  │ Is the problem well-defined    │──YES──► SONNET 4.6 (default)
+  │ with clear acceptance criteria?│         └─► if CI fails → escalate
+  └────────────────────────────────┘
+       │ NO
+       ▼
+  ┌────────────────────────────────┐
+  │ Is it ambiguous / multi-file / │──YES──► OPUS 4.8
+  │ cross-cutting / novel design?  │         (4.7 if rate-limited)
+  └────────────────────────────────┘
+       │ NO
+       ▼
+  SONNET 4.6 with detailed prompt</div>
+<p class="figcap">Figure 6.1 — Default routing decision tree. Encode this in a shared team config and CI-assisted agentic workflows.</p>
+
+<div class="callout warn">
+  <div class="co-icon">⚠️</div>
+  <div class="co-body">
+    <div class="co-tag">Anti-pattern to avoid</div>
+    <strong>"Opus for everything."</strong> The single most expensive habit is routing all traffic to the frontier model "to be safe." This multiplies the token bill by 4–5× while improving outcomes only on the ~30% of work that is genuinely hard. Measure your escalation rate — if it exceeds 30% of tasks, investigate the cause before adjusting the model default.
+  </div>
+</div>
+
+<!-- ── §7 TASK MATRIX ─────────────────────────────────────────── -->
+<h2 class="sec" id="s7"><span class="sn">§7</span>Task-to-Model-to-Tool Matrix</h2>
+<p class="lede">The primary decision table for engineering teams. For each workload: recommended model tier, recommended tool, and the reasoning.</p>
+
+<div class="routing-table-wrap">
+<table class="routing-table">
+  <thead>
+    <tr>
+      <th style="width:18%">Workload</th>
+      <th style="width:14%">Model</th>
+      <th style="width:12%">Tool</th>
+      <th style="width:12%">Volume / Freq.</th>
+      <th>Rationale &amp; Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="task-name">🐛 Daily bug fixes</td>
+      <td><span class="badge sonnet">Sonnet 4.6</span></td>
+      <td><span class="badge copilot">Copilot</span></td>
+      <td>Very High / Daily</td>
+      <td class="rationale">Localized, well-reproduced, existing tests act as a safety net. Inner-loop latency matters more than intelligence. Escalate to Opus only for "mystery" bugs with no obvious root cause.</td>
+    </tr>
+    <tr>
+      <td class="task-name">✨ Small features</td>
+      <td><span class="badge sonnet">Sonnet 4.6</span></td>
+      <td><span class="badge both">Both</span></td>
+      <td>High / Daily</td>
+      <td class="rationale">Clear acceptance criteria and bounded scope. Sonnet one-shots the majority. Use Copilot for in-editor flow; Claude Code if the feature touches multiple files. Escalate on cross-cutting concerns only.</td>
+    </tr>
+    <tr>
+      <td class="task-name">📋 User stories &amp; AC</td>
+      <td><span class="badge sonnet">Sonnet 4.6</span></td>
+      <td><span class="badge copilot">Copilot Chat</span></td>
+      <td>High / Daily</td>
+      <td class="rationale">Language generation, not deep reasoning. Sonnet is fluent and fast. Provide a good epic/context prompt and the output is strong. Zero reason to use Opus here.</td>
+    </tr>
+    <tr>
+      <td class="task-name">🧪 Unit test generation</td>
+      <td><span class="badge sonnet">Sonnet 4.6</span></td>
+      <td><span class="badge both">Both</span></td>
+      <td>High / Every sprint</td>
+      <td class="rationale">Pattern-driven. Attach the target module, specify the test framework, generate. Copilot works inline; Claude Code for batch generation of an entire module. Cache shared test utilities.</td>
+    </tr>
+    <tr>
+      <td class="task-name">🔁 Prototype / spike</td>
+      <td><span class="badge split">Sonnet → Opus 4.8</span></td>
+      <td><span class="badge ccode">Claude Code</span></td>
+      <td>Medium / Weekly</td>
+      <td class="rationale">Start cheap with Sonnet for scaffolding and exploration. Pull in Opus 4.8 specifically at the 2–3 genuine architectural decision forks (data model, API contract, async strategy). Don't pay frontier prices for boilerplate.</td>
+    </tr>
+    <tr>
+      <td class="task-name">🏗️ Full application scaffold</td>
+      <td><span class="badge split">Opus 4.8 + Sonnet</span></td>
+      <td><span class="badge ccode">Claude Code</span></td>
+      <td>Low / Per quarter</td>
+      <td class="rationale"><strong>Two-phase:</strong> (1) Opus 4.8 defines module boundaries, data contracts, test strategy — the expensive-to-reverse decisions. (2) Sonnet 4.6 implements each module against the contracts. Cache the architecture document as shared context. Total cost is modest; quality is high.</td>
+    </tr>
+    <tr>
+      <td class="task-name">🔬 E2E test suite</td>
+      <td><span class="badge sonnet">Sonnet 4.6</span></td>
+      <td><span class="badge ccode">Claude Code</span></td>
+      <td>Medium / Per feature</td>
+      <td class="rationale">Highly repetitive and pattern-driven. Use Claude Code to batch-generate across all flows with prompt caching on the page-object / app-context prefix. Enable batch mode for the generation run. Use Opus 4.8 only for diagnosing genuinely flaky tests where timing/state reasoning matters.</td>
+    </tr>
+    <tr>
+      <td class="task-name">🔒 Vulnerability fixes</td>
+      <td><span class="badge critical">Opus 4.8</span></td>
+      <td><span class="badge ccode">Claude Code</span></td>
+      <td>Low-Medium / On demand</td>
+      <td class="rationale"><strong>Non-negotiable Opus-tier use case.</strong> A single escaped CVE can cost orders of magnitude more than any token bill. Provide full call-graph context via Claude Code. Always require a human security engineer to review and sign off the patch. Never auto-merge.</td>
+    </tr>
+    <tr>
+      <td class="task-name">🔧 Large cross-cutting refactor</td>
+      <td><span class="badge opus48">Opus 4.8</span></td>
+      <td><span class="badge ccode">Claude Code</span></td>
+      <td>Low / Per initiative</td>
+      <td class="rationale">Long-horizon planning across many files with regression risk. Opus 4.8's reasoning depth consistently reduces the number of cascading bugs. Claude Code's whole-repo context is essential. Run the test suite in the loop.</td>
+    </tr>
+    <tr>
+      <td class="task-name">👀 PR / code review</td>
+      <td><span class="badge split">Sonnet → Opus 4.8</span></td>
+      <td><span class="badge copilot">Copilot PR</span></td>
+      <td>Very High / Daily</td>
+      <td class="rationale">Two-tier: Sonnet pass-1 flags the obvious (style, lint, coverage, obvious bugs). Route only diffs touching security, auth, or data-model changes to Opus 4.8 for deep review. Dramatically reduces total cost.</td>
+    </tr>
+    <tr>
+      <td class="task-name">📚 Documentation</td>
+      <td><span class="badge sonnet">Sonnet 4.6</span></td>
+      <td><span class="badge both">Both</span></td>
+      <td>Medium / Ongoing</td>
+      <td class="rationale">Docstrings, READMEs, ADRs, runbooks. Sonnet is more than capable. Copilot inline for docstrings; Claude Code for generating full-module documentation in batch.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ── §8 SCENARIOS ───────────────────────────────────────────── -->
+<h2 class="sec" id="s8"><span class="sn">§8</span>Scenario Deep-Dives</h2>
+<p>Concrete workflow recipes for the eight most impactful engineering scenarios.</p>
+
+<div class="scenario-grid">
+  <div class="sc-card s1">
+    <div class="sc-head">
+      <div class="sc-icon">🐛</div>
+      <div class="sc-head-text">
+        <h4>Daily Bug-Fix Factory (30–50/week)</h4>
+        <div class="sc-tags">
+          <span class="badge sonnet">Sonnet 4.6</span>
+          <span class="badge copilot">Copilot</span>
+        </div>
+      </div>
+    </div>
+    <div class="sc-body">
+      The highest-frequency scenario. Each bug is localized, has a repro, and passes/fails against existing tests. Speed of inner loop dominates; raw reasoning is secondary.
+      <div class="flow">1. Attach failing test + surrounding code in Copilot Chat
+2. Ask Sonnet: "Fix this bug. Output only the changed lines."
+3. Accept inline suggestion → run tests
+4. If tests pass → commit
+5. If 2nd attempt fails → escalate to Opus 4.8 with fuller context
+─────────────────────────────────────────
+Cost profile: Mostly Sonnet. ~5% escalation to Opus.</div>
+    </div>
+  </div>
+
+  <div class="sc-card s2">
+    <div class="sc-head">
+      <div class="sc-icon">✨</div>
+      <div class="sc-head-text">
+        <h4>Small Feature Development</h4>
+        <div class="sc-tags">
+          <span class="badge sonnet">Sonnet 4.6</span>
+          <span class="badge both">Both tools</span>
+        </div>
+      </div>
+    </div>
+    <div class="sc-body">
+      Feature with clear acceptance criteria, bounded to 1–3 files. Sonnet one-shots the majority; human review is the gate.
+      <div class="flow">1. Write acceptance criteria in Copilot Chat
+2. Sonnet generates implementation + unit tests
+3. Run CI → review diff → request changes if needed
+4. Escalate to Claude Code only if feature touches 5+ files
+─────────────────────────────────────────
+Cost profile: 100% Sonnet. Claude Code only for multi-file reach.</div>
+    </div>
+  </div>
+
+  <div class="sc-card s3">
+    <div class="sc-head">
+      <div class="sc-icon">🔁</div>
+      <div class="sc-head-text">
+        <h4>Prototype / Spike (2-day timebox)</h4>
+        <div class="sc-tags">
+          <span class="badge split">Sonnet → Opus 4.8</span>
+          <span class="badge ccode">Claude Code</span>
+        </div>
+      </div>
+    </div>
+    <div class="sc-body">
+      Exploration-first; code is partially throwaway. Speed dominates for 80% of the work; a few key decisions need deep reasoning.
+      <div class="flow">1. Claude Code + Sonnet: scaffold project, generate boilerplate
+2. At each architectural fork (data model, auth, async): switch to Opus 4.8
+3. Opus decides, writes the interface/contract
+4. Switch back to Sonnet to implement against the contract
+5. End of spike: Opus 4.8 reviews the overall structure
+─────────────────────────────────────────
+Cost profile: ~80% Sonnet, ~20% Opus 4.8 at decision forks.</div>
+    </div>
+  </div>
+
+  <div class="sc-card s4">
+    <div class="sc-head">
+      <div class="sc-icon">🏗️</div>
+      <div class="sc-head-text">
+        <h4>Full Application Scaffold</h4>
+        <div class="sc-tags">
+          <span class="badge opus48">Opus 4.8</span>
+          <span class="badge sonnet">Sonnet 4.6</span>
+          <span class="badge ccode">Claude Code</span>
+        </div>
+      </div>
+    </div>
+    <div class="sc-body">
+      Building a service or app from scratch. Two explicit phases to maximise quality while controlling cost.
+      <div class="flow">PHASE 1 — DESIGN (Opus 4.8 in Claude Code):
+  • Define modules, data contracts, API surface
+  • Define test strategy and acceptance criteria
+  • Output: architecture.md  ← cache this as shared context
+
+PHASE 2 — BUILD (Sonnet 4.6 in Claude Code):
+  • Implement each module against the contracts
+  • Generate unit + integration tests per module
+  • Run CI in the loop; escalate on failures
+─────────────────────────────────────────────
+Cost profile: ~15% Opus (design), ~85% Sonnet (build).</div>
+    </div>
+  </div>
+
+  <div class="sc-card s5">
+    <div class="sc-head">
+      <div class="sc-icon">🔬</div>
+      <div class="sc-head-text">
+        <h4>E2E Test Suite Generation</h4>
+        <div class="sc-tags">
+          <span class="badge sonnet">Sonnet 4.6</span>
+          <span class="badge ccode">Claude Code</span>
+        </div>
+      </div>
+    </div>
+    <div class="sc-body">
+      E2E tests are repetitive and pattern-driven — the highest-value use of batch mode and prompt caching.
+      <div class="flow">1. Build a shared context: page-object definitions, auth helpers,
+   test framework config → cache this prefix
+2. Claude Code + Sonnet: batch-generate one test file per user flow
+3. Run suite → collect failures → fix individually (Sonnet)
+4. For genuinely flaky tests: Opus 4.8 to reason about timing/state
+─────────────────────────────────────────
+Cost profile: ~95% Sonnet (batched + cached). Opus only for flaky diagnosis.</div>
+    </div>
+  </div>
+
+  <div class="sc-card s6">
+    <div class="sc-head">
+      <div class="sc-icon">🔒</div>
+      <div class="sc-head-text">
+        <h4>Vulnerability Remediation</h4>
+        <div class="sc-tags">
+          <span class="badge critical">Opus 4.8 — Non-negotiable</span>
+          <span class="badge ccode">Claude Code</span>
+        </div>
+      </div>
+    </div>
+    <div class="sc-body">
+      Asymmetric risk: the cost of a missed injection, auth bypass, or secrets leak dwarfs any token bill by orders of magnitude.
+      <div class="flow">1. Opus 4.8 in Claude Code: read full call graph + data flow
+2. Classify vulnerability: severity, attack vector, blast radius
+3. Generate patch + regression test
+4. Run SAST tool in the loop (Claude Code executes it)
+5. MANDATORY: human security engineer reviews &amp; approves
+6. Never auto-merge security patches
+─────────────────────────────────────────────
+Cost profile: 100% Opus 4.8. No exceptions. Human review required.</div>
+    </div>
+  </div>
+
+  <div class="sc-card s7">
+    <div class="sc-head">
+      <div class="sc-icon">🔧</div>
+      <div class="sc-head-text">
+        <h4>Cross-Cutting Refactor</h4>
+        <div class="sc-tags">
+          <span class="badge opus48">Opus 4.8</span>
+          <span class="badge ccode">Claude Code</span>
+        </div>
+      </div>
+    </div>
+    <div class="sc-body">
+      Touching many files, high regression risk, cascading implications. Opus 4.8's long-context reasoning is the primary value driver here.
+      <div class="flow">1. Claude Code: index the full repo for Opus 4.8
+2. Opus: map all call sites and data flows affected
+3. Opus: plan the refactor as a sequence of safe atomic steps
+4. Execute each step with Sonnet; run tests after each
+5. Opus 4.8 for final review of the complete diff
+─────────────────────────────────────────────
+Cost profile: ~40% Opus (planning + final review), ~60% Sonnet (execution).</div>
+    </div>
+  </div>
+
+  <div class="sc-card s8">
+    <div class="sc-head">
+      <div class="sc-icon">📋</div>
+      <div class="sc-head-text">
+        <h4>User Stories &amp; Acceptance Criteria</h4>
+        <div class="sc-tags">
+          <span class="badge sonnet">Sonnet 4.6</span>
+          <span class="badge copilot">Copilot Chat</span>
+        </div>
+      </div>
+    </div>
+    <div class="sc-body">
+      Language generation from a product brief — not deep reasoning. Sonnet is fluent, fast, and more than adequate.
+      <div class="flow">1. Provide epic description + persona in Copilot Chat
+2. Sonnet generates stories in "As a / I want / So that" format
+3. Generate acceptance criteria per story
+4. Human PO reviews + edits (5–10 min)
+5. Batch-generate across the full backlog with prompt template
+─────────────────────────────────────────
+Cost profile: 100% Sonnet. No Opus involvement needed.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PART III · TOOLING
+═══════════════════════════════════════════════════════════ -->
+<h2 class="sec" id="s9"><span class="sn">§9</span>GitHub Copilot vs Claude Code</h2>
+<p>Model choice and tool choice are two independent decisions that interact. Here is where they differ and where they overlap.</p>
+
+<div class="tool-vs">
+  <div class="tool-card cop">
+    <div class="tc-head">
+      <div class="tool-name">GitHub Copilot</div>
+      <div class="tool-sub">Inner-Loop IDE Companion</div>
+    </div>
+    <div class="tc-body">
+      <div class="tc-attr">
+        <span class="at-key">Surface</span>
+        <span class="at-val">VS Code, JetBrains, neovim — lives inside the editor</span>
+      </div>
+      <div class="tc-attr">
+        <span class="at-key">Interaction</span>
+        <span class="at-val">Inline completions, chat panel, slash commands, PR review bot</span>
+      </div>
+      <div class="tc-attr">
+        <span class="at-key">Autonomy</span>
+        <span class="at-val">Human-in-the-loop — every suggestion is reviewed before accepting</span>
+      </div>
+      <div class="tc-attr">
+        <span class="at-key">Context reach</span>
+        <span class="at-val">Open files, workspace symbols, semantic search over indexed repo</span>
+      </div>
+      <div class="tc-attr">
+        <span class="at-key">Ideal for</span>
+        <span class="at-val">Bug fixes, completions, quick refactors, PR reviews, user stories</span>
+      </div>
+      <div class="tc-attr">
+        <span class="at-key">Cost shape</span>
+        <span class="at-val">Seat licence + usage; predictable for steady inner-loop volume</span>
+      </div>
+      <div class="tc-attr">
+        <span class="at-key">Model choice</span>
+        <span class="at-val">Set per request — default Sonnet 4.6, escalate to Opus 4.8 in chat</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="vs-divider"><div class="vs-circle">VS</div></div>
+
+  <div class="tool-card cco">
+    <div class="tc-head">
+      <div class="tool-name">Claude Code</div>
+      <div class="tool-sub">Outer-Loop Agentic Executor</div>
+    </div>
+    <div class="tc-body">
+      <div class="tc-attr">
+        <span class="at-key">Surface</span>
+        <span class="at-val">Terminal-native CLI; integrates with CI/CD and scripts</span>
+      </div>
+      <div class="tc-attr">
+        <span class="at-key">Interaction</span>
+        <span class="at-val">Agentic: plans tasks, edits files, runs commands, iterates on failures</span>
+      </div>
+      <div class="tc-attr">
+        <span class="at-key">Autonomy</span>
+        <span class="at-val">High — can complete multi-step tasks with minimal intervention</span>
+      </div>
+      <div class="tc-attr">
+        <span class="at-key">Context reach</span>
+        <span class="at-val">Whole repository, shell execution, tool calls, file system</span>
+      </div>
+      <div class="tc-attr">
+        <span class="at-key">Ideal for</span>
+        <span class="at-val">App scaffolds, E2E test gen, refactors, security sweeps, bulk docs</span>
+      </div>
+      <div class="tc-attr">
+        <span class="at-key">Cost shape</span>
+        <span class="at-val">Usage-heavy on long agentic runs — set token budgets per task</span>
+      </div>
+      <div class="tc-attr">
+        <span class="at-key">Model choice</span>
+        <span class="at-val">Set per session/task — default Sonnet 4.6, Opus 4.8 for hard tasks</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="callout find">
+  <div class="co-icon">🤝</div>
+  <div class="co-body">
+    <div class="co-tag">Core recommendation</div>
+    <strong>These tools are complements, not competitors.</strong> Copilot handles the highest-frequency, lowest-ceremony interactions (you're in the editor, you want a suggestion now). Claude Code handles the tasks that span many files, require running the toolchain, or benefit from autonomous iteration. Use both simultaneously; standardise Sonnet 4.6 as the default in each.
+  </div>
+</div>
+
+<!-- ── §10 IDEAL USE CASES ────────────────────────────────────── -->
+<h2 class="sec" id="s10"><span class="sn">§10</span>Ideal Use Cases by Tool + Model</h2>
+
+<div class="tbl-wrap">
+<table class="gt">
+  <thead><tr><th style="width:28%">Scenario</th><th style="width:18%">Best Tool</th><th style="width:18%">Best Model</th><th>Why this combination wins</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="lk">Quick inline fix while coding</td>
+      <td><span class="badge copilot">Copilot inline</span></td>
+      <td><span class="badge sonnet">Sonnet 4.6</span></td>
+      <td>Lowest latency; you want the suggestion before you finish thinking. Sonnet is fast enough for zero-friction flow.</td>
+    </tr>
+    <tr>
+      <td class="lk">Explaining a complex function</td>
+      <td><span class="badge copilot">Copilot Chat</span></td>
+      <td><span class="badge sonnet">Sonnet 4.6</span></td>
+      <td>Language understanding; no reasoning required. Sonnet's explanation quality matches Opus for this task at 1/5 the cost.</td>
+    </tr>
+    <tr>
+      <td class="lk">Draft PR description</td>
+      <td><span class="badge copilot">Copilot PR</span></td>
+      <td><span class="badge sonnet">Sonnet 4.6</span></td>
+      <td>Summarisation task. Copilot has native PR context; Sonnet is entirely adequate and fast.</td>
+    </tr>
+    <tr>
+      <td class="lk">Review a security-sensitive diff</td>
+      <td><span class="badge copilot">Copilot PR</span></td>
+      <td><span class="badge opus48">Opus 4.8</span></td>
+      <td>Deep reasoning about subtle auth/injection patterns. The one PR review scenario where Opus earns its premium.</td>
+    </tr>
+    <tr>
+      <td class="lk">Build a new service from scratch</td>
+      <td><span class="badge ccode">Claude Code</span></td>
+      <td><span class="badge split">Opus 4.8 design + Sonnet build</span></td>
+      <td>Claude Code has full repo access. Opus defines the architecture; Sonnet executes it. Two-phase pattern (§8) keeps cost down.</td>
+    </tr>
+    <tr>
+      <td class="lk">Generate all unit tests for a module</td>
+      <td><span class="badge ccode">Claude Code</span></td>
+      <td><span class="badge sonnet">Sonnet 4.6</span></td>
+      <td>Batch generation with prompt caching on the module header. Claude Code runs tests in the loop. Pure Sonnet; cheapest route.</td>
+    </tr>
+    <tr>
+      <td class="lk">Generate full E2E suite (20+ flows)</td>
+      <td><span class="badge ccode">Claude Code</span></td>
+      <td><span class="badge sonnet">Sonnet 4.6 + batch</span></td>
+      <td>Repetitive pattern; batch mode adds ~50% cost saving. Claude Code executes the tests and fixes failures autonomously.</td>
+    </tr>
+    <tr>
+      <td class="lk">Audit codebase for SQL injection</td>
+      <td><span class="badge ccode">Claude Code</span></td>
+      <td><span class="badge opus48">Opus 4.8</span></td>
+      <td>Full repo context + security reasoning + SAST tool execution. Claude Code + Opus 4.8 is the only configuration adequate for a serious audit.</td>
+    </tr>
+    <tr>
+      <td class="lk">Rename a concept across 40 files</td>
+      <td><span class="badge ccode">Claude Code</span></td>
+      <td><span class="badge opus47">Opus 4.7</span></td>
+      <td>Systematic mechanical refactor — doesn't need frontier reasoning, but benefits from Opus-level context retention across many files. 4.7 saves ~20% vs 4.8.</td>
+    </tr>
+    <tr>
+      <td class="lk">Draft sprint user stories (10+ stories)</td>
+      <td><span class="badge copilot">Copilot Chat</span></td>
+      <td><span class="badge sonnet">Sonnet 4.6</span></td>
+      <td>Pure language generation from a product brief. Sonnet is fast, fluent, and cheap. No reasoning depth required.</td>
+    </tr>
+    <tr>
+      <td class="lk">Diagnose a flaky E2E test</td>
+      <td><span class="badge ccode">Claude Code</span></td>
+      <td><span class="badge opus48">Opus 4.8</span></td>
+      <td>Flakiness diagnosis requires reasoning about async timing, state isolation, and test infrastructure. This is exactly where Opus 4.8's depth pays off.</td>
+    </tr>
+    <tr>
+      <td class="lk">Write architecture decision record (ADR)</td>
+      <td><span class="badge both">Both</span></td>
+      <td><span class="badge sonnet">Sonnet 4.6</span></td>
+      <td>Documentation writing; the human provides the decision. Sonnet formats and articulates it well. Copilot inline or Claude Code for a whole-repo ADR.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ── §11 COMBINED WORKFLOW ──────────────────────────────────── -->
+<h2 class="sec" id="s11"><span class="sn">§11</span>The Combined Copilot + Claude Code Workflow</h2>
+<p>How the two tools and three models fit into a single, coherent engineering day.</p>
+
+<div class="decision-flow">  ┌─────────────────────────────────────────────────────────────────┐
+  │              A TYPICAL ENGINEER'S AI-ASSISTED DAY               │
+  └─────────────────────────────────────────────────────────────────┘
+
+  MORNING STAND-UP
+    └─► Copilot Chat (Sonnet 4.6) → summarise overnight CI failures,
+        draft today's story cards from the sprint backlog
+
+  IN-EDITOR CODING (all day)
+    └─► Copilot inline completions (Sonnet 4.6) → live as you type
+        Copilot Chat → explain, refactor, generate tests for current file
+
+  MULTI-FILE TASK (e.g. new feature touching 5 files)
+    └─► Switch to Claude Code (Sonnet 4.6)
+        Claude Code plans + executes across files → runs tests → iterates
+
+  HARD PROBLEM HITS (ambiguous bug, security issue, design fork)
+    └─► Claude Code → escalate to Opus 4.8
+        Reason deeply → produce output → switch back to Sonnet
+
+  END OF DAY — PR REVIEW
+    └─► Copilot PR review (Sonnet 4.6 pass-1)
+        If diff touches security/auth → Copilot PR (Opus 4.8 deep review)
+
+  OVERNIGHT / ASYNC (E2E gen, bulk doc, large refactor planning)
+    └─► Claude Code (Sonnet 4.6 batched) → runs unattended
+        Results available next morning for human review</div>
+<p class="figcap">Figure 11.1 — Daily workflow integrating both tools and three model tiers. The engineer only intervenes at decision gates and review checkpoints.</p>
+
+<blockquote>
+  The ideal AI engineering setup is not one tool or one model. It is a <strong>portfolio</strong>: Copilot for frictionless inner-loop flow, Claude Code for autonomous outer-loop execution, and a disciplined model routing policy that defaults to Sonnet and escalates to Opus only when reasoning depth provably pays.
+  <cite>— Thesis central claim, §11</cite>
+</blockquote>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PART IV · OPERATIONS
+═══════════════════════════════════════════════════════════ -->
+<h2 class="sec" id="s12"><span class="sn">§12</span>Adoption Playbook</h2>
+<p>A pragmatic, three-phase rollout for an engineering organisation standardising on this portfolio approach.</p>
+
+<div class="playbook-steps">
+  <div class="pb-step phase1">
+    <div class="pb-num">1</div>
+    <div class="pb-content">
+      <h4>Set the default and baseline (Week 1–2)</h4>
+      <p>Configure Sonnet 4.6 as the org-wide default in both Copilot and Claude Code. Instrument token spend per team and per workload type from day one. Publish the §7 routing matrix as a laminated one-pager at every desk (or pinned in every Slack channel).</p>
+    </div>
+  </div>
+  <div class="pb-step phase1">
+    <div class="pb-num">2</div>
+    <div class="pb-content">
+      <h4>Define escalation triggers explicitly (Week 1–2)</h4>
+      <p>Write down — in a shared config and a team norm — exactly what qualifies as an Opus 4.8 task: security changes, ambiguous cross-cutting work, novel algorithm design, tasks that fail CI twice. Remove the ambiguity that leads to reflexive Opus usage.</p>
+    </div>
+  </div>
+  <div class="pb-step phase2">
+    <div class="pb-num">3</div>
+    <div class="pb-content">
+      <h4>Add "start-cheap, escalate-on-failure" to CI (Week 3–4)</h4>
+      <p>In agentic Claude Code workflows, encode the routing rule: attempt with Sonnet; if automated checks fail twice, automatically switch to Opus 4.8. Log every escalation. A rising escalation rate is a prompt quality problem, not a model problem.</p>
+    </div>
+  </div>
+  <div class="pb-step phase2">
+    <div class="pb-num">4</div>
+    <div class="pb-content">
+      <h4>Enable prompt caching for shared contexts (Week 3–5)</h4>
+      <p>Identify the 3–5 large, stable context prefixes used repeatedly (system prompt, architecture doc, shared test fixtures). Enable prompt caching on each. This is typically the highest-ROI cost reduction available after routing policy.</p>
+    </div>
+  </div>
+  <div class="pb-step phase2">
+    <div class="pb-num">5</div>
+    <div class="pb-content">
+      <h4>Move bulk async jobs to batch mode (Week 4–6)</h4>
+      <p>E2E test generation, large documentation runs, bulk refactor planning — these are non-urgent and can run overnight in batch mode at ~50% discount. Identify your top 3 recurring batch-eligible tasks and configure them.</p>
+    </div>
+  </div>
+  <div class="pb-step phase3">
+    <div class="pb-num">6</div>
+    <div class="pb-content">
+      <h4>Review TCoR quarterly and rebalance (Ongoing)</h4>
+      <p>Model capability and pricing shift rapidly. Every quarter, review TCoR by workload type. If Sonnet has improved on a task class where you were using Opus, move the routing rule. If a new model tier arrives, evaluate it against the same rubric before adopting.</p>
+    </div>
+  </div>
+  <div class="pb-step phase3">
+    <div class="pb-num">7</div>
+    <div class="pb-content">
+      <h4>Track the human review cost, not just tokens (Ongoing)</h4>
+      <p>Add a lightweight review-time log to your workflow. Even rough estimates (15 min vs 45 min to verify a change) will reveal which model/workload combinations have hidden costs that token dashboards miss entirely.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── §13 RISKS ───────────────────────────────────────────────── -->
+<h2 class="sec" id="s13"><span class="sn">§13</span>Risks &amp; Governance</h2>
+
+<div class="risk-grid">
+  <div class="risk-card r1">
+    <h4>🚨 Reflexive Opus usage</h4>
+    <p>Teams default to the frontier model "to be safe," inflating the bill 4–5× with no quality gain on routine tasks.</p>
+    <div class="mit">Mandate Sonnet default; require logged justification for Opus escalation; monitor model-mix dashboard weekly.</div>
+  </div>
+  <div class="risk-card r2">
+    <h4>⚡ Under-modelling hard tasks</h4>
+    <p>Using Sonnet for genuinely ambiguous or high-blast-radius work increases defect-escape rate and review burden, negating the token saving.</p>
+    <div class="mit">Publish clear escalation triggers; add auto-escalation rule in CI-integrated agentic workflows.</div>
+  </div>
+  <div class="risk-card r3">
+    <h4>🔓 Security over-trust</h4>
+    <p>Treating AI-generated security patches as production-ready without human review. Opus 4.8 reduces risk; it does not eliminate it.</p>
+    <div class="mit">All security changes require human security-engineer sign-off. Never auto-merge. Run SAST in the loop regardless of model.</div>
+  </div>
+  <div class="risk-card r4">
+    <h4>💸 Runaway agentic spend</h4>
+    <p>Long Claude Code sessions with Opus 4.8 and large contexts can generate surprise bills. Especially risky in overnight autonomous runs.</p>
+    <div class="mit">Set per-task token budgets in Claude Code config. Enable spend alerts. Use batch mode for non-urgent large jobs.</div>
+  </div>
+  <div class="risk-card r5">
+    <h4>📉 Pricing / score drift</h4>
+    <p>This thesis uses representative figures. Vendor pricing and model benchmark scores change quarterly; stale routing rules over- or under-spend.</p>
+    <div class="mit">Quarterly TCoR review cadence (see §12, step 6). Treat the routing matrix as a living document, not a one-time decision.</div>
+  </div>
+  <div class="risk-card r6">
+    <h4>🔗 Vendor lock-in</h4>
+    <p>Tight coupling to one vendor's model naming or API surface makes model swaps painful when the market evolves.</p>
+    <div class="mit">Abstract model identity behind a thin router layer. Use capability labels ("workhorse", "reasoning", "frontier") not model names in business logic.</div>
+  </div>
+</div>
+
+<!-- ── §14 CONCLUSION ──────────────────────────────────────────── -->
+<h2 class="sec" id="s14"><span class="sn">§14</span>Conclusion</h2>
+<p class="lead">Model selection is not a one-time decision. It is a daily operating policy with compounding financial and quality consequences.</p>
+<p>The evidence assembled across twelve sections converges on three durable conclusions:</p>
+
+<ol>
+  <li>
+    <strong>Make Sonnet 4.6 the default, not the fallback.</strong> Approximately 70% of daily engineering volume — bug fixes, features, tests, stories, documentation, PR reviews — is fully and efficiently served by the workhorse tier. Defaulting to Opus for these tasks is not caution; it is waste.
+  </li>
+  <li>
+    <strong>Escalate to Opus 4.8 deliberately and measurably.</strong> Security analysis, ambiguous architecture decisions, cross-cutting refactors, and novel algorithm design are the tasks where frontier reasoning depth converts into avoided defects that dwarf the token premium. Keep Opus 4.7 as the calibrated fallback when 4.8 is unavailable or the last increment of reasoning isn't worth the cost.
+  </li>
+  <li>
+    <strong>Tool and model are orthogonal — run both.</strong> Copilot is the high-frequency, low-ceremony inner-loop companion; Claude Code is the autonomous, whole-repo outer-loop executor. They serve different parts of the engineering day and are more powerful together than either is alone.
+  </li>
+</ol>
+
+<blockquote>
+  The goal is not to use the most powerful model. It is to deliver <strong>merged, trustworthy, defect-free software at the lowest total cost of resolution</strong> — and that optimum is almost always a portfolio of models and tools, routed by task signal, not by instinct.
+  <cite>— Closing statement, Model Selection Thesis v2</cite>
+</blockquote>
+
+<!-- ── APPENDIX ────────────────────────────────────────────────── -->
+<h2 class="sec" id="appendix"><span class="sn">A</span>Appendix</h2>
+
+<h3 class="ssec" id="a1">A.1 — How to localise this thesis to your organisation</h3>
+<ol>
+  <li>Replace the §3 price table with your contracted rates from the billing console.</li>
+  <li>Select 15–20 representative tasks per workload class and run them through each model tier. Record first-pass success rate, retry count, and human review time.</li>
+  <li>Compute TCoR per workload using the formula in §1 and your actual loaded engineer rate.</li>
+  <li>Adjust the §7 routing matrix to reflect your TCoR results, not the generic defaults here.</li>
+  <li>Encode the resulting routing logic in a shared team config file, CI pipeline env var, or thin router service.</li>
+  <li>Set a quarterly calendar reminder to re-run steps 1–4.</li>
+</ol>
+
+<h3 class="ssec" id="a2">A.2 — Methodology &amp; evaluation rubric</h3>
+<div class="tbl-wrap">
+<table class="gt">
+  <thead><tr><th>Dimension</th><th>Definition</th><th>How to measure</th></tr></thead>
+  <tbody>
+    <tr><td class="lk">First-pass success</td><td>Output accepted without iteration</td><td>% tasks merged on first generation</td></tr>
+    <tr><td class="lk">Retry count</td><td>Follow-up prompts to reach "done"</td><td>Avg. prompts per task</td></tr>
+    <tr><td class="lk">Review burden</td><td>Human minutes to verify and trust</td><td>Median review time per diff</td></tr>
+    <tr><td class="lk">Token spend</td><td>Input + output tokens × price</td><td>Per-task cost from billing API</td></tr>
+    <tr><td class="lk">Defect-escape rate</td><td>Bugs shipped despite AI assistance</td><td>Post-merge defect count per 100 AI tasks</td></tr>
+    <tr><td class="lk">Latency</td><td>Time from prompt to usable output</td><td>Wall-clock seconds, p50/p95</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3 class="ssec" id="a3">A.3 — Glossary</h3>
+<ul>
+  <li><strong>MTok</strong> — million tokens; standard pricing unit.</li>
+  <li><strong>TCoR</strong> — Total Cost of Resolution: token cost + human review cost + expected escaped-defect cost.</li>
+  <li><strong>Inner loop</strong> — the edit/run/test cycle inside the IDE, where Copilot excels.</li>
+  <li><strong>Outer loop</strong> — multi-file, cross-cutting, agentic work spanning the repository, where Claude Code excels.</li>
+  <li><strong>Prompt caching</strong> — reusing a stable context prefix (system prompt, architecture doc) to cut input token cost by 50–90%.</li>
+  <li><strong>Batch mode</strong> — async, non-priority API calls processed at ~50% of standard price.</li>
+  <li><strong>Escalation rate</strong> — share of tasks promoted from Sonnet to Opus tier; a key monitoring metric.</li>
+  <li><strong>Agentic run</strong> — a Claude Code session where the model plans, executes, and iterates without per-step human approval.</li>
+  <li><strong>Frontier model</strong> — the most capable, most expensive tier; currently Opus 4.8.</li>
+</ul>
+
+<footer>
+  <strong>Model Selection for Engineering Teams — Research Thesis v2</strong> · Version 2.0 · June 2026<br/>
+  Prepared as a living research document. All pricing and benchmark figures are representative planning values — not vendor price quotes. Calibrate against your live billing console and task-specific evaluation harness before operationalising. Review quarterly.<br/><br/>
+  Companion documents in this workspace: <em>AI_ADOPTION_THESIS.html</em> · <em>AI_ADOPTION_PLAYBOOK_PRESENTATION.html</em>
+</footer>
+
+</main>
+</div>
+
+<a href="#top" class="back-top">↑ Back to top</a>
+
+</body>
+</html>
